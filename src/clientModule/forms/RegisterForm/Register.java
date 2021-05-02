@@ -1,0 +1,190 @@
+/*
+ * Created by JFormDesigner on Sat May 01 17:02:45 MSK 2021
+ */
+
+package clientModule.forms.RegisterForm;
+
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import javax.swing.*;
+import javax.swing.border.*;
+
+import clientModule.Client;
+import clientModule.forms.MainMenuForm.MainMenu;
+import clientModule.forms.StartMenuForm.StartMenu;
+import common.utility.Request;
+import common.utility.Response;
+import common.utility.ResponseCode;
+import common.utility.User;
+import net.miginfocom.swing.*;
+
+/**
+ * @author unknown
+ */
+public class Register extends JPanel {
+    public Register(JFrame mainFrame, Client client) {
+        initComponents();
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mainFrame.setContentPane(new StartMenu(mainFrame, client).getStartMenuPanel());
+                mainFrame.validate();
+            }
+        });
+        registerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    if (String.valueOf(passwordField.getPassword()).equals(String.valueOf(passwordField2.getPassword()))) {
+                        User user = new User(loginField.getText(), String.valueOf(passwordField.getPassword()));
+                        client.send(new Request("sign_up", "", user));
+                        Response fromServer = client.receive();
+                        if (fromServer.getResponseCode().equals(ResponseCode.OK)) {
+                            client.setUser(user);
+                            mainFrame.setContentPane(new MainMenu(mainFrame, client).getMainMenuPanel());
+                            mainFrame.validate();
+                        } else {
+                            JOptionPane.showMessageDialog(null, fromServer.getResponseBody());
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Пароли различаются!");
+                    }
+                } catch (IOException exception) {
+                    JOptionPane.showMessageDialog(null, "Произошла ошибка при отправке запроса на сервер!");
+                } catch (ClassNotFoundException classNotFoundException) {
+                    JOptionPane.showMessageDialog(null, "Произошла ошибка при получении ответа с сервера!");
+                }
+            }
+        });
+    }
+
+    private void initComponents() {
+        // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
+        // Generated using JFormDesigner Evaluation license - unknown
+        registerPanel = new JPanel();
+        name = new JLabel();
+        loginName = new JLabel();
+        loginField = new JTextField();
+        passwordName = new JLabel();
+        passwordField = new JPasswordField();
+        confirmPassword = new JLabel();
+        passwordField2 = new JPasswordField();
+        registerButton = new JButton();
+        backButton = new JButton();
+
+        //======== registerPanel ========
+        {
+            registerPanel.setBackground(new Color(225, 183, 144));
+            registerPanel.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax.
+            swing. border. EmptyBorder( 0, 0, 0, 0) , "JF\u006frmD\u0065sig\u006eer \u0045val\u0075ati\u006fn", javax. swing. border
+            . TitledBorder. CENTER, javax. swing. border. TitledBorder. BOTTOM, new java .awt .Font ("Dia\u006cog"
+            ,java .awt .Font .BOLD ,12 ), java. awt. Color. red) ,registerPanel. getBorder
+            ( )) ); registerPanel. addPropertyChangeListener (new java. beans. PropertyChangeListener( ){ @Override public void propertyChange (java
+            .beans .PropertyChangeEvent e) {if ("\u0062ord\u0065r" .equals (e .getPropertyName () )) throw new RuntimeException
+            ( ); }} );
+            registerPanel.setLayout(new MigLayout(
+                "insets 0,hidemode 3",
+                // columns
+                "[fill]" +
+                "[fill]" +
+                "[fill]" +
+                "[fill]" +
+                "[grow,fill]" +
+                "[fill]" +
+                "[fill]" +
+                "[fill]" +
+                "[fill]",
+                // rows
+                "[80,grow,fill]" +
+                "[25,fill]" +
+                "[35,fill]" +
+                "[25,fill]" +
+                "[35,fill]" +
+                "[25,fill]" +
+                "[35,fill]" +
+                "[40]" +
+                "[40]" +
+                "[50,grow,fill]"));
+
+            //---- name ----
+            name.setText("\u0420\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u044f");
+            name.setHorizontalAlignment(SwingConstants.CENTER);
+            name.setFont(new Font("Arial Black", Font.BOLD, 40));
+            name.setBackground(new Color(255, 102, 102));
+            name.setForeground(new Color(40, 61, 82));
+            registerPanel.add(name, "cell 4 0,align center center,grow 0 0");
+
+            //---- loginName ----
+            loginName.setText("\u041b\u043e\u0433\u0438\u043d");
+            loginName.setHorizontalAlignment(SwingConstants.CENTER);
+            loginName.setForeground(Color.black);
+            loginName.setFont(new Font("Arial", Font.BOLD, 16));
+            registerPanel.add(loginName, "cell 4 1");
+
+            //---- loginField ----
+            loginField.setBackground(Color.white);
+            registerPanel.add(loginField, "cell 4 2,alignx center,growx 0,width 100:200:250");
+
+            //---- passwordName ----
+            passwordName.setText("\u041f\u0430\u0440\u043e\u043b\u044c");
+            passwordName.setHorizontalAlignment(SwingConstants.CENTER);
+            passwordName.setForeground(Color.black);
+            passwordName.setFont(new Font("Arial", Font.BOLD, 16));
+            registerPanel.add(passwordName, "cell 4 3");
+
+            //---- passwordField ----
+            passwordField.setBackground(Color.white);
+            registerPanel.add(passwordField, "cell 4 4,alignx center,growx 0,width 100:200:250");
+
+            //---- confirmPassword ----
+            confirmPassword.setText("\u041f\u043e\u0434\u0442\u0432\u0435\u0440\u0436\u0434\u0435\u043d\u0438\u0435 \u043f\u0430\u0440\u043e\u043b\u044f");
+            confirmPassword.setHorizontalAlignment(SwingConstants.CENTER);
+            confirmPassword.setForeground(Color.black);
+            confirmPassword.setFont(new Font("Arial", Font.BOLD, 16));
+            registerPanel.add(confirmPassword, "cell 4 5");
+
+            //---- passwordField2 ----
+            passwordField2.setBackground(Color.white);
+            registerPanel.add(passwordField2, "cell 4 6,alignx center,growx 0,width 100:200:250");
+
+            //---- registerButton ----
+            registerButton.setText("\u0420\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u044f");
+            registerButton.setFont(new Font("Arial", Font.PLAIN, 12));
+            registerButton.setBorder(new EtchedBorder());
+            registerButton.setBackground(new Color(40, 61, 82));
+            registerButton.setForeground(Color.white);
+            registerPanel.add(registerButton, "cell 4 7,align center center,grow 0 0,width 100:150:250,height 30:35:45");
+
+            //---- backButton ----
+            backButton.setText("\u041d\u0430\u0437\u0430\u0434");
+            backButton.setFont(new Font("Arial", Font.PLAIN, 12));
+            backButton.setBorder(new EtchedBorder());
+            backButton.setBackground(new Color(40, 61, 82));
+            backButton.setForeground(Color.white);
+            registerPanel.add(backButton, "cell 4 8,align center center,grow 0 0,width 100:150:250,height 30:35:45");
+        }
+        // JFormDesigner - End of component initialization  //GEN-END:initComponents
+    }
+
+    // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
+    // Generated using JFormDesigner Evaluation license - unknown
+    private JPanel registerPanel;
+    private JLabel name;
+    private JLabel loginName;
+    private JTextField loginField;
+    private JLabel passwordName;
+    private JPasswordField passwordField;
+    private JLabel confirmPassword;
+    private JPasswordField passwordField2;
+    private JButton registerButton;
+    private JButton backButton;
+    // JFormDesigner - End of variables declaration  //GEN-END:variables
+    private Client client;
+
+
+    public JPanel getRegisterPanel() {
+        return registerPanel;
+    }
+}
