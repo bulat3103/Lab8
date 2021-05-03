@@ -9,21 +9,25 @@ import java.util.*;
 import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.table.*;
+
+import clientModule.Client;
 import net.miginfocom.swing.*;
 
 /**
  * @author unknown
  */
 public class Show extends JPanel {
-    public Show() {
+    public Show(JFrame mainFrame, Client client) {
         initComponents();
+        this.client = client;
+        this.currentUser.setText(this.client.getUser().getLogin());
     }
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - unknown
         showPanel = new JPanel();
-        owner = new JLabel();
+        currentUser = new JLabel();
         backButton = new JButton();
         name = new JLabel();
         filterButton = new JButton();
@@ -34,13 +38,12 @@ public class Show extends JPanel {
         //======== showPanel ========
         {
             showPanel.setBackground(new Color(225, 183, 144));
-            showPanel.setBorder ( new javax . swing. border .CompoundBorder ( new javax . swing. border .TitledBorder ( new javax
-            . swing. border .EmptyBorder ( 0, 0 ,0 , 0) ,  "JF\u006frmD\u0065sig\u006eer \u0045val\u0075ati\u006fn" , javax. swing
-            .border . TitledBorder. CENTER ,javax . swing. border .TitledBorder . BOTTOM, new java. awt .
-            Font ( "Dia\u006cog", java .awt . Font. BOLD ,12 ) ,java . awt. Color .red
-            ) ,showPanel. getBorder () ) ); showPanel. addPropertyChangeListener( new java. beans .PropertyChangeListener ( ){ @Override
-            public void propertyChange (java . beans. PropertyChangeEvent e) { if( "\u0062ord\u0065r" .equals ( e. getPropertyName (
-            ) ) )throw new RuntimeException( ) ;} } );
+            showPanel.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing.border.
+            EmptyBorder(0,0,0,0), "JFor\u006dDesi\u0067ner \u0045valu\u0061tion",javax.swing.border.TitledBorder.CENTER,javax.swing
+            .border.TitledBorder.BOTTOM,new java.awt.Font("Dia\u006cog",java.awt.Font.BOLD,12),
+            java.awt.Color.red),showPanel. getBorder()));showPanel. addPropertyChangeListener(new java.beans.PropertyChangeListener()
+            {@Override public void propertyChange(java.beans.PropertyChangeEvent e){if("bord\u0065r".equals(e.getPropertyName()))
+            throw new RuntimeException();}});
             showPanel.setLayout(new MigLayout(
                 "insets 0,hidemode 3",
                 // columns
@@ -60,12 +63,12 @@ public class Show extends JPanel {
                 "[35,grow,fill]" +
                 "[50,grow,fill]"));
 
-            //---- owner ----
-            owner.setText("test");
-            owner.setHorizontalAlignment(SwingConstants.CENTER);
-            owner.setFont(new Font("Arial", Font.BOLD, 14));
-            owner.setForeground(new Color(40, 61, 82));
-            showPanel.add(owner, "cell 0 0");
+            //---- currentUser ----
+            currentUser.setText("test");
+            currentUser.setHorizontalAlignment(SwingConstants.CENTER);
+            currentUser.setFont(new Font("Arial", Font.BOLD, 14));
+            currentUser.setForeground(new Color(40, 61, 82));
+            showPanel.add(currentUser, "cell 0 0");
 
             //---- backButton ----
             backButton.setText("\u041d\u0430\u0437\u0430\u0434");
@@ -131,7 +134,7 @@ public class Show extends JPanel {
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     // Generated using JFormDesigner Evaluation license - unknown
     private JPanel showPanel;
-    private JLabel owner;
+    private JLabel currentUser;
     private JButton backButton;
     private JLabel name;
     private JButton filterButton;
@@ -139,4 +142,5 @@ public class Show extends JPanel {
     private JScrollPane scrollPane1;
     private JTable table1;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
+    private Client client;
 }

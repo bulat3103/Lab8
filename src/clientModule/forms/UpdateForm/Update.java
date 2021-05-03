@@ -7,11 +7,19 @@ package clientModule.forms.UpdateForm;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import javax.swing.*;
 import javax.swing.border.*;
 
 import clientModule.Client;
 import clientModule.forms.MainMenuForm.MainMenu;
+import common.data.Chapter;
+import common.data.Coordinates;
+import common.data.Weapon;
+import common.exceptions.NotDeclaredValueException;
+import common.utility.Request;
+import common.utility.Response;
+import common.utility.SpaceMarineLite;
 import net.miginfocom.swing.*;
 
 /**
@@ -20,9 +28,131 @@ import net.miginfocom.swing.*;
 public class Update extends JPanel {
     public Update(JFrame mainFrame, Client client) {
         initComponents();
+        this.client = client;
+        this.currentUser.setText(this.client.getUser().getLogin());
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                mainFrame.setContentPane(new MainMenu(mainFrame ,client).getMainMenuPanel());
+                mainFrame.validate();
+            }
+        });
+        updateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                StringBuilder errors = new StringBuilder();
+                int key = -1;
+                try {
+                    key = Integer.parseInt(keyField.getText());
+                    if (key <= 0) throw new NotDeclaredValueException();
+                } catch (NumberFormatException exception) {
+                    errors.append("Ключ должен быть числом!\n");
+                } catch (NotDeclaredValueException notDeclaredValueException) {
+                    errors.append("Ключ должен быть больше 0!\n");
+                }
+                String name = null;
+                if (nameCheck.isSelected()) {
+                    try {
+                        name = nameField.getText();
+                        if (name.isEmpty()) throw new NotDeclaredValueException();
+                    } catch (NotDeclaredValueException notDeclaredValueException) {
+                        errors.append("Значение поля 'name' не может быть пустым!\n");
+                    }
+                }
+                int health = -1;
+                if (healthCheck.isSelected()) {
+                    try {
+                        health = Integer.parseInt(healthField.getText());
+                        if (health <= 0) throw new NotDeclaredValueException();
+                    } catch (NumberFormatException exception) {
+                        errors.append("Здоровье должно быть числом!\n");
+                    } catch (NotDeclaredValueException notDeclaredValueException) {
+                        errors.append("Здоровье должно быть больше 0!\n");
+                    }
+                }
+                int heartCount = -1;
+                if (heartCheck.isSelected()) {
+                    try {
+                        heartCount = Integer.parseInt(heartField.getText());
+                        if (heartCount <= 0) throw new NotDeclaredValueException();
+                    } catch (NumberFormatException exception) {
+                        errors.append("Кол-во сердец должно быть числом!\n");
+                    } catch (NotDeclaredValueException notDeclaredValueException) {
+                        errors.append("Кол-во сердец должно быть больше 0!\n");
+                    }
+                }
+                String achieve = null;
+                if (achieveCheck.isSelected()) {
+                    try {
+                        achieve = achieveField.getText();
+                        if (achieve.isEmpty()) throw new NotDeclaredValueException();
+                    } catch (NotDeclaredValueException notDeclaredValueException) {
+                        errors.append("Значение поля 'achievements' не может быть пустым!\n");
+                    }
+                }
+                Coordinates newCoor = null;
+                if (coorCheck.isSelected()) {
+                    double x = -667;
+                    try {
+                        double x1 = Double.parseDouble(xField.getText());
+                        if (x1 <= -666) throw new NotDeclaredValueException();
+                        x = x1;
+                    } catch (NumberFormatException exception) {
+                        errors.append("Координата 'x' должна быть числом!\n");
+                    } catch (NotDeclaredValueException notDeclaredValueException) {
+                        errors.append("Координата 'x' должна быть больше -666!\n");
+                    }
+                    float y = -604;
+                    try {
+                        float y1 = Float.parseFloat(yField.getText());
+                        if (y1 <= -603) throw new NotDeclaredValueException();
+                        y = y1;
+                    } catch (NumberFormatException exception) {
+                        errors.append("Координата 'y' должна быть числом!\n");
+                    } catch (NotDeclaredValueException notDeclaredValueException) {
+                        errors.append("Координата 'y' должна быть больше -666!\n");
+                    }
+                    if (x != -667 && y != -604) newCoor = new Coordinates(x, y);
+                }
+                Chapter newChapter = null;
+                if (chapterCheck.isSelected()) {
+                    String chapterN = null;
+                    try {
+                        chapterN = chapterNameField.getText();
+                        if (chapterN.isEmpty()) throw new NotDeclaredValueException();
+                    } catch (NotDeclaredValueException notDeclaredValueException) {
+                        errors.append("Значение поля 'chapterName' не может быть пустым!\n");
+                    }
+                    String chapterL = null;
+                    try {
+                        chapterL = chapterLegionField.getText();
+                        if (chapterL.isEmpty()) throw new NotDeclaredValueException();
+                    } catch (NotDeclaredValueException notDeclaredValueException) {
+                        errors.append("Значение поля 'chapterLegion' не может быть пустым!\n");
+                    }
+                    if (!chapterN.isEmpty() && !chapterL.isEmpty()) newChapter = new Chapter(chapterN, chapterL);
+                }
+                Weapon newWeapon = null;
+                if (weaponCheck.isSelected()) {
+                    newWeapon = Weapon.valueOf(weaponBox.getItemAt(weaponBox.getSelectedIndex()));
+                }
+                if (errors.toString().equals("")) {
+                    try {
+                        client.send(new Request("insert",
+                                String.valueOf(key),
+                                new SpaceMarineLite(
+                                        name, newCoor, health, heartCount, achieve, newWeapon, newChapter),
+                                client.getUser()));
+                        Response fromServer = client.receive();
+                        JOptionPane.showMessageDialog(null, fromServer.getResponseBody());
+                    } catch (IOException exception) {
+                        JOptionPane.showMessageDialog(null, "Произошла ошибка при отправке запроса на сервер!");
+                    } catch (ClassNotFoundException classNotFoundException) {
+                        JOptionPane.showMessageDialog(null, "Произошла ошибка при получении ответа с сервера!");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, errors.toString());
+                }
                 mainFrame.setContentPane(new MainMenu(mainFrame ,client).getMainMenuPanel());
                 mainFrame.validate();
             }
@@ -45,13 +175,12 @@ public class Update extends JPanel {
         nameCheck = new JCheckBox();
         xTitle = new JLabel();
         xField = new JTextField();
-        xCheck = new JCheckBox();
+        coorCheck = new JCheckBox();
         healthTitle = new JLabel();
         healthField = new JTextField();
         healthCheck = new JCheckBox();
         yTitle = new JLabel();
         yField = new JTextField();
-        yCheck = new JCheckBox();
         heartTitle = new JLabel();
         heartField = new JTextField();
         heartCheck = new JCheckBox();
@@ -61,25 +190,23 @@ public class Update extends JPanel {
         achieveCheck = new JCheckBox();
         chapterNameTitle = new JLabel();
         chapterNameField = new JTextField();
-        chapterNameCheck = new JCheckBox();
+        chapterCheck = new JCheckBox();
         weaponTitle = new JLabel();
         weaponBox = new JComboBox<>();
         weaponCheck = new JCheckBox();
         chapterLegionTitle = new JLabel();
         chapterLegionField = new JTextField();
-        chapterLegionCheck = new JCheckBox();
         updateButton = new JButton();
 
         //======== updatePanel ========
         {
             updatePanel.setBackground(new Color(225, 183, 144));
-            updatePanel.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax. swing
-            . border. EmptyBorder( 0, 0, 0, 0) , "JF\u006frmDesi\u0067ner Ev\u0061luatio\u006e", javax. swing. border. TitledBorder
-            . CENTER, javax. swing. border. TitledBorder. BOTTOM, new java .awt .Font ("Dialo\u0067" ,java .
-            awt .Font .BOLD ,12 ), java. awt. Color. red) ,updatePanel. getBorder( )) )
-            ; updatePanel. addPropertyChangeListener (new java. beans. PropertyChangeListener( ){ @Override public void propertyChange (java .beans .PropertyChangeEvent e
-            ) {if ("borde\u0072" .equals (e .getPropertyName () )) throw new RuntimeException( ); }} )
-            ;
+            updatePanel.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing.
+            border.EmptyBorder(0,0,0,0), "JF\u006frmDesi\u0067ner Ev\u0061luatio\u006e",javax.swing.border.TitledBorder.CENTER
+            ,javax.swing.border.TitledBorder.BOTTOM,new java.awt.Font("Dialo\u0067",java.awt.Font
+            .BOLD,12),java.awt.Color.red),updatePanel. getBorder()));updatePanel. addPropertyChangeListener(
+            new java.beans.PropertyChangeListener(){@Override public void propertyChange(java.beans.PropertyChangeEvent e){if("borde\u0072"
+            .equals(e.getPropertyName()))throw new RuntimeException();}});
             updatePanel.setLayout(new MigLayout(
                 "insets 0,hidemode 3,align center center",
                 // columns
@@ -136,7 +263,7 @@ public class Update extends JPanel {
             //---- keyField ----
             keyField.setBackground(Color.white);
             keyField.setHorizontalAlignment(SwingConstants.CENTER);
-            updatePanel.add(keyField, "cell 2 1");
+            updatePanel.add(keyField, "cell 2 1,aligny center,grow 100 0,height 30:30:60");
 
             //---- marineTitle ----
             marineTitle.setText("\u0414\u0430\u043d\u043d\u044b\u0435 \u043e Spacemarine");
@@ -162,7 +289,7 @@ public class Update extends JPanel {
             //---- nameField ----
             nameField.setBackground(Color.white);
             nameField.setHorizontalAlignment(SwingConstants.CENTER);
-            updatePanel.add(nameField, "cell 5 2");
+            updatePanel.add(nameField, "cell 5 2,aligny center,grow 100 0,height 30:30:60");
 
             //---- nameCheck ----
             nameCheck.setBackground(new Color(225, 183, 144));
@@ -178,11 +305,11 @@ public class Update extends JPanel {
             //---- xField ----
             xField.setBackground(Color.white);
             xField.setHorizontalAlignment(SwingConstants.CENTER);
-            updatePanel.add(xField, "cell 2 3");
+            updatePanel.add(xField, "cell 2 3,aligny center,grow 100 0,height 30:30:60");
 
-            //---- xCheck ----
-            xCheck.setBackground(new Color(225, 183, 144));
-            updatePanel.add(xCheck, "cell 3 3");
+            //---- coorCheck ----
+            coorCheck.setBackground(new Color(225, 183, 144));
+            updatePanel.add(coorCheck, "cell 3 3 1 2");
 
             //---- healthTitle ----
             healthTitle.setText("\u0417\u0434\u043e\u0440\u043e\u0432\u044c\u0435");
@@ -194,7 +321,7 @@ public class Update extends JPanel {
             //---- healthField ----
             healthField.setBackground(Color.white);
             healthField.setHorizontalAlignment(SwingConstants.CENTER);
-            updatePanel.add(healthField, "cell 5 3");
+            updatePanel.add(healthField, "cell 5 3,aligny center,grow 100 0,height 30:30:60");
 
             //---- healthCheck ----
             healthCheck.setBackground(new Color(225, 183, 144));
@@ -210,11 +337,7 @@ public class Update extends JPanel {
             //---- yField ----
             yField.setBackground(Color.white);
             yField.setHorizontalAlignment(SwingConstants.CENTER);
-            updatePanel.add(yField, "cell 2 4");
-
-            //---- yCheck ----
-            yCheck.setBackground(new Color(225, 183, 144));
-            updatePanel.add(yCheck, "cell 3 4");
+            updatePanel.add(yField, "cell 2 4,aligny center,grow 100 0,height 30:30:60");
 
             //---- heartTitle ----
             heartTitle.setText("\u0421\u0435\u0440\u0434\u0446\u0430");
@@ -226,7 +349,7 @@ public class Update extends JPanel {
             //---- heartField ----
             heartField.setBackground(Color.white);
             heartField.setHorizontalAlignment(SwingConstants.CENTER);
-            updatePanel.add(heartField, "cell 5 4");
+            updatePanel.add(heartField, "cell 5 4,aligny center,grow 100 0,height 30:30:60");
 
             //---- heartCheck ----
             heartCheck.setBackground(new Color(225, 183, 144));
@@ -249,7 +372,7 @@ public class Update extends JPanel {
             //---- achieveField ----
             achieveField.setBackground(Color.white);
             achieveField.setHorizontalAlignment(SwingConstants.CENTER);
-            updatePanel.add(achieveField, "cell 5 5");
+            updatePanel.add(achieveField, "cell 5 5,aligny center,grow 100 0,height 30:30:60");
 
             //---- achieveCheck ----
             achieveCheck.setBackground(new Color(225, 183, 144));
@@ -265,11 +388,11 @@ public class Update extends JPanel {
             //---- chapterNameField ----
             chapterNameField.setBackground(Color.white);
             chapterNameField.setHorizontalAlignment(SwingConstants.CENTER);
-            updatePanel.add(chapterNameField, "cell 2 6");
+            updatePanel.add(chapterNameField, "cell 2 6,aligny center,grow 100 0,height 30:30:60");
 
-            //---- chapterNameCheck ----
-            chapterNameCheck.setBackground(new Color(225, 183, 144));
-            updatePanel.add(chapterNameCheck, "cell 3 6");
+            //---- chapterCheck ----
+            chapterCheck.setBackground(new Color(225, 183, 144));
+            updatePanel.add(chapterCheck, "cell 3 6 1 2");
 
             //---- weaponTitle ----
             weaponTitle.setText("\u041e\u0440\u0443\u0436\u0438\u0435");
@@ -286,7 +409,7 @@ public class Update extends JPanel {
                 "GRENADE"
             }));
             weaponBox.setSelectedIndex(0);
-            updatePanel.add(weaponBox, "cell 5 6");
+            updatePanel.add(weaponBox, "cell 5 6,aligny center,grow 100 0,height 30:30:60");
 
             //---- weaponCheck ----
             weaponCheck.setBackground(new Color(225, 183, 144));
@@ -302,18 +425,14 @@ public class Update extends JPanel {
             //---- chapterLegionField ----
             chapterLegionField.setBackground(Color.white);
             chapterLegionField.setHorizontalAlignment(SwingConstants.CENTER);
-            updatePanel.add(chapterLegionField, "cell 2 7");
-
-            //---- chapterLegionCheck ----
-            chapterLegionCheck.setBackground(new Color(225, 183, 144));
-            updatePanel.add(chapterLegionCheck, "cell 3 7");
+            updatePanel.add(chapterLegionField, "cell 2 7,aligny center,grow 100 0,height 30:30:60");
 
             //---- updateButton ----
             updateButton.setText("Update");
             updateButton.setBackground(new Color(40, 61, 82));
             updateButton.setFont(new Font("Arial", Font.BOLD, 14));
             updateButton.setForeground(Color.white);
-            updatePanel.add(updateButton, "cell 3 8 2 1");
+            updatePanel.add(updateButton, "cell 3 8 2 1,aligny center,grow 100 0,height 30:30:60");
         }
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
@@ -333,13 +452,12 @@ public class Update extends JPanel {
     private JCheckBox nameCheck;
     private JLabel xTitle;
     private JTextField xField;
-    private JCheckBox xCheck;
+    private JCheckBox coorCheck;
     private JLabel healthTitle;
     private JTextField healthField;
     private JCheckBox healthCheck;
     private JLabel yTitle;
     private JTextField yField;
-    private JCheckBox yCheck;
     private JLabel heartTitle;
     private JTextField heartField;
     private JCheckBox heartCheck;
@@ -349,15 +467,15 @@ public class Update extends JPanel {
     private JCheckBox achieveCheck;
     private JLabel chapterNameTitle;
     private JTextField chapterNameField;
-    private JCheckBox chapterNameCheck;
+    private JCheckBox chapterCheck;
     private JLabel weaponTitle;
     private JComboBox<String> weaponBox;
     private JCheckBox weaponCheck;
     private JLabel chapterLegionTitle;
     private JTextField chapterLegionField;
-    private JCheckBox chapterLegionCheck;
     private JButton updateButton;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
+    private Client client;
     
     public JPanel getUpdatePanel() {
         return updatePanel;

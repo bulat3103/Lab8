@@ -13,6 +13,9 @@ import javax.swing.border.*;
 
 import clientModule.Client;
 import clientModule.forms.InsertForm.Insert;
+import clientModule.forms.RemoveByWeaponForm.RemoveByWeapon;
+import clientModule.forms.RemoveGreaterForm.RemoveGreater;
+import clientModule.forms.RemoveKeyForm.RemoveKey;
 import clientModule.forms.StartMenuForm.StartMenu;
 import clientModule.forms.UpdateForm.Update;
 import common.utility.Request;
@@ -27,6 +30,7 @@ public class MainMenu extends JPanel {
     public MainMenu(JFrame mainFrame, Client client) {
         initComponents();
         this.client = client;
+        this.currentUser.setText(this.client.getUser().getLogin());
         signOutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -129,6 +133,41 @@ public class MainMenu extends JPanel {
                 mainFrame.validate();
             }
         });
+        clearButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    client.send(new Request("clear", "", client.getUser()));
+                    Response fromServer = client.receive();
+                    JOptionPane.showMessageDialog(null, fromServer.getResponseBody());
+                } catch (IOException exception) {
+                    JOptionPane.showMessageDialog(null, "Произошла ошибка при отправке запроса на сервер!");
+                } catch (ClassNotFoundException classNotFoundException) {
+                    JOptionPane.showMessageDialog(null, "Произошла ошибка при получении ответа с сервера!");
+                }
+            }
+        });
+        rmGreaterButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mainFrame.setContentPane(new RemoveGreater(mainFrame ,client).getRemoveGreaterPanel());
+                mainFrame.validate();
+            }
+        });
+        rmKeyButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mainFrame.setContentPane(new RemoveKey(mainFrame ,client).getRemoveKeyPanel());
+                mainFrame.validate();
+            }
+        });
+        rmWeaponTypeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mainFrame.setContentPane(new RemoveByWeapon(mainFrame ,client).getRemoveByWeaponPanel());
+                mainFrame.validate();
+            }
+        });
     }
 
     private void initComponents() {
@@ -160,12 +199,13 @@ public class MainMenu extends JPanel {
         //======== mainMenuPanel ========
         {
             mainMenuPanel.setBackground(new Color(225, 183, 144));
-            mainMenuPanel.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing.border.EmptyBorder
-            (0,0,0,0), "JF\u006frmDes\u0069gner \u0045valua\u0074ion",javax.swing.border.TitledBorder.CENTER,javax.swing.border
-            .TitledBorder.BOTTOM,new java.awt.Font("D\u0069alog",java.awt.Font.BOLD,12),java.awt
-            .Color.red),mainMenuPanel. getBorder()));mainMenuPanel. addPropertyChangeListener(new java.beans.PropertyChangeListener(){@Override public void
-            propertyChange(java.beans.PropertyChangeEvent e){if("\u0062order".equals(e.getPropertyName()))throw new RuntimeException()
-            ;}});
+            mainMenuPanel.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new
+            javax. swing. border. EmptyBorder( 0, 0, 0, 0) , "JFor\u006dDesi\u0067ner \u0045valu\u0061tion", javax
+            . swing. border. TitledBorder. CENTER, javax. swing. border. TitledBorder. BOTTOM, new java
+            .awt .Font ("Dia\u006cog" ,java .awt .Font .BOLD ,12 ), java. awt
+            . Color. red) ,mainMenuPanel. getBorder( )) ); mainMenuPanel. addPropertyChangeListener (new java. beans.
+            PropertyChangeListener( ){ @Override public void propertyChange (java .beans .PropertyChangeEvent e) {if ("bord\u0065r" .
+            equals (e .getPropertyName () )) throw new RuntimeException( ); }} );
             mainMenuPanel.setLayout(new MigLayout(
                 "insets 0,hidemode 3,align center center",
                 // columns

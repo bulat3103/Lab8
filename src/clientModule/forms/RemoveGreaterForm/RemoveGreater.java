@@ -1,8 +1,8 @@
 /*
- * Created by JFormDesigner on Sun May 02 01:01:23 MSK 2021
+ * Created by JFormDesigner on Mon May 03 22:08:03 MSK 2021
  */
 
-package clientModule.forms.InsertForm;
+package clientModule.forms.RemoveGreaterForm;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,7 +13,6 @@ import javax.swing.border.*;
 
 import clientModule.Client;
 import clientModule.forms.MainMenuForm.MainMenu;
-import clientModule.forms.StartMenuForm.StartMenu;
 import common.data.Chapter;
 import common.data.Coordinates;
 import common.data.Weapon;
@@ -26,8 +25,8 @@ import net.miginfocom.swing.*;
 /**
  * @author unknown
  */
-public class Insert extends JPanel {
-    public Insert(JFrame mainFrame, Client client) {
+public class RemoveGreater extends JPanel {
+    public RemoveGreater(JFrame mainFrame, Client client) {
         initComponents();
         this.client = client;
         this.currentUser.setText(this.client.getUser().getLogin());
@@ -38,19 +37,10 @@ public class Insert extends JPanel {
                 mainFrame.validate();
             }
         });
-        insertButton.addActionListener(new ActionListener() {
+        removeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 StringBuilder errors = new StringBuilder();
-                int key = 0;
-                try {
-                    key = Integer.parseInt(keyField.getText());
-                    if (key <= 0) throw new NotDeclaredValueException();
-                } catch (NumberFormatException exception) {
-                    errors.append("Ключ должен быть числом!\n");
-                } catch (NotDeclaredValueException notDeclaredValueException) {
-                    errors.append("Ключ должен быть больше 0!\n");
-                }
                 String name = null;
                 try {
                     name = nameField.getText();
@@ -117,8 +107,8 @@ public class Insert extends JPanel {
                 }
                 if (errors.toString().equals("")) {
                     try {
-                        client.send(new Request("insert",
-                                String.valueOf(key),
+                        client.send(new Request("remove_greater",
+                                "",
                                 new SpaceMarineLite(
                                         name, new Coordinates(x, y), health, heartCount, achieve, Weapon.valueOf(weaponTypeField.getItemAt(weaponTypeField.getSelectedIndex())), new Chapter(chapterN, chapterL)
                                 ),
@@ -142,12 +132,10 @@ public class Insert extends JPanel {
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - unknown
-        insertPanel = new JPanel();
+        removeGreaterPanel = new JPanel();
         currentUser = new JLabel();
         name = new JLabel();
         backButton = new JButton();
-        keyName = new JLabel();
-        keyField = new JTextField();
         marineData = new JLabel();
         nameField = new JTextField();
         healthField = new JTextField();
@@ -160,17 +148,20 @@ public class Insert extends JPanel {
         chapterData = new JLabel();
         chapterName = new JTextField();
         chapterLegion = new JTextField();
-        insertButton = new JButton();
+        removeButton = new JButton();
 
-        //======== insertPanel ========
+        //======== removeGreaterPanel ========
         {
-            insertPanel.setBackground(new Color(225, 183, 144));
-            insertPanel.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing.border.EmptyBorder(
-            0,0,0,0), "JFor\u006dDesi\u0067ner \u0045valu\u0061tion",javax.swing.border.TitledBorder.CENTER,javax.swing.border.TitledBorder
-            .BOTTOM,new java.awt.Font("Dia\u006cog",java.awt.Font.BOLD,12),java.awt.Color.
-            red),insertPanel. getBorder()));insertPanel. addPropertyChangeListener(new java.beans.PropertyChangeListener(){@Override public void propertyChange(java.
-            beans.PropertyChangeEvent e){if("bord\u0065r".equals(e.getPropertyName()))throw new RuntimeException();}});
-            insertPanel.setLayout(new MigLayout(
+            removeGreaterPanel.setBackground(new Color(225, 183, 144));
+            removeGreaterPanel.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(
+            new javax.swing.border.EmptyBorder(0,0,0,0), "JF\u006frmDes\u0069gner \u0045valua\u0074ion"
+            ,javax.swing.border.TitledBorder.CENTER,javax.swing.border.TitledBorder.BOTTOM
+            ,new java.awt.Font("D\u0069alog",java.awt.Font.BOLD,12)
+            ,java.awt.Color.red),removeGreaterPanel. getBorder()));removeGreaterPanel. addPropertyChangeListener(
+            new java.beans.PropertyChangeListener(){@Override public void propertyChange(java.beans.PropertyChangeEvent e
+            ){if("\u0062order".equals(e.getPropertyName()))throw new RuntimeException()
+            ;}});
+            removeGreaterPanel.setLayout(new MigLayout(
                 "insets 0,hidemode 3,align center center",
                 // columns
                 "[grow,fill]" +
@@ -182,13 +173,13 @@ public class Insert extends JPanel {
                 "[grow,fill]",
                 // rows
                 "[80,grow,fill]" +
-                "[25,grow,fill]" +
                 "[35,grow,fill]" +
                 "[25,grow,fill]" +
                 "[35,grow,fill]" +
                 "[25,grow,fill]" +
                 "[35,grow,fill]" +
                 "[25,grow,fill]" +
+                "[35,grow,fill]" +
                 "[35,grow,fill]" +
                 "[35,grow,fill]" +
                 "[35,grow,fill]"));
@@ -198,7 +189,7 @@ public class Insert extends JPanel {
             currentUser.setForeground(Color.white);
             currentUser.setHorizontalAlignment(SwingConstants.CENTER);
             currentUser.setFont(new Font("Arial", Font.BOLD, 20));
-            insertPanel.add(currentUser, "cell 1 0");
+            removeGreaterPanel.add(currentUser, "cell 1 0");
 
             //---- name ----
             name.setText("SpaceMarine");
@@ -206,7 +197,7 @@ public class Insert extends JPanel {
             name.setFont(new Font("Arial Black", Font.BOLD, 40));
             name.setBackground(new Color(255, 102, 102));
             name.setForeground(new Color(40, 61, 82));
-            insertPanel.add(name, "cell 2 0 3 1,align center center,grow 0 0");
+            removeGreaterPanel.add(name, "cell 2 0 3 1,align center center,grow 0 0");
 
             //---- backButton ----
             backButton.setText("\u041d\u0430\u0437\u0430\u0434");
@@ -214,57 +205,42 @@ public class Insert extends JPanel {
             backButton.setForeground(new Color(40, 61, 82));
             backButton.setFont(new Font("Arial", Font.BOLD, 12));
             backButton.setBorder(new EtchedBorder());
-            insertPanel.add(backButton, "cell 5 0,align center center,grow 0 0");
-
-            //---- keyName ----
-            keyName.setText("\u041a\u043b\u044e\u0447");
-            keyName.setHorizontalAlignment(SwingConstants.CENTER);
-            keyName.setFont(new Font("Arial", Font.BOLD, 14));
-            keyName.setForeground(new Color(40, 61, 82));
-            insertPanel.add(keyName, "cell 3 1");
-
-            //---- keyField ----
-            keyField.setHorizontalAlignment(SwingConstants.CENTER);
-            keyField.setBackground(Color.white);
-            keyField.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
-            keyField.setBorder(new EtchedBorder());
-            keyField.setToolTipText("key");
-            insertPanel.add(keyField, "cell 3 2,aligny center,grow 100 0,height 25:30:50");
+            removeGreaterPanel.add(backButton, "cell 5 0,align center center,grow 0 0");
 
             //---- marineData ----
             marineData.setText("\u0414\u0430\u043d\u043d\u044b\u0435 \u043e SpaceMarine");
             marineData.setHorizontalAlignment(SwingConstants.CENTER);
             marineData.setFont(new Font("Arial", Font.BOLD, 14));
             marineData.setForeground(new Color(40, 61, 82));
-            insertPanel.add(marineData, "cell 2 3 3 1");
+            removeGreaterPanel.add(marineData, "cell 2 2 3 1");
 
             //---- nameField ----
             nameField.setBackground(Color.white);
             nameField.setHorizontalAlignment(SwingConstants.CENTER);
             nameField.setBorder(new EtchedBorder());
             nameField.setToolTipText("name");
-            insertPanel.add(nameField, "cell 1 4,aligny center,grow 100 0,height 25:30:50");
+            removeGreaterPanel.add(nameField, "cell 1 3,aligny center,grow 100 0,height 25:30:50");
 
             //---- healthField ----
             healthField.setHorizontalAlignment(SwingConstants.CENTER);
             healthField.setBackground(Color.white);
             healthField.setBorder(new EtchedBorder());
             healthField.setToolTipText("health");
-            insertPanel.add(healthField, "cell 2 4,aligny center,grow 100 0,height 25:30:50");
+            removeGreaterPanel.add(healthField, "cell 2 3,aligny center,grow 100 0,height 25:30:50");
 
             //---- heartCountField ----
             heartCountField.setHorizontalAlignment(SwingConstants.CENTER);
             heartCountField.setBackground(Color.white);
             heartCountField.setBorder(new EtchedBorder());
             heartCountField.setToolTipText("heartCount");
-            insertPanel.add(heartCountField, "cell 3 4,aligny center,grow 100 0,height 25:30:50");
+            removeGreaterPanel.add(heartCountField, "cell 3 3,aligny center,grow 100 0,height 25:30:50");
 
             //---- achieveField ----
             achieveField.setHorizontalAlignment(SwingConstants.CENTER);
             achieveField.setBackground(Color.white);
             achieveField.setBorder(new EtchedBorder());
             achieveField.setToolTipText("achievements");
-            insertPanel.add(achieveField, "cell 4 4,aligny center,grow 100 0,height 25:30:50");
+            removeGreaterPanel.add(achieveField, "cell 4 3,aligny center,grow 100 0,height 25:30:50");
 
             //---- weaponTypeField ----
             weaponTypeField.setBackground(Color.white);
@@ -275,69 +251,67 @@ public class Insert extends JPanel {
             }));
             weaponTypeField.setBorder(new EtchedBorder());
             weaponTypeField.setSelectedIndex(1);
-            insertPanel.add(weaponTypeField, "cell 5 4,aligny center,grow 100 0,height 25:30:50");
+            removeGreaterPanel.add(weaponTypeField, "cell 5 3,aligny center,grow 100 0,height 25:30:50");
 
             //---- coordinatesData ----
             coordinatesData.setText("\u041a\u043e\u043e\u0440\u0434\u0438\u043d\u0430\u0442\u044b");
             coordinatesData.setHorizontalAlignment(SwingConstants.CENTER);
             coordinatesData.setFont(new Font("Arial", Font.BOLD, 14));
             coordinatesData.setForeground(new Color(40, 61, 82));
-            insertPanel.add(coordinatesData, "cell 2 5 3 1");
+            removeGreaterPanel.add(coordinatesData, "cell 2 4 3 1");
 
             //---- coorX ----
             coorX.setHorizontalAlignment(SwingConstants.CENTER);
             coorX.setBackground(Color.white);
             coorX.setBorder(new EtchedBorder());
             coorX.setToolTipText("x");
-            insertPanel.add(coorX, "cell 2 6,aligny center,grow 100 0,height 25:30:50");
+            removeGreaterPanel.add(coorX, "cell 2 5,aligny center,grow 100 0,height 25:30:50");
 
             //---- coorY ----
             coorY.setHorizontalAlignment(SwingConstants.CENTER);
             coorY.setBackground(Color.white);
             coorY.setBorder(new EtchedBorder());
             coorY.setToolTipText("y");
-            insertPanel.add(coorY, "cell 4 6,aligny center,grow 100 0,height 25:30:50");
+            removeGreaterPanel.add(coorY, "cell 4 5,aligny center,grow 100 0,height 25:30:50");
 
             //---- chapterData ----
             chapterData.setText("\u0427\u0430\u0441\u0442\u044c");
             chapterData.setHorizontalAlignment(SwingConstants.CENTER);
             chapterData.setFont(new Font("Arial", Font.BOLD, 14));
             chapterData.setForeground(new Color(40, 61, 82));
-            insertPanel.add(chapterData, "cell 2 7 3 1");
+            removeGreaterPanel.add(chapterData, "cell 2 6 3 1");
 
             //---- chapterName ----
             chapterName.setHorizontalAlignment(SwingConstants.CENTER);
             chapterName.setBackground(Color.white);
             chapterName.setBorder(new EtchedBorder());
             chapterName.setToolTipText("ChapterName");
-            insertPanel.add(chapterName, "cell 2 8,aligny center,grow 100 0,height 25:30:50");
+            removeGreaterPanel.add(chapterName, "cell 2 7,aligny center,grow 100 0,height 25:30:50");
 
             //---- chapterLegion ----
             chapterLegion.setHorizontalAlignment(SwingConstants.CENTER);
             chapterLegion.setBackground(Color.white);
             chapterLegion.setBorder(new EtchedBorder());
             chapterLegion.setToolTipText("ChapterLegion");
-            insertPanel.add(chapterLegion, "cell 4 8,aligny center,grow 100 0,height 25:30:50");
+            removeGreaterPanel.add(chapterLegion, "cell 4 7,aligny center,grow 100 0,height 25:30:50");
 
-            //---- insertButton ----
-            insertButton.setText("Insert");
-            insertButton.setForeground(new Color(225, 183, 144));
-            insertButton.setFont(new Font("Arial", Font.BOLD, 12));
-            insertButton.setBackground(new Color(40, 61, 82));
-            insertButton.setBorder(new EtchedBorder());
-            insertPanel.add(insertButton, "cell 3 9,aligny center,grow 100 0,height 25:30:50");
+            //---- removeButton ----
+            removeButton.setText("Remove");
+            removeButton.setForeground(new Color(225, 183, 144));
+            removeButton.setFont(new Font("Arial", Font.BOLD, 12));
+            removeButton.setBackground(new Color(40, 61, 82));
+            removeButton.setBorder(new EtchedBorder());
+            removeGreaterPanel.add(removeButton, "cell 3 9,aligny center,grow 100 0,height 30:30:50");
         }
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     // Generated using JFormDesigner Evaluation license - unknown
-    private JPanel insertPanel;
+    private JPanel removeGreaterPanel;
     private JLabel currentUser;
     private JLabel name;
     private JButton backButton;
-    private JLabel keyName;
-    private JTextField keyField;
     private JLabel marineData;
     private JTextField nameField;
     private JTextField healthField;
@@ -350,12 +324,12 @@ public class Insert extends JPanel {
     private JLabel chapterData;
     private JTextField chapterName;
     private JTextField chapterLegion;
-    private JButton insertButton;
+    private JButton removeButton;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
     private Client client;
 
 
-    public JPanel getInsertPanel() {
-        return insertPanel;
+    public JPanel getRemoveGreaterPanel() {
+        return removeGreaterPanel;
     }
 }

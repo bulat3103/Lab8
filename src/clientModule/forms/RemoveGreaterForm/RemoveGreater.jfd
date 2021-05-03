@@ -6,9 +6,9 @@ new FormModel {
 		add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class net.miginfocom.swing.MigLayout ) {
 			"$layoutConstraints": "insets 0,hidemode 3,align center center"
 			"$columnConstraints": "[grow,fill][110,grow,fill][110,grow,fill][110,grow,fill][110,grow,fill][110,grow,fill][grow,fill]"
-			"$rowConstraints": "[80,grow,fill][25,grow,fill][35,grow,fill][25,grow,fill][35,grow,fill][25,grow,fill][35,grow,fill][25,grow,fill][35,grow,fill][35,grow,fill][35,grow,fill]"
+			"$rowConstraints": "[80,grow,fill][35,grow,fill][25,grow,fill][35,grow,fill][25,grow,fill][35,grow,fill][25,grow,fill][35,grow,fill][35,grow,fill][35,grow,fill][35,grow,fill]"
 		} ) {
-			name: "insertPanel"
+			name: "removeGreaterPanel"
 			"background": new java.awt.Color( 225, 183, 144, 255 )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "currentUser"
@@ -40,41 +40,22 @@ new FormModel {
 				"value": "cell 5 0,align center center,grow 0 0"
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "keyName"
-				"text": "Ключ"
+				name: "marineData"
+				"text": "Данные о SpaceMarine"
 				"horizontalAlignment": 0
 				"font": &Font0 new java.awt.Font( "Arial", 1, 14 )
 				"foreground": &Color0 new java.awt.Color( 40, 61, 82, 255 )
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 3 1"
-			} )
-			add( new FormComponent( "javax.swing.JTextField" ) {
-				name: "keyField"
-				"horizontalAlignment": 0
-				"background": new java.awt.Color( 255, 255, 255, 255 )
-				"cursor": new java.awt.Cursor( 2 )
-				"border": &EtchedBorder1 new javax.swing.border.EtchedBorder( 1, null, null )
-				"toolTipText": "key"
-			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 3 2,aligny center,grow 100 0,height 25:30:50"
-			} )
-			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "marineData"
-				"text": "Данные о SpaceMarine"
-				"horizontalAlignment": 0
-				"font": #Font0
-				"foreground": #Color0
-			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 2 3 3 1"
+				"value": "cell 2 2 3 1"
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "nameField"
 				"background": new java.awt.Color( 255, 255, 255, 255 )
 				"horizontalAlignment": 0
-				"border": #EtchedBorder1
+				"border": &EtchedBorder1 new javax.swing.border.EtchedBorder( 1, null, null )
 				"toolTipText": "name"
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 1 4,aligny center,grow 100 0,height 25:30:50"
+				"value": "cell 1 3,aligny center,grow 100 0,height 25:30:50"
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "healthField"
@@ -83,7 +64,7 @@ new FormModel {
 				"border": #EtchedBorder1
 				"toolTipText": "health"
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 2 4,aligny center,grow 100 0,height 25:30:50"
+				"value": "cell 2 3,aligny center,grow 100 0,height 25:30:50"
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "heartCountField"
@@ -92,7 +73,7 @@ new FormModel {
 				"border": #EtchedBorder1
 				"toolTipText": "heartCount"
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 3 4,aligny center,grow 100 0,height 25:30:50"
+				"value": "cell 3 3,aligny center,grow 100 0,height 25:30:50"
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "achieveField"
@@ -101,7 +82,7 @@ new FormModel {
 				"border": #EtchedBorder1
 				"toolTipText": "achievements"
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 4 4,aligny center,grow 100 0,height 25:30:50"
+				"value": "cell 4 3,aligny center,grow 100 0,height 25:30:50"
 			} )
 			add( new FormComponent( "javax.swing.JComboBox" ) {
 				name: "weaponTypeField"
@@ -115,7 +96,7 @@ new FormModel {
 				"border": #EtchedBorder1
 				"selectedIndex": 1
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 5 4,aligny center,grow 100 0,height 25:30:50"
+				"value": "cell 5 3,aligny center,grow 100 0,height 25:30:50"
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "coordinatesData"
@@ -124,7 +105,7 @@ new FormModel {
 				"font": #Font0
 				"foreground": #Color0
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 2 5 3 1"
+				"value": "cell 2 4 3 1"
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "coorX"
@@ -133,7 +114,7 @@ new FormModel {
 				"border": #EtchedBorder1
 				"toolTipText": "x"
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 2 6,aligny center,grow 100 0,height 25:30:50"
+				"value": "cell 2 5,aligny center,grow 100 0,height 25:30:50"
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "coorY"
@@ -142,7 +123,7 @@ new FormModel {
 				"border": #EtchedBorder1
 				"toolTipText": "y"
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 4 6,aligny center,grow 100 0,height 25:30:50"
+				"value": "cell 4 5,aligny center,grow 100 0,height 25:30:50"
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "chapterData"
@@ -151,7 +132,7 @@ new FormModel {
 				"font": #Font0
 				"foreground": #Color0
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 2 7 3 1"
+				"value": "cell 2 6 3 1"
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "chapterName"
@@ -160,7 +141,7 @@ new FormModel {
 				"border": #EtchedBorder1
 				"toolTipText": "ChapterName"
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 2 8,aligny center,grow 100 0,height 25:30:50"
+				"value": "cell 2 7,aligny center,grow 100 0,height 25:30:50"
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "chapterLegion"
@@ -169,20 +150,20 @@ new FormModel {
 				"border": #EtchedBorder1
 				"toolTipText": "ChapterLegion"
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 4 8,aligny center,grow 100 0,height 25:30:50"
+				"value": "cell 4 7,aligny center,grow 100 0,height 25:30:50"
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
-				name: "insertButton"
-				"text": "Insert"
+				name: "removeButton"
+				"text": "Remove"
 				"foreground": new java.awt.Color( 225, 183, 144, 255 )
 				"font": new java.awt.Font( "Arial", 1, 12 )
 				"background": new java.awt.Color( 40, 61, 82, 255 )
 				"border": #EtchedBorder0
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 3 9,aligny center,grow 100 0,height 25:30:50"
+				"value": "cell 3 9,aligny center,grow 100 0,height 30:30:50"
 			} )
 		}, new FormLayoutConstraints( null ) {
-			"location": new java.awt.Point( 0, 0 )
+			"location": new java.awt.Point( 10, 5 )
 			"size": new java.awt.Dimension( 600, 400 )
 		} )
 	}

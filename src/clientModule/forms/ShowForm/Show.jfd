@@ -11,7 +11,7 @@ new FormModel {
 			name: "showPanel"
 			"background": new java.awt.Color( 225, 183, 144, 255 )
 			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "owner"
+				name: "currentUser"
 				"text": "test"
 				"horizontalAlignment": 0
 				"font": new java.awt.Font( "Arial", 1, 14 )
