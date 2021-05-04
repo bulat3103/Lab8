@@ -11,6 +11,7 @@ import java.io.IOException;
 import javax.swing.*;
 import javax.swing.border.*;
 
+import clientModule.App;
 import clientModule.Client;
 import clientModule.forms.MainMenuForm.MainMenu;
 import common.data.Chapter;
@@ -20,21 +21,21 @@ import common.exceptions.NotDeclaredValueException;
 import common.utility.Request;
 import common.utility.Response;
 import common.utility.SpaceMarineLite;
+import common.utility.User;
 import net.miginfocom.swing.*;
 
 /**
  * @author unknown
  */
 public class RemoveKey extends JPanel {
-    public RemoveKey(JFrame mainFrame, Client client) {
+    public RemoveKey(Client client) {
         initComponents();
         this.client = client;
-        this.currentUser.setText(this.client.getUser().getLogin());
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mainFrame.setContentPane(new MainMenu(mainFrame ,client).getMainMenuPanel());
-                mainFrame.validate();
+                App.mainFrame.setContentPane(App.mainMenu.getMainMenuPanel());
+                App.mainFrame.validate();
             }
         });
         removeButton.addActionListener(new ActionListener() {
@@ -67,6 +68,11 @@ public class RemoveKey extends JPanel {
                 }
             }
         });
+    }
+
+    public void setUser(User user) {
+        this.client.setUser(user);
+        this.currentUser.setText(user.getLogin());
     }
 
     private void initComponents() {

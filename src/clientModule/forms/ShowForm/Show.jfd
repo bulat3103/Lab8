@@ -60,41 +60,10 @@ new FormModel {
 				"value": "cell 4 0,align center center,grow 0 0,width 70:70:100"
 			} )
 			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
-				name: "scrollPane1"
+				name: "scrollPane"
 				add( new FormComponent( "javax.swing.JTable" ) {
-					name: "table1"
-					"model": new com.jformdesigner.model.SwingTableModel( new java.util.Vector {
-						add( new java.util.Vector {
-							add( null )
-							add( null )
-							add( "" )
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-							add( "" )
-						} )
-						add( new java.util.Vector {
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-						} )
-					}, new java.util.Vector {
+					name: "table"
+					"model": new com.jformdesigner.model.SwingTableModel( new java.util.Vector, new java.util.Vector {
 						add( "id" )
 						add( "key" )
 						add( "name" )

@@ -11,6 +11,7 @@ import java.io.IOException;
 import javax.swing.*;
 import javax.swing.border.*;
 
+import clientModule.App;
 import clientModule.Client;
 import clientModule.forms.InsertForm.Insert;
 import clientModule.forms.RemoveByWeaponForm.RemoveByWeapon;
@@ -21,16 +22,16 @@ import clientModule.forms.UpdateForm.Update;
 import common.utility.Request;
 import common.utility.Response;
 import common.utility.ResponseCode;
+import common.utility.User;
 import net.miginfocom.swing.*;
 
 /**
  * @author unknown
  */
 public class MainMenu extends JPanel {
-    public MainMenu(JFrame mainFrame, Client client) {
+    public MainMenu(Client client) {
         initComponents();
         this.client = client;
-        this.currentUser.setText(this.client.getUser().getLogin());
         signOutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -39,8 +40,8 @@ public class MainMenu extends JPanel {
                     Response fromServer = client.receive();
                     if (fromServer.getResponseCode().equals(ResponseCode.OK)) {
                         client.setUser(null);
-                        mainFrame.setContentPane(new StartMenu(mainFrame, client).getStartMenuPanel());
-                        mainFrame.validate();
+                        App.mainFrame.setContentPane(App.startMenu.getStartMenuPanel());
+                        App.mainFrame.validate();
                     }
                 } catch (IOException exception) {
                     JOptionPane.showMessageDialog(null, "Произошла ошибка при отправке запроса на сервер!");
@@ -122,15 +123,15 @@ public class MainMenu extends JPanel {
         insertButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mainFrame.setContentPane(new Insert(mainFrame ,client).getInsertPanel());
-                mainFrame.validate();
+                App.mainFrame.setContentPane(App.insert.getInsertPanel());
+                App.mainFrame.validate();
             }
         });
         updateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mainFrame.setContentPane(new Update(mainFrame ,client).getUpdatePanel());
-                mainFrame.validate();
+                App.mainFrame.setContentPane(App.update.getUpdatePanel());
+                App.mainFrame.validate();
             }
         });
         clearButton.addActionListener(new ActionListener() {
@@ -150,24 +151,37 @@ public class MainMenu extends JPanel {
         rmGreaterButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mainFrame.setContentPane(new RemoveGreater(mainFrame ,client).getRemoveGreaterPanel());
-                mainFrame.validate();
+                App.mainFrame.setContentPane(App.removeGreater.getRemoveGreaterPanel());
+                App.mainFrame.validate();
             }
         });
         rmKeyButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mainFrame.setContentPane(new RemoveKey(mainFrame ,client).getRemoveKeyPanel());
-                mainFrame.validate();
+                App.mainFrame.setContentPane(App.removeKey.getRemoveKeyPanel());
+                App.mainFrame.validate();
             }
         });
         rmWeaponTypeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mainFrame.setContentPane(new RemoveByWeapon(mainFrame ,client).getRemoveByWeaponPanel());
-                mainFrame.validate();
+                App.mainFrame.setContentPane(App.removeByWeapon.getRemoveByWeaponPanel());
+                App.mainFrame.validate();
             }
         });
+        showButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                App.show.drawTable();
+                App.mainFrame.setContentPane(App.show.getShowPanel());
+                App.mainFrame.validate();
+            }
+        });
+    }
+
+    public void setUser(User user) {
+        this.client.setUser(user);
+        this.currentUser.setText(user.getLogin());
     }
 
     private void initComponents() {

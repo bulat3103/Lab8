@@ -11,6 +11,7 @@ import java.io.IOException;
 import javax.swing.*;
 import javax.swing.border.*;
 
+import clientModule.App;
 import clientModule.Client;
 import clientModule.forms.MainMenuForm.MainMenu;
 import common.data.Chapter;
@@ -20,31 +21,31 @@ import common.exceptions.NotDeclaredValueException;
 import common.utility.Request;
 import common.utility.Response;
 import common.utility.SpaceMarineLite;
+import common.utility.User;
 import net.miginfocom.swing.*;
 
 /**
  * @author unknown
  */
 public class Update extends JPanel {
-    public Update(JFrame mainFrame, Client client) {
+    public Update(Client client) {
         initComponents();
         this.client = client;
-        this.currentUser.setText(this.client.getUser().getLogin());
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mainFrame.setContentPane(new MainMenu(mainFrame ,client).getMainMenuPanel());
-                mainFrame.validate();
+                App.mainFrame.setContentPane(App.mainMenu.getMainMenuPanel());
+                App.mainFrame.validate();
             }
         });
         updateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 StringBuilder errors = new StringBuilder();
-                int key = -1;
+                int id = -1;
                 try {
-                    key = Integer.parseInt(keyField.getText());
-                    if (key <= 0) throw new NotDeclaredValueException();
+                    id = Integer.parseInt(idField.getText());
+                    if (id <= 0) throw new NotDeclaredValueException();
                 } catch (NumberFormatException exception) {
                     errors.append("Ключ должен быть числом!\n");
                 } catch (NotDeclaredValueException notDeclaredValueException) {
@@ -138,8 +139,8 @@ public class Update extends JPanel {
                 }
                 if (errors.toString().equals("")) {
                     try {
-                        client.send(new Request("insert",
-                                String.valueOf(key),
+                        client.send(new Request("update",
+                                String.valueOf(id),
                                 new SpaceMarineLite(
                                         name, newCoor, health, heartCount, achieve, newWeapon, newChapter),
                                 client.getUser()));
@@ -153,10 +154,15 @@ public class Update extends JPanel {
                 } else {
                     JOptionPane.showMessageDialog(null, errors.toString());
                 }
-                mainFrame.setContentPane(new MainMenu(mainFrame ,client).getMainMenuPanel());
-                mainFrame.validate();
+                App.mainFrame.setContentPane(App.mainMenu.getMainMenuPanel());
+                App.mainFrame.validate();
             }
         });
+    }
+
+    public void setUser(User user) {
+        this.client.setUser(user);
+        this.currentUser.setText(user.getLogin());
     }
 
     private void initComponents() {
@@ -166,8 +172,8 @@ public class Update extends JPanel {
         currentUser = new JLabel();
         name = new JLabel();
         backButton = new JButton();
-        keyTitle = new JLabel();
-        keyField = new JTextField();
+        idTitle = new JLabel();
+        idField = new JTextField();
         marineTitle = new JLabel();
         marineTitle2 = new JLabel();
         nameTitle = new JLabel();
@@ -201,12 +207,11 @@ public class Update extends JPanel {
         //======== updatePanel ========
         {
             updatePanel.setBackground(new Color(225, 183, 144));
-            updatePanel.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing.
-            border.EmptyBorder(0,0,0,0), "JF\u006frmDesi\u0067ner Ev\u0061luatio\u006e",javax.swing.border.TitledBorder.CENTER
-            ,javax.swing.border.TitledBorder.BOTTOM,new java.awt.Font("Dialo\u0067",java.awt.Font
-            .BOLD,12),java.awt.Color.red),updatePanel. getBorder()));updatePanel. addPropertyChangeListener(
-            new java.beans.PropertyChangeListener(){@Override public void propertyChange(java.beans.PropertyChangeEvent e){if("borde\u0072"
-            .equals(e.getPropertyName()))throw new RuntimeException();}});
+            updatePanel.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax. swing. border. EmptyBorder( 0
+            , 0, 0, 0) , "JF\u006frmDes\u0069gner \u0045valua\u0074ion", javax. swing. border. TitledBorder. CENTER, javax. swing. border. TitledBorder. BOTTOM
+            , new java .awt .Font ("D\u0069alog" ,java .awt .Font .BOLD ,12 ), java. awt. Color. red) ,
+            updatePanel. getBorder( )) ); updatePanel. addPropertyChangeListener (new java. beans. PropertyChangeListener( ){ @Override public void propertyChange (java .beans .PropertyChangeEvent e
+            ) {if ("\u0062order" .equals (e .getPropertyName () )) throw new RuntimeException( ); }} );
             updatePanel.setLayout(new MigLayout(
                 "insets 0,hidemode 3,align center center",
                 // columns
@@ -253,17 +258,17 @@ public class Update extends JPanel {
             backButton.setBorder(new EtchedBorder());
             updatePanel.add(backButton, "cell 6 0,align center center,grow 0 0");
 
-            //---- keyTitle ----
-            keyTitle.setText("\u041a\u043b\u044e\u0447");
-            keyTitle.setForeground(new Color(40, 61, 82));
-            keyTitle.setHorizontalAlignment(SwingConstants.CENTER);
-            keyTitle.setFont(new Font("Arial", Font.BOLD, 14));
-            updatePanel.add(keyTitle, "cell 1 1");
+            //---- idTitle ----
+            idTitle.setText("id");
+            idTitle.setForeground(new Color(40, 61, 82));
+            idTitle.setHorizontalAlignment(SwingConstants.CENTER);
+            idTitle.setFont(new Font("Arial", Font.BOLD, 14));
+            updatePanel.add(idTitle, "cell 1 1");
 
-            //---- keyField ----
-            keyField.setBackground(Color.white);
-            keyField.setHorizontalAlignment(SwingConstants.CENTER);
-            updatePanel.add(keyField, "cell 2 1,aligny center,grow 100 0,height 30:30:60");
+            //---- idField ----
+            idField.setBackground(Color.white);
+            idField.setHorizontalAlignment(SwingConstants.CENTER);
+            updatePanel.add(idField, "cell 2 1,aligny center,grow 100 0,height 30:30:60");
 
             //---- marineTitle ----
             marineTitle.setText("\u0414\u0430\u043d\u043d\u044b\u0435 \u043e Spacemarine");
@@ -443,8 +448,8 @@ public class Update extends JPanel {
     private JLabel currentUser;
     private JLabel name;
     private JButton backButton;
-    private JLabel keyTitle;
-    private JTextField keyField;
+    private JLabel idTitle;
+    private JTextField idField;
     private JLabel marineTitle;
     private JLabel marineTitle2;
     private JLabel nameTitle;

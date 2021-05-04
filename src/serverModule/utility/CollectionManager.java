@@ -141,11 +141,6 @@ public class CollectionManager {
         return lastInitTime;
     }
 
-    public String showCollection() {
-        if (marines.isEmpty()) return "Коллекция пуста!";
-        return marines.values().stream().reduce("", (sum, m) -> sum += m + "\n\n", (sum1, sum2) -> sum1 + sum2).trim();
-    }
-
     public void loadCollection() {
         marines = databaseCollectionManager.getCollection();
         lastInitTime = LocalDateTime.now();

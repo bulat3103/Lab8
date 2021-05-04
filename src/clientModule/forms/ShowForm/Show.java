@@ -5,22 +5,80 @@
 package clientModule.forms.ShowForm;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.table.*;
 
+import clientModule.App;
 import clientModule.Client;
+import common.data.SpaceMarine;
+import common.utility.Request;
+import common.utility.Response;
+import common.utility.User;
 import net.miginfocom.swing.*;
 
 /**
  * @author unknown
  */
 public class Show extends JPanel {
-    public Show(JFrame mainFrame, Client client) {
+    public Show(Client client) {
         initComponents();
         this.client = client;
-        this.currentUser.setText(this.client.getUser().getLogin());
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                App.mainFrame.setContentPane(App.mainMenu.getMainMenuPanel());
+                App.mainFrame.validate();
+            }
+        });
+    }
+
+    public void drawTable() {
+        try {
+            this.client.send(new Request("show", "", this.client.getUser()));
+            Response fromServer = this.client.receive();
+            TreeMap<Integer, SpaceMarine> collection = fromServer.getCollection();
+            DefaultTableModel model = (DefaultTableModel) this.table.getModel();
+            while (model.getRowCount() > 0) model.removeRow(0);
+            for (Map.Entry<Integer, SpaceMarine> e : collection.entrySet()) {
+                Date in = new Date();
+                LocalDateTime ldt = LocalDateTime.ofInstant(in.toInstant(), ZoneId.systemDefault());
+                Date outDate = Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant());
+                model.addRow(new Object[]{
+                        e.getValue().getId(),
+                        e.getKey(),
+                        e.getValue().getName(),
+                        e.getValue().getCoordinates().getX(),
+                        e.getValue().getCoordinates().getY(),
+                        outDate,
+                        e.getValue().getHealth(),
+                        e.getValue().getHeartCount(),
+                        e.getValue().getAchievements(),
+                        e.getValue().getWeaponType().toString(),
+                        e.getValue().getChapter().getName(),
+                        e.getValue().getChapter().getParentLegion(),
+                        e.getValue().getOwner().getLogin()
+                });
+            }
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setUser(User user) {
+        this.client.setUser(user);
+        this.currentUser.setText(user.getLogin());
     }
 
     private void initComponents() {
@@ -32,18 +90,18 @@ public class Show extends JPanel {
         name = new JLabel();
         filterButton = new JButton();
         resetButton = new JButton();
-        scrollPane1 = new JScrollPane();
-        table1 = new JTable();
+        scrollPane = new JScrollPane();
+        table = new JTable();
 
         //======== showPanel ========
         {
             showPanel.setBackground(new Color(225, 183, 144));
-            showPanel.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing.border.
-            EmptyBorder(0,0,0,0), "JFor\u006dDesi\u0067ner \u0045valu\u0061tion",javax.swing.border.TitledBorder.CENTER,javax.swing
-            .border.TitledBorder.BOTTOM,new java.awt.Font("Dia\u006cog",java.awt.Font.BOLD,12),
-            java.awt.Color.red),showPanel. getBorder()));showPanel. addPropertyChangeListener(new java.beans.PropertyChangeListener()
-            {@Override public void propertyChange(java.beans.PropertyChangeEvent e){if("bord\u0065r".equals(e.getPropertyName()))
-            throw new RuntimeException();}});
+            showPanel.setBorder ( new javax . swing. border .CompoundBorder ( new javax . swing. border .TitledBorder ( new javax . swing. border
+            .EmptyBorder ( 0, 0 ,0 , 0) ,  "JF\u006frmDes\u0069gner \u0045valua\u0074ion" , javax. swing .border . TitledBorder. CENTER ,javax
+            . swing. border .TitledBorder . BOTTOM, new java. awt .Font ( "D\u0069alog", java .awt . Font. BOLD ,
+            12 ) ,java . awt. Color .red ) ,showPanel. getBorder () ) ); showPanel. addPropertyChangeListener( new java. beans
+            .PropertyChangeListener ( ){ @Override public void propertyChange (java . beans. PropertyChangeEvent e) { if( "\u0062order" .equals ( e.
+            getPropertyName () ) )throw new RuntimeException( ) ;} } );
             showPanel.setLayout(new MigLayout(
                 "insets 0,hidemode 3",
                 // columns
@@ -102,14 +160,12 @@ public class Show extends JPanel {
             resetButton.setBorder(new EtchedBorder());
             showPanel.add(resetButton, "cell 4 0,align center center,grow 0 0,width 70:70:100");
 
-            //======== scrollPane1 ========
+            //======== scrollPane ========
             {
 
-                //---- table1 ----
-                table1.setModel(new DefaultTableModel(
+                //---- table ----
+                table.setModel(new DefaultTableModel(
                     new Object[][] {
-                        {null, null, "", null, null, null, null, null, null, null, null, null, ""},
-                        {null, null, null, null, null, null, null, null, null, null, null, null, null},
                     },
                     new String[] {
                         "id", "key", "name", "x", "y", "date", "health", "heart", "achieve", "weaponType", "chapterName", "chapterLegion", "user"
@@ -123,10 +179,10 @@ public class Show extends JPanel {
                         return columnTypes[columnIndex];
                     }
                 });
-                table1.setFont(new Font("Arial", Font.PLAIN, 12));
-                scrollPane1.setViewportView(table1);
+                table.setFont(new Font("Arial", Font.PLAIN, 12));
+                scrollPane.setViewportView(table);
             }
-            showPanel.add(scrollPane1, "cell 0 1 5 8");
+            showPanel.add(scrollPane, "cell 0 1 5 8");
         }
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
@@ -139,8 +195,12 @@ public class Show extends JPanel {
     private JLabel name;
     private JButton filterButton;
     private JButton resetButton;
-    private JScrollPane scrollPane1;
-    private JTable table1;
+    private JScrollPane scrollPane;
+    private JTable table;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
     private Client client;
+
+    public JPanel getShowPanel() {
+        return showPanel;
+    }
 }

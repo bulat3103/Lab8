@@ -95,7 +95,7 @@ public class DatabaseCollectionManager {
         String achieve = resultSet.getString(DatabaseManager.MARINE_TABLE_ACHIEVEMENTS_COLUMN);
         if (achieve.isEmpty()) throw new IllegalDatabaseEditException();
         String weaponString = resultSet.getString(DatabaseManager.MARINE_TABLE_WEAPON_TYPE_COLUMN);
-        if (weaponString.isEmpty() || (!weaponString.equals("HEAVY_BOLTGUN") && !weaponString.equals("FLAMER") && !weaponString.equals("GRENADE_LAUNCHER"))) throw new IllegalDatabaseEditException();
+        if (weaponString.isEmpty() || (!weaponString.equals("BOLTGUN") && !weaponString.equals("FLAMER") && !weaponString.equals("GRENADE"))) throw new IllegalDatabaseEditException();
         Weapon weaponType = Weapon.valueOf(weaponString);
         Chapter chapter = getChapterByID(resultSet.getInt(DatabaseManager.MARINE_TABLE_CHAPTER_ID_COLUMN));
         User owner = databaseUserManager.getUserById(resultSet.getInt(DatabaseManager.MARINE_TABLE_USER_ID_COLUMN));

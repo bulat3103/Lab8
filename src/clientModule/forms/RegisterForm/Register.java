@@ -11,6 +11,7 @@ import java.io.IOException;
 import javax.swing.*;
 import javax.swing.border.*;
 
+import clientModule.App;
 import clientModule.Client;
 import clientModule.forms.MainMenuForm.MainMenu;
 import clientModule.forms.StartMenuForm.StartMenu;
@@ -24,13 +25,14 @@ import net.miginfocom.swing.*;
  * @author unknown
  */
 public class Register extends JPanel {
-    public Register(JFrame mainFrame, Client client) {
+    public Register(Client client) {
         initComponents();
+        this.client = client;
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mainFrame.setContentPane(new StartMenu(mainFrame, client).getStartMenuPanel());
-                mainFrame.validate();
+                App.mainFrame.setContentPane(App.startMenu.getStartMenuPanel());
+                App.mainFrame.validate();
             }
         });
         registerButton.addActionListener(new ActionListener() {
@@ -43,8 +45,15 @@ public class Register extends JPanel {
                         Response fromServer = client.receive();
                         if (fromServer.getResponseCode().equals(ResponseCode.OK)) {
                             client.setUser(user);
-                            mainFrame.setContentPane(new MainMenu(mainFrame, client).getMainMenuPanel());
-                            mainFrame.validate();
+                            App.mainMenu.setUser(user);
+                            App.insert.setUser(user);
+                            App.removeByWeapon.setUser(user);
+                            App.removeGreater.setUser(user);
+                            App.removeKey.setUser(user);
+                            App.show.setUser(user);
+                            App.update.setUser(user);
+                            App.mainFrame.setContentPane(App.mainMenu.getMainMenuPanel());
+                            App.mainFrame.validate();
                         } else {
                             JOptionPane.showMessageDialog(null, fromServer.getResponseBody());
                         }

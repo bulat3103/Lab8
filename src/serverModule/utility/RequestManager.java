@@ -7,9 +7,11 @@ import common.utility.User;
 
 public class RequestManager {
     private CommandManager commandManager;
+    private CollectionManager collectionManager;
 
-    public RequestManager(CommandManager commandManager) {
+    public RequestManager(CommandManager commandManager, CollectionManager collectionManager) {
         this.commandManager = commandManager;
+        this.collectionManager = collectionManager;
     }
 
     public Response manage(Request request) {
@@ -22,7 +24,8 @@ public class RequestManager {
             commandManager.addToHistory(request.getCommandName(), request.getUser());
         }
         ResponseCode responseCode = executeCommand(request.getCommandName(), request.getArgument(), request.getObjectArgument(), hashUser);
-        return new Response(responseCode, ResponseOutputer.getAndClear());
+        if (request.getCommandName().equals("show")) return new Response(responseCode, ResponseOutputer.getAndClear(), collectionManager.getCollection());
+        return new Response(responseCode, ResponseOutputer.getAndClear(), null);
     }
 
     private synchronized ResponseCode executeCommand(String command, String argument, Object objectArgument, User user) {

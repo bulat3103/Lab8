@@ -2,13 +2,14 @@ package common.data;
 
 import common.utility.User;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
  * Main character. Is stored in the collection.
  */
-public class SpaceMarine implements Comparable<SpaceMarine>{
+public class SpaceMarine implements Comparable<SpaceMarine>, Serializable {
     private int id;
     private String name;
     private Coordinates coordinates;

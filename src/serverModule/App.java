@@ -29,7 +29,7 @@ public class App {
                 new SignUpCommand(databaseUserManager),
                 new SignInCommand(databaseUserManager),
                 new LogOutCommand(databaseUserManager));
-        RequestManager requestManager = new RequestManager(commandManager);
+        RequestManager requestManager = new RequestManager(commandManager, collectionManager);
         Server server = new Server(PORT, requestManager);
         server.run();
         databaseManager.closeConnection();

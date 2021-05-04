@@ -11,6 +11,7 @@ import java.io.IOException;
 import javax.swing.*;
 import javax.swing.border.*;
 
+import clientModule.App;
 import clientModule.Client;
 import clientModule.forms.MainMenuForm.MainMenu;
 import clientModule.forms.StartMenuForm.StartMenu;
@@ -21,21 +22,21 @@ import common.exceptions.NotDeclaredValueException;
 import common.utility.Request;
 import common.utility.Response;
 import common.utility.SpaceMarineLite;
+import common.utility.User;
 import net.miginfocom.swing.*;
 
 /**
  * @author unknown
  */
 public class Insert extends JPanel {
-    public Insert(JFrame mainFrame, Client client) {
+    public Insert(Client client) {
         initComponents();
         this.client = client;
-        this.currentUser.setText(this.client.getUser().getLogin());
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mainFrame.setContentPane(new MainMenu(mainFrame ,client).getMainMenuPanel());
-                mainFrame.validate();
+                App.mainFrame.setContentPane(App.mainMenu.getMainMenuPanel());
+                App.mainFrame.validate();
             }
         });
         insertButton.addActionListener(new ActionListener() {
@@ -133,10 +134,15 @@ public class Insert extends JPanel {
                 } else {
                     JOptionPane.showMessageDialog(null, errors.toString());
                 }
-                mainFrame.setContentPane(new MainMenu(mainFrame ,client).getMainMenuPanel());
-                mainFrame.validate();
+                App.mainFrame.setContentPane(App.mainMenu.getMainMenuPanel());
+                App.mainFrame.validate();
             }
         });
+    }
+
+    public void setUser(User user) {
+        this.client.setUser(user);
+        this.currentUser.setText(user.getLogin());
     }
 
     private void initComponents() {

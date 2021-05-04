@@ -28,6 +28,7 @@ public class ResponseSenderThread extends Thread{
             sendResponse(response);
         } catch (IOException exception) {
             System.out.println("Произошла ошибка при отправке ответа!");
+            exception.printStackTrace();
         }
     }
 

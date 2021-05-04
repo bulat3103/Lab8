@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.border.*;
 
+import clientModule.App;
 import clientModule.Client;
 import clientModule.forms.LoginForm.Login;
 import clientModule.forms.RegisterForm.Register;
@@ -19,21 +20,21 @@ import net.miginfocom.swing.*;
  * @author unknown
  */
 public class StartMenu extends JPanel {
-    public StartMenu(JFrame mainFrame, Client client) {
+    public StartMenu(Client client) {
         initComponents();
         this.client = client;
         signInButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mainFrame.setContentPane(new Login(mainFrame, client).getLoginPanel());
-                mainFrame.validate();
+                App.mainFrame.setContentPane(App.login.getLoginPanel());
+                App.mainFrame.validate();
             }
         });
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mainFrame.setContentPane(new Register(mainFrame, client).getRegisterPanel());
-                mainFrame.validate();
+                App.mainFrame.setContentPane(App.register.getRegisterPanel());
+                App.mainFrame.validate();
             }
         });
         exitButton.addActionListener(new ActionListener() {
