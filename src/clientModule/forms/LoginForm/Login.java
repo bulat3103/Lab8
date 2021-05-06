@@ -43,6 +43,9 @@ public class Login extends JPanel {
                     client.send(new Request("sign_in", "", user));
                     Response fromServer = client.receive();
                     if (fromServer.getResponseCode().equals(ResponseCode.OK)) {
+                        client.send(new Request("get_user_color", "", user));
+                        Response response = client.receive();
+                        if (response.getResponseBody() != null) App.userColor = response.getResponseBody();
                         client.setUser(user);
                         App.mainMenu.setUser(user);
                         App.insert.setUser(user);

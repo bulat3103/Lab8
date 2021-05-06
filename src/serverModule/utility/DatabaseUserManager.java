@@ -19,13 +19,16 @@ public class DatabaseUserManager {
             DatabaseManager.USER_TABLE + " (" +
             DatabaseManager.USER_TABLE_USERNAME_COLUMN + ", " +
             DatabaseManager.USER_TABLE_PASSWORD_COLUMN + ", " +
-            DatabaseManager.USER_TABLE_ONLINE_COLUMN + ") VALUES (?, ?, ?)";
+            DatabaseManager.USER_TABLE_ONLINE_COLUMN + ", " +
+            DatabaseManager.USER_TABLE_COLOR_COLUMN + ") VALUES (?, ?, ?, ?)";
     private final String UPDATE_ONLINE_BY_USERNAME_AND_PASSWORD = "UPDATE " + DatabaseManager.USER_TABLE + " SET " +
             DatabaseManager.USER_TABLE_ONLINE_COLUMN + " = ?" + " WHERE " +
             DatabaseManager.USER_TABLE_USERNAME_COLUMN + " = ?" + " AND " +
             DatabaseManager.USER_TABLE_PASSWORD_COLUMN + " = ?";
     private final String SWITCH_OFF_ALL_USERS = "UPDATE " + DatabaseManager.USER_TABLE + " SET " +
             DatabaseManager.USER_TABLE_ONLINE_COLUMN + " = ?";
+    private final String SELECT_COLOR_BY_USERNAME = "SELECT color FROM " + DatabaseManager.USER_TABLE +
+            " WHERE " + DatabaseManager.USER_TABLE_USERNAME_COLUMN + " = ?";
 
     private DatabaseManager databaseManager;
 
@@ -120,7 +123,7 @@ public class DatabaseUserManager {
         }
     }
 
-    public boolean insertUser(User user) throws DatabaseManagerException {
+    public boolean insertUser(User user, String color) throws DatabaseManagerException {
         PreparedStatement preparedStatement = null;
         try {
             if (getUserIdByUsername(user) != -1) return false;
@@ -128,11 +131,31 @@ public class DatabaseUserManager {
             preparedStatement.setString(1, user.getLogin());
             preparedStatement.setString(2, user.getPassword());
             preparedStatement.setBoolean(3, true);
-
+            preparedStatement.setString(4, color);
             if (preparedStatement.executeUpdate() == 0) throw new SQLException();
             return true;
         } catch (SQLException exception) {
             System.out.println("Произошла ошибка при выполнении запроса INSERT_USER!");
+            throw new DatabaseManagerException();
+        } finally {
+            databaseManager.closePreparedStatement(preparedStatement);
+        }
+    }
+
+    public String getColorByUsername(User user) throws DatabaseManagerException {
+        String color;
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = databaseManager.doPreparedStatement(SELECT_COLOR_BY_USERNAME, false);
+            preparedStatement.setString(1, user.getLogin());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next())
+                color = resultSet.getString(DatabaseManager.USER_TABLE_COLOR_COLUMN);
+            else
+                color = null;
+            return color;
+        } catch (SQLException exception) {
+            System.out.println("Произошла ошибка при выполнении запроса SELECT_COLOR_BY_USERNAME");
             throw new DatabaseManagerException();
         } finally {
             databaseManager.closePreparedStatement(preparedStatement);

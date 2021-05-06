@@ -28,7 +28,8 @@ public class App {
                 new AverageOfHeartCountCommand(collectionManager),
                 new SignUpCommand(databaseUserManager),
                 new SignInCommand(databaseUserManager),
-                new LogOutCommand(databaseUserManager));
+                new LogOutCommand(databaseUserManager),
+                new GetUserColorCommand(databaseUserManager));
         RequestManager requestManager = new RequestManager(commandManager, collectionManager);
         Server server = new Server(PORT, requestManager);
         server.run();

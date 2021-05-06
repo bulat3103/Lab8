@@ -33,10 +33,11 @@ public class CommandManager {
     private AbstractCommand signUpCommand;
     private AbstractCommand signInCommand;
     private AbstractCommand logOutCommand;
+    private AbstractCommand getUserColor;
 
     private ReentrantLock locker = new ReentrantLock();
 
-    public CommandManager(AbstractCommand helpCommand, AbstractCommand infoCommand, AbstractCommand showCommand, AbstractCommand insertCommand, AbstractCommand updateCommand, AbstractCommand removeKeyCommand, AbstractCommand clearCommand, AbstractCommand executeScriptCommand, AbstractCommand exitCommand, AbstractCommand removeGreaterCommand, AbstractCommand historyCommand, AbstractCommand removeLowerKeyCommand, AbstractCommand removeAllByWeaponTypeCommand, AbstractCommand sumOfHealthCommand, AbstractCommand averageOfHeartCountCommand, AbstractCommand signUpCommand, AbstractCommand signInCommand, AbstractCommand logOutCommand) {
+    public CommandManager(AbstractCommand helpCommand, AbstractCommand infoCommand, AbstractCommand showCommand, AbstractCommand insertCommand, AbstractCommand updateCommand, AbstractCommand removeKeyCommand, AbstractCommand clearCommand, AbstractCommand executeScriptCommand, AbstractCommand exitCommand, AbstractCommand removeGreaterCommand, AbstractCommand historyCommand, AbstractCommand removeLowerKeyCommand, AbstractCommand removeAllByWeaponTypeCommand, AbstractCommand sumOfHealthCommand, AbstractCommand averageOfHeartCountCommand, AbstractCommand signUpCommand, AbstractCommand signInCommand, AbstractCommand logOutCommand, AbstractCommand getUserColor) {
         this.helpCommand = helpCommand;
         commands.add(helpCommand);
         this.infoCommand = infoCommand;
@@ -77,6 +78,7 @@ public class CommandManager {
         });
         this.logOutCommand = logOutCommand;
         commands.add(logOutCommand);
+        this.getUserColor = getUserColor;
     }
 
     /**
@@ -330,5 +332,9 @@ public class CommandManager {
 
     public boolean log_out(String argument, Object objectArgument, User user) {
         return logOutCommand.execute(argument, objectArgument, user);
+    }
+
+    public boolean get_user_color(String argument, Object objectArgument, User user) {
+        return getUserColor.execute(argument, objectArgument, user);
     }
 }

@@ -25,6 +25,7 @@ public class App {
     public static Show show;
     public static StartMenu startMenu;
     public static Update update;
+    public static String userColor;
 
     public static void main(String[] args) {
         Client client = new Client("localhost", 20002);

@@ -1,10 +1,7 @@
 package clientModule;
 
-import clientModule.utility.AuthManager;
-import clientModule.utility.Console;
 import common.utility.Request;
 import common.utility.Response;
-import common.utility.ResponseCode;
 import common.utility.User;
 
 import java.io.*;

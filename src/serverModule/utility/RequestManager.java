@@ -86,6 +86,9 @@ public class RequestManager {
             case "log_out":
                 if (!commandManager.log_out(argument, objectArgument, user)) return ResponseCode.ERROR;
                 break;
+            case "get_user_color":
+                if (!commandManager.get_user_color(argument, objectArgument, user)) return ResponseCode.ERROR;
+                break;
             default:
                 ResponseOutputer.append("Команда '" + command + "' не найдена. Наберите 'help' для справки.\n");
                 return ResponseCode.ERROR;

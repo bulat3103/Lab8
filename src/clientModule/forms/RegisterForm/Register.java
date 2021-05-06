@@ -8,6 +8,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.Locale;
+import java.util.Random;
 import javax.swing.*;
 import javax.swing.border.*;
 
@@ -40,10 +42,17 @@ public class Register extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 try {
                     if (String.valueOf(passwordField.getPassword()).equals(String.valueOf(passwordField2.getPassword()))) {
+                        Random rand = new Random();
+                        int redValue = rand.nextInt(255);
+                        int greenValue = rand.nextInt(255);
+                        int blueValue = rand.nextInt(255);
+                        Color clr = new Color(redValue, greenValue, blueValue);
+                        String hex = "0x" + Integer.toHexString(clr.getRGB()).substring(2).toUpperCase(Locale.ROOT);
                         User user = new User(loginField.getText(), String.valueOf(passwordField.getPassword()));
-                        client.send(new Request("sign_up", "", user));
+                        client.send(new Request("sign_up", hex, user));
                         Response fromServer = client.receive();
                         if (fromServer.getResponseCode().equals(ResponseCode.OK)) {
+                            App.userColor = hex;
                             client.setUser(user);
                             App.mainMenu.setUser(user);
                             App.insert.setUser(user);
