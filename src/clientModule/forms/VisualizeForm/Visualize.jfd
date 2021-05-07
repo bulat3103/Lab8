@@ -8,7 +8,7 @@ new FormModel {
 			"$columnConstraints": "[70,grow,fill][70,grow,fill][grow,fill][70,grow,fill][70,grow,fill]"
 			"$rowConstraints": "[80,grow,fill][35,grow,fill][35,grow,fill][35,grow,fill][35,grow,fill][35,fill][35,grow,fill][35,grow,fill][50,grow,fill]"
 		} ) {
-			name: "showPanel"
+			name: "visualizePanel"
 			"background": new java.awt.Color( 225, 183, 144, 255 )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "currentUser"
@@ -42,15 +42,6 @@ new FormModel {
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
 				name: "drawSpace"
 				"background": new java.awt.Color( 225, 183, 144, 255 )
-				add( new FormComponent( "javax.swing.JLabel" ) {
-					name: "label1"
-					"text": "text"
-					"background": new java.awt.Color( 0, 0, 0, 255 )
-					"foreground": new java.awt.Color( 0, 0, 0, 255 )
-				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-					"x": 45
-					"y": 60
-				} )
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
 				"value": "cell 0 1 5 8"
 			} )

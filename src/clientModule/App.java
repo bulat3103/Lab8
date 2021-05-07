@@ -2,6 +2,7 @@ package clientModule;
 
 import javax.swing.*;
 
+import clientModule.forms.FilterForm.Filter;
 import clientModule.forms.InsertForm.Insert;
 import clientModule.forms.LoginForm.Login;
 import clientModule.forms.MainMenuForm.MainMenu;
@@ -9,9 +10,13 @@ import clientModule.forms.RegisterForm.Register;
 import clientModule.forms.RemoveByWeaponForm.RemoveByWeapon;
 import clientModule.forms.RemoveGreaterForm.RemoveGreater;
 import clientModule.forms.RemoveKeyForm.RemoveKey;
+import clientModule.forms.ScriptForm.Script;
 import clientModule.forms.ShowForm.Show;
 import clientModule.forms.StartMenuForm.*;
 import clientModule.forms.UpdateForm.Update;
+import clientModule.forms.VisualizeForm.Visualize;
+
+import java.nio.ByteBuffer;
 
 public class App {
     public static final JFrame mainFrame = new JFrame("SpaceMarine");
@@ -25,6 +30,8 @@ public class App {
     public static Show show;
     public static StartMenu startMenu;
     public static Update update;
+    public static Filter filter;
+    public static Script script;
     public static String userColor;
 
     public static void main(String[] args) {
@@ -39,6 +46,8 @@ public class App {
         show = new Show(client);
         startMenu = new StartMenu(client);
         update = new Update(client);
+        script = new Script(client);
+        filter = new Filter(client);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setSize(600, 400);
         mainFrame.setContentPane(startMenu.getStartMenuPanel());

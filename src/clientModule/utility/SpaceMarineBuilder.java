@@ -46,19 +46,8 @@ public class SpaceMarineBuilder {
      * @return Marine's name.
      */
     public String askName() {
-        String name;
-        while (true) {
-            try {
-                System.out.println("Введите имя:");
-                System.out.print(">");
-                name = scanner.nextLine().trim();
-                if (fileMode) System.out.println(name);
-                if (name.equals("")) throw new NotDeclaredValueException();
-                break;
-            } catch (NotDeclaredValueException exception) {
-                System.out.println("Значение поля 'name' не может быть пустым!");
-            }
-        }
+        String name = scanner.nextLine().trim();;
+        if (name.isEmpty()) name = null;
         return name;
     }
 
@@ -67,22 +56,13 @@ public class SpaceMarineBuilder {
      * @return Marine's X coordinate.
      */
     public int askX() {
-        String strX;
+        String strX = scanner.nextLine().trim();
         int x;
-        while (true) {
-            try {
-                System.out.println("Введите координату X > -666:");
-                System.out.print(">");
-                strX = scanner.nextLine().trim();
-                x = Integer.parseInt(strX);
-                if (fileMode) System.out.println(strX);
-                if (x <= -666) throw new NotDeclaredValueException();
-                break;
-            } catch (NotDeclaredValueException exception) {
-                System.out.println("Значение должно быть больше -666!");
-            } catch (NumberFormatException exception) {
-                System.out.println("Значение 'X' должно быть числом!");
-            }
+        try {
+            x = Integer.parseInt(strX);
+            if (x <= -666) throw new NotDeclaredValueException();
+        } catch (NumberFormatException | NotDeclaredValueException exception) {
+            x = -666;
         }
         return x;
     }
@@ -92,22 +72,13 @@ public class SpaceMarineBuilder {
      * @return Marine's Y coordinate.
      */
     public Float askY() {
-        String strY;
+        String strY = scanner.nextLine().trim();
         float y;
-        while (true) {
-            try {
-                System.out.println("Введите координату Y > -603:");
-                System.out.print(">");
-                strY = scanner.nextLine().trim();
-                y = Float.parseFloat(strY);
-                if (fileMode) System.out.println(strY);
-                if (y <= -603) throw new NotDeclaredValueException();
-                break;
-            } catch (NotDeclaredValueException exception) {
-                System.out.println("Значение должно быть больше -666!");
-            } catch (NumberFormatException exception) {
-                System.out.println("Значение 'X' должно быть числом!");
-            }
+        try {
+            y = Float.parseFloat(strY);
+            if (y <= -604) throw new NotDeclaredValueException();
+        } catch (NumberFormatException | NotDeclaredValueException exception) {
+            y = -604;
         }
         return y;
     }
@@ -121,6 +92,7 @@ public class SpaceMarineBuilder {
         float y;
         x = askX();
         y = askY();
+        if (x == -666 || y == -604) return null;
         return new Coordinates(x, y);
     }
 
@@ -129,22 +101,13 @@ public class SpaceMarineBuilder {
      * @return Marine's health.
      */
     public int askHealth() {
-        String strHealth;
+        String strHealth = scanner.nextLine().trim();
         int health;
-        while (true) {
-            try {
-                System.out.println("Введите здоровье:");
-                System.out.print(">");
-                strHealth = scanner.nextLine().trim();
-                health = Integer.parseInt(strHealth);
-                if (fileMode) System.out.println(strHealth);
-                if (health <= 0) throw new NotDeclaredValueException();
-                break;
-            } catch (NotDeclaredValueException exception) {
-                System.out.println("Здоровье должно быть больше нуля!");
-            } catch (NumberFormatException exception) {
-                System.out.println("Значение 'health' должно быть целым числом!");
-            }
+        try {
+            health = Integer.parseInt(strHealth);
+            if (health <= 0) throw new NotDeclaredValueException();
+        } catch (NumberFormatException | NotDeclaredValueException exception) {
+            health = -1;
         }
         return health;
     }
@@ -154,22 +117,13 @@ public class SpaceMarineBuilder {
      * @return Marine's heartCount.
      */
     public Integer askHeartCount() {
-        String strHeartCount;
+        String strHeartCount = scanner.nextLine().trim();
         int heartCount;
-        while (true) {
-            try {
-                System.out.println("Введите кол-во сердец:");
-                System.out.print(">");
-                strHeartCount = scanner.nextLine().trim();
-                heartCount = Integer.parseInt(strHeartCount);
-                if (fileMode) System.out.println(strHeartCount);
-                if (heartCount < 0 || heartCount > 3) throw new NotDeclaredValueException();
-                break;
-            } catch (NotDeclaredValueException exception) {
-                System.out.println("Количество сердец может быть от 1 до 3");
-            } catch (NumberFormatException exception) {
-                System.out.println("Значение 'heartCount' должно быть целым числом!");
-            }
+        try {
+            heartCount = Integer.parseInt(strHeartCount);
+            if (heartCount < 0 || heartCount > 3) throw new NotDeclaredValueException();
+        } catch (NumberFormatException | NotDeclaredValueException exception) {
+            heartCount = -1;
         }
         return heartCount;
     }
@@ -179,19 +133,8 @@ public class SpaceMarineBuilder {
      * @return Marine's achievements.
      */
     public String askAchievements() {
-        String achieve;
-        while (true) {
-            try {
-                System.out.println("Введите достижение:");
-                System.out.print(">");
-                achieve = scanner.nextLine().trim();
-                if (fileMode) System.out.println(achieve);
-                if (achieve.equals("")) throw new NotDeclaredValueException();
-                break;
-            } catch (NotDeclaredValueException exception) {
-                System.out.println("Значение поля 'achievements' не может быть пустым!");
-            }
-        }
+        String achieve = scanner.nextLine().trim();;
+        if (achieve.isEmpty()) achieve = null;
         return achieve;
     }
 
@@ -200,20 +143,12 @@ public class SpaceMarineBuilder {
      * @return Marine's weapon type.
      */
     public Weapon askWeapon() {
-        String strWeapon;
+        String strWeapon = scanner.nextLine().trim();
         Weapon weapon;
-        while (true) {
-            try {
-                System.out.println("Список доступного оружия - " + Weapon.list());
-                System.out.println("Введите оружие");
-                System.out.print(">");
-                strWeapon = scanner.nextLine().trim();
-                if (fileMode) System.out.println(strWeapon);
-                weapon = Weapon.valueOf(strWeapon.toUpperCase());
-                break;
-            } catch (IllegalArgumentException exception) {
-                System.out.println("Такого оружия нет!");
-            }
+        try {
+            weapon = Weapon.valueOf(strWeapon.toUpperCase());
+        } catch (IllegalArgumentException exception) {
+            weapon = null;
         }
         return weapon;
     }
@@ -223,7 +158,10 @@ public class SpaceMarineBuilder {
      * @return Marine's chapter.
      */
     public Chapter askChapter() {
-        return new Chapter(askChapterName(), askChapterParentLegion());
+        String chapterName = askChapterName();
+        String parentLegion = askChapterParentLegion();
+        if (chapterName == null || parentLegion == null) return null;
+        return new Chapter(chapterName, parentLegion);
     }
 
     /**
@@ -231,20 +169,9 @@ public class SpaceMarineBuilder {
      * @return Chapter's name.
      */
     public String askChapterName() {
-        String name;
-        while (true) {
-            try {
-                System.out.println("Введите имя ордена:");
-                System.out.print(">");
-                name = scanner.nextLine().trim();
-                if (fileMode) System.out.println(name);
-                if (name.equals("")) throw new NotDeclaredValueException();
-                break;
-            } catch (NotDeclaredValueException exception) {
-                System.out.println("Значение поля 'name' не может быть пустым!");
-            }
-        }
-        return name;
+        String chapterName = scanner.nextLine().trim();
+        if (chapterName.isEmpty()) chapterName = null;
+        return chapterName;
     }
 
     /**
@@ -252,15 +179,8 @@ public class SpaceMarineBuilder {
      * @return Chapter's parentLegion.
      */
     public String askChapterParentLegion() {
-        String parentLegion;
-        while (true) {
-            System.out.println("Введите имя родительского легиона:");
-            System.out.print(">");
-            parentLegion = scanner.nextLine().trim();
-            if (fileMode) System.out.println(parentLegion);
-            if (parentLegion.equals("")) parentLegion = null;
-            break;
-        }
+        String parentLegion = scanner.nextLine().trim();
+        if (parentLegion.isEmpty()) parentLegion = null;
         return parentLegion;
     }
 
@@ -270,20 +190,7 @@ public class SpaceMarineBuilder {
      * @param ask A question.
      */
     public boolean askAboutChangingField(String ask) {
-        String res = ask + " (+/-):";
-        String answer;
-        while (true) {
-            try {
-                System.out.println(res);
-                System.out.print(">");
-                answer = scanner.nextLine().trim();
-                if (fileMode) System.out.println(answer);
-                if (!answer.equals("+") && !answer.equals("-")) throw new NotDeclaredValueException();
-                break;
-            } catch (NotDeclaredValueException exception) {
-                System.out.println("Ответ должен быть представлен знаками '+' или '-'!");
-            }
-        }
+        String answer = scanner.nextLine().trim();
         return answer.equals("+");
     }
 }

@@ -40,7 +40,8 @@ public class Server {
                     if (!fixedThreadPool.submit(() -> {
                         try {
                             request = getRequest();
-                            System.out.println("Получена команда '" + request.getCommandName() + "'");
+                            if (!request.getCommandName().equals("show"))
+                                System.out.println("Получена команда '" + request.getCommandName() + "'");
                             return true;
                         } catch (ClassNotFoundException | IOException e) {
                             System.out.println("Произошла ошибка при чтении запроса!");

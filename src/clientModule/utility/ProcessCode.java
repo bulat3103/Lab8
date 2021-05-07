@@ -5,7 +5,5 @@ public enum ProcessCode {
     ERROR,
     OBJECT,
     UPDATE_OBJECT,
-    SCRIPT,
-    LOG_IN,
-    LOG_OUT
+    SCRIPT
 }

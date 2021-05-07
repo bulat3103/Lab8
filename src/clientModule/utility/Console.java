@@ -11,11 +11,10 @@ import common.utility.ResponseCode;
 import common.utility.SpaceMarineLite;
 import common.utility.User;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * Operates command input.
@@ -24,11 +23,12 @@ public class Console {
     private Scanner scanner;
     private Stack<File> scriptFileNames = new Stack<>();
     private Stack<Scanner> scannerStack = new Stack<>();
-    private AuthManager authManager;
+    private JTextPane writePane;
 
-    public Console(Scanner scanner, AuthManager authManager) {
+    public Console(Scanner scanner, File script, JTextPane writePane) {
         this.scanner = scanner;
-        this.authManager = authManager;
+        this.scriptFileNames.add(script);
+        this.writePane = writePane;
     }
 
     /**
@@ -41,33 +41,22 @@ public class Console {
         try {
             do {
                 try {
-                    if (fileMode() && (serverResponseCode == ResponseCode.SERVER_EXIT || serverResponseCode == ResponseCode.ERROR)) {
+                    if (serverResponseCode == ResponseCode.SERVER_EXIT || serverResponseCode == ResponseCode.ERROR) {
                         throw new IncorrectInputInScriptException();
                     }
-                    while (fileMode() && !scanner.hasNextLine()) {
+                    while (!scanner.hasNextLine()) {
                         scanner.close();
                         scanner = scannerStack.pop();
-                        System.out.println("Возвращаюсь из скрипта '" + scriptFileNames.pop().getName() + "'!");
+                        writePane.setText(writePane.getText() + "Возвращаюсь из скрипта '" + scriptFileNames.pop().getName() + "'!\n");
                     }
-                    if (fileMode()) {
-                        userInput = scanner.nextLine();
-                        if (!userInput.isEmpty()) {
-                            System.out.print("$ ");
-                            System.out.println(userInput);
-                        }
-                    } else {
-                        System.out.print("$ ");
-                        if (scanner.hasNext()) {
-                            userInput = scanner.nextLine();
-                        } else {
-                            System.out.println("Клиент завершен!");
-                            System.exit(0);
-                        }
+                    userInput = scanner.nextLine();
+                    if (!userInput.isEmpty()) {
+                        writePane.setText(writePane.getText() + userInput + "\n");
                     }
                     userCommand = (userInput.trim() + " ").split(" ", 2);
                     userCommand[1] = userCommand[1].trim();
                 } catch (NoSuchElementException | IllegalStateException exception) {
-                    System.out.println("Произошла ошибка при вводе команды!");
+                    writePane.setText(writePane.getText() + "Произошла ошибка при вводе команды!\n");
                     userCommand = new String[]{"", ""};
                 }
                 processCode = checkCommand(userCommand[0], userCommand[1]);
@@ -76,10 +65,16 @@ public class Console {
                 switch (processCode) {
                     case OBJECT:
                         SpaceMarineLite marineToInsert = generateMarineToInsert();
-                        return new Request(userCommand[0], userCommand[1], marineToInsert, user);
+                        if (marineToInsert != null) {
+                            return new Request(userCommand[0], userCommand[1], marineToInsert, user);
+                        }
+                        return null;
                     case UPDATE_OBJECT:
                         SpaceMarineLite marineToUpdate = generateMarineToUpdate();
-                        return new Request(userCommand[0], userCommand[1], marineToUpdate, user);
+                        if (marineToUpdate != null) {
+                            return new Request(userCommand[0], userCommand[1], marineToUpdate, user);
+                        }
+                        return null;
                     case SCRIPT:
                         File scriptFile = new File(userCommand[1]);
                         if (!scriptFile.exists()) throw new FileNotFoundException();
@@ -89,19 +84,17 @@ public class Console {
                         scannerStack.push(scanner);
                         scriptFileNames.push(scriptFile);
                         scanner = new Scanner(scriptFile);
-                        System.out.println("Выполняю скрипт '" + scriptFile.getName() + "'!");
+                        writePane.setText(writePane.getText() + "Выполняю скрипт '" + scriptFile.getName() + "'!\n");
                         break;
-                    case LOG_IN:
-                        return authManager.handle();
                 }
             } catch (FileNotFoundException exception) {
-                System.out.println("Файл со скриптом не найден!");
+                writePane.setText(writePane.getText() + "Файл со скриптом не найден!\n");
             } catch (ScriptRecursionException exception) {
-                System.out.println("Скрипты не могут вызываться рекурсивно!");
+                writePane.setText(writePane.getText() + "Скрипты не могут вызываться рекурсивно!\n");
                 throw new IncorrectInputInScriptException();
             }
         } catch (IncorrectInputInScriptException exception) {
-            System.out.println("Выполнение скрипта прервано!");
+            writePane.setText(writePane.getText() + "Выполнение скрипта прервано!\n");
             while (!scannerStack.isEmpty()) {
                 scanner.close();
                 scanner = scannerStack.pop();
@@ -130,7 +123,6 @@ public class Console {
                 case "sum_of_health":
                 case "average_of_heart_count":
                 case "exit":
-                case "log_out":
                     if (!argument.isEmpty()) throw new WrongAmountOfParametersException();
                     return ProcessCode.OK;
                 case "insert":
@@ -139,9 +131,6 @@ public class Console {
                 case "update":
                     if (argument.isEmpty()) throw new WrongAmountOfParametersException();
                     return ProcessCode.UPDATE_OBJECT;
-                case "log_in":
-                    if (!argument.isEmpty()) throw new WrongAmountOfParametersException();
-                    return ProcessCode.LOG_IN;
                 case "remove_key":
                 case "remove_lower_key":
                 case "remove_all_by_weapon_type":
@@ -154,11 +143,11 @@ public class Console {
                     if (!argument.isEmpty()) throw new WrongAmountOfParametersException();
                     return ProcessCode.OBJECT;
                 default:
-                    System.out.println("Команда '" + command + "' не найдена. Наберите 'help' для справки.");
+                    writePane.setText(writePane.getText() + "Команда '" + command + "' не найдена. Наберите 'help' для справки.\n");
                     return ProcessCode.ERROR;
             }
         } catch (WrongAmountOfParametersException e) {
-            System.out.println("Проверьте правильность ввода аргументов!");
+            writePane.setText(writePane.getText() + "Проверьте правильность ввода аргументов!\n");
         }
         return ProcessCode.OK;
     }
@@ -170,15 +159,17 @@ public class Console {
         } else {
             builder.setUserMode();
         }
-        return new SpaceMarineLite(
-                builder.askName(),
-                builder.askCoordinates(),
-                builder.askHealth(),
-                builder.askHeartCount(),
-                builder.askAchievements(),
-                builder.askWeapon(),
-                builder.askChapter()
-        );
+        String name = builder.askName();
+        Coordinates coordinates = builder.askCoordinates();
+        int health = builder.askHealth();
+        int heartCount = builder.askHeartCount();
+        String achieve = builder.askAchievements();
+        Weapon weapon = builder.askWeapon();
+        Chapter chapter = builder.askChapter();
+        if (name != null && coordinates.getX() != -666 && coordinates.getY() != -604 && health != -1 && heartCount != -1 && achieve != null && weapon != null && chapter.getName() != null && chapter.getParentLegion() != null) {
+            return new SpaceMarineLite(name, coordinates, health, heartCount, achieve, weapon, chapter);
+        }
+        return null;
     }
 
     private SpaceMarineLite generateMarineToUpdate() {
@@ -188,20 +179,34 @@ public class Console {
         } else {
             builder.setUserMode();
         }
-        String name = builder.askAboutChangingField("Хотите изменить имя космического солдата?") ?
-                builder.askName() : null;
-        Coordinates coordinates = builder.askAboutChangingField("Хотите изменить координаты космического солдата?") ?
-                builder.askCoordinates() : null;
-        int health = builder.askAboutChangingField("Хотите изменить здоровье космического солдата?") ?
-                builder.askHealth() : -1;
-        Integer heartCount = builder.askAboutChangingField("Хотите изменить количество сердец космического солдата?") ?
-                builder.askHeartCount() : -1;
-        String achievements = builder.askAboutChangingField("Хотите изменить достижения космического солдата?") ?
-                builder.askAchievements() : null;
-        Weapon weapon = builder.askAboutChangingField("Хотите изменить оружие космического солдата?") ?
-                builder.askWeapon() : null;
-        Chapter chapter = builder.askAboutChangingField("Хотите изменить часть, к которой принадлежит космический солдат?") ?
-                builder.askChapter() : null;
+        boolean askName = builder.askAboutChangingField("Хотите изменить имя космического солдата?");
+        String name = askName ? builder.askName() : null;
+        if (askName && name == null) return null;
+
+        boolean askCoordinates = builder.askAboutChangingField("Хотите изменить координаты космического солдата?");
+        Coordinates coordinates = askCoordinates ? builder.askCoordinates() : null;
+        if (askCoordinates && coordinates == null) return null;
+
+        boolean askHealth = builder.askAboutChangingField("Хотите изменить здоровье космического солдата?");
+        int health = askHealth ? builder.askHealth() : -1;
+        if (askHealth && health == -1) return null;
+
+        boolean askHeartCount = builder.askAboutChangingField("Хотите изменить количество сердец космического солдата?");
+        int heartCount = askHeartCount ? builder.askHeartCount() : -1;
+        if (askHeartCount && heartCount == -1) return null;
+
+        boolean askAchievements = builder.askAboutChangingField("Хотите изменить достижения космического солдата?");
+        String achievements = askAchievements ? builder.askAchievements() : null;
+        if (askAchievements && achievements == null) return null;
+
+        boolean askWeapon = builder.askAboutChangingField("Хотите изменить оружие космического солдата?");
+        Weapon weapon = askWeapon ? builder.askWeapon() : null;
+        if (askWeapon && weapon == null) return null;
+
+        boolean askChapter = builder.askAboutChangingField("Хотите изменить часть, к которой принадлежит космический солдат?");
+        Chapter chapter = askChapter ? builder.askChapter() : null;
+        if (askChapter && chapter == null) return null;
+
         return new SpaceMarineLite(
                 name,
                 coordinates,

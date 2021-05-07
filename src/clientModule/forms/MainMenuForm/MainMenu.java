@@ -177,6 +177,13 @@ public class MainMenu extends JPanel {
                 App.mainFrame.validate();
             }
         });
+        scriptButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                App.mainFrame.setContentPane(App.script.getScriptPanel());
+                App.mainFrame.validate();
+            }
+        });
     }
 
     public void setUser(User user) {
