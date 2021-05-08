@@ -39,13 +39,13 @@ public class Login extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    User user = new User(loginField.getText(), String.valueOf(passwordField.getPassword()));
+                    User user = new User(loginField.getText(), String.valueOf(passwordField.getPassword()), null);
                     client.send(new Request("sign_in", "", user));
                     Response fromServer = client.receive();
                     if (fromServer.getResponseCode().equals(ResponseCode.OK)) {
                         client.send(new Request("get_user_color", "", user));
                         Response response = client.receive();
-                        if (response.getResponseBody() != null) App.userColor = response.getResponseBody();
+                        if (response.getResponseBody() != null) user.setColor(response.getResponseBody());
                         client.setUser(user);
                         App.mainMenu.setUser(user);
                         App.insert.setUser(user);
@@ -57,7 +57,6 @@ public class Login extends JPanel {
                         App.script.setUser(user);
                         App.filter.setUser(user);
                         App.visualize.setUser(user);
-                        App.visualize.startThread();
                         App.mainFrame.setContentPane(App.mainMenu.getMainMenuPanel());
                         App.mainFrame.validate();
                     } else {

@@ -187,6 +187,7 @@ public class MainMenu extends JPanel {
         visualizeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                App.visualize.startThread();
                 App.mainFrame.setContentPane(App.visualize.getVisualizePanel());
                 App.mainFrame.validate();
             }

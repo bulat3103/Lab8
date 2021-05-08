@@ -15,14 +15,9 @@ public class RequestManager {
     }
 
     public Response manage(Request request) {
-        User hashUser;
-        if (request.getUser() == null) {
-            hashUser = null;
-        } else {
-            hashUser = new User(
-                    request.getUser().getLogin(), DataHasher.hash(request.getUser().getPassword() + "!Hq78p@T"));
-            commandManager.addToHistory(request.getCommandName(), request.getUser());
-        }
+        User hashUser = new User(
+                    request.getUser().getLogin(), DataHasher.hash(request.getUser().getPassword() + "!Hq78p@T"), request.getUser().getColor());
+        commandManager.addToHistory(request.getCommandName(), request.getUser());
         ResponseCode responseCode = executeCommand(request.getCommandName(), request.getArgument(), request.getObjectArgument(), hashUser);
         if (request.getCommandName().equals("show")) return new Response(responseCode, ResponseOutputer.getAndClear(), collectionManager.getCollection());
         return new Response(responseCode, ResponseOutputer.getAndClear(), null);

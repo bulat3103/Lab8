@@ -48,8 +48,8 @@ public class Register extends JPanel {
                         int blueValue = rand.nextInt(255);
                         Color clr = new Color(redValue, greenValue, blueValue);
                         String hex = "0x" + Integer.toHexString(clr.getRGB()).substring(2).toUpperCase(Locale.ROOT);
-                        User user = new User(loginField.getText(), String.valueOf(passwordField.getPassword()));
-                        client.send(new Request("sign_up", hex, user));
+                        User user = new User(loginField.getText(), String.valueOf(passwordField.getPassword()), hex);
+                        client.send(new Request("sign_up", "", user));
                         Response fromServer = client.receive();
                         if (fromServer.getResponseCode().equals(ResponseCode.OK)) {
                             App.userColor = hex;
@@ -64,7 +64,6 @@ public class Register extends JPanel {
                             App.script.setUser(user);
                             App.filter.setUser(user);
                             App.visualize.setUser(user);
-                            App.visualize.startThread();
                             App.mainFrame.setContentPane(App.mainMenu.getMainMenuPanel());
                             App.mainFrame.validate();
                         } else {

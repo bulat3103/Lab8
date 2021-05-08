@@ -31,6 +31,7 @@ public class Visualize extends JPanel {
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 App.mainFrame.setContentPane(App.mainMenu.getMainMenuPanel());
                 App.mainFrame.validate();
             }
@@ -38,13 +39,13 @@ public class Visualize extends JPanel {
     }
 
     public void startThread() {
-        Thread draw = new Thread(new Runnable() {
+        draw = new Thread(new Runnable() {
             @Override
             public void run() {
                 while (true) {
                     drawObject();
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(1500);
                     } catch (InterruptedException ignored) {}
                 }
             }
@@ -54,6 +55,7 @@ public class Visualize extends JPanel {
 
     public void drawObject() {
         try {
+            drawSpace.removeAll();
             client.send(new Request("show", "", client.getUser()));
             Response fromServer = client.receive();
             TreeMap<Integer, SpaceMarine> collection = fromServer.getCollection();
@@ -61,11 +63,12 @@ public class Visualize extends JPanel {
                 SpaceMarine marine = collection.get(collection.firstKey());
                 JButton button = new JButton(String.valueOf(marine.getId()));
                 button.setFont(new Font("Arial", Font.BOLD, 12));
-                Color color = Color.decode(App.userColor);
+                Color color = Color.decode(marine.getOwner().getColor());
                 button.setBackground(color);
                 button.setForeground(new Color(255 - color.getRed(), 255 - color.getGreen(), 255 - color.getBlue()));
                 button.setBorder(new EtchedBorder());
-                button.setBounds(getWidth() / 2, getHeight() / 2, 30, 20);
+                button.setPreferredSize(new Dimension(30, 20));
+                button.setBounds(new Rectangle(new Point(getWidth() / 2, getHeight() / 2), button.getPreferredSize()));
                 button.setVisible(true);
                 drawSpace.add(button);
                 System.out.println(drawSpace.getComponent(0));
@@ -89,19 +92,20 @@ public class Visualize extends JPanel {
             for (Map.Entry<Integer, SpaceMarine> e : collection.entrySet()) {
                 int oldX = (int) e.getValue().getCoordinates().getX();
                 int oldY = (int) (double) e.getValue().getCoordinates().getY();
-                int x = (int) (oldX - minX + (drawSpace.getWidth() * 0.05)) * (weight / (maxX - minX));
-                int y = (int) (oldY - minY + (drawSpace.getHeight() * 0.05)) * (height / (maxY - minY));
+                int x = (int) ((oldX - minX) * (weight / (maxX - minX)) + (drawSpace.getWidth() * 0.05));
+                int y = (oldY - minY) * (height / (maxY - minY));
                 JButton button = new JButton();
                 button.setText(String.valueOf(e.getValue().getId()));
                 button.setFont(new Font("Arial", Font.BOLD, 12));
-                Color color = Color.decode(App.userColor);
+                Color color = Color.decode(e.getValue().getOwner().getColor());
                 button.setBackground(color);
                 button.setForeground(new Color(255 - color.getRed(), 255 - color.getGreen(), 255 - color.getBlue()));
                 button.setBorder(new EtchedBorder());
-                button.setBounds(x, y, 30, 20);
+                button.setPreferredSize(new Dimension(30, 20));
+                button.setBounds(new Rectangle(new Point(x, y), button.getPreferredSize()));
                 button.setVisible(true);
                 drawSpace.add(button);
-                drawSpace.revalidate();
+                drawSpace.repaint();
             }
         } catch (IOException | ClassNotFoundException ignored) {}
     }
@@ -118,12 +122,12 @@ public class Visualize extends JPanel {
         //======== visualizePanel ========
         {
             visualizePanel.setBackground(new Color(225, 183, 144));
-            visualizePanel.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing.border.EmptyBorder
-            (0,0,0,0), "JFor\u006dDesi\u0067ner \u0045valu\u0061tion",javax.swing.border.TitledBorder.CENTER,javax.swing.border
-            .TitledBorder.BOTTOM,new java.awt.Font("Dia\u006cog",java.awt.Font.BOLD,12),java.awt
-            .Color.red),visualizePanel. getBorder()));visualizePanel. addPropertyChangeListener(new java.beans.PropertyChangeListener(){@Override public void
-            propertyChange(java.beans.PropertyChangeEvent e){if("bord\u0065r".equals(e.getPropertyName()))throw new RuntimeException()
-            ;}});
+            visualizePanel.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax. swing. border. EmptyBorder
+            ( 0, 0, 0, 0) , "JF\u006frmDes\u0069gner \u0045valua\u0074ion", javax. swing. border. TitledBorder. CENTER, javax. swing. border
+            . TitledBorder. BOTTOM, new java .awt .Font ("D\u0069alog" ,java .awt .Font .BOLD ,12 ), java. awt
+            . Color. red) ,visualizePanel. getBorder( )) ); visualizePanel. addPropertyChangeListener (new java. beans. PropertyChangeListener( ){ @Override public void
+            propertyChange (java .beans .PropertyChangeEvent e) {if ("\u0062order" .equals (e .getPropertyName () )) throw new RuntimeException( )
+            ; }} );
             visualizePanel.setLayout(new MigLayout(
                 "insets 0,hidemode 3",
                 // columns
@@ -205,6 +209,7 @@ public class Visualize extends JPanel {
     private JPanel drawSpace;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
     private Client client;
+    private Thread draw;
 
     public JPanel getVisualizePanel() {
         return visualizePanel;

@@ -58,7 +58,8 @@ public class DatabaseUserManager {
             if (resultSet.next()) {
                 user = new User(
                         resultSet.getString(DatabaseManager.USER_TABLE_USERNAME_COLUMN),
-                        resultSet.getString(DatabaseManager.USER_TABLE_PASSWORD_COLUMN)
+                        resultSet.getString(DatabaseManager.USER_TABLE_PASSWORD_COLUMN),
+                        resultSet.getString(DatabaseManager.USER_TABLE_COLOR_COLUMN)
                 );
             } else throw new SQLException();
         } catch (SQLException exception) {
@@ -123,7 +124,7 @@ public class DatabaseUserManager {
         }
     }
 
-    public boolean insertUser(User user, String color) throws DatabaseManagerException {
+    public boolean insertUser(User user) throws DatabaseManagerException {
         PreparedStatement preparedStatement = null;
         try {
             if (getUserIdByUsername(user) != -1) return false;
@@ -131,7 +132,7 @@ public class DatabaseUserManager {
             preparedStatement.setString(1, user.getLogin());
             preparedStatement.setString(2, user.getPassword());
             preparedStatement.setBoolean(3, true);
-            preparedStatement.setString(4, color);
+            preparedStatement.setString(4, user.getColor());
             if (preparedStatement.executeUpdate() == 0) throw new SQLException();
             return true;
         } catch (SQLException exception) {
