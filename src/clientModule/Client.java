@@ -5,23 +5,20 @@ import common.utility.Response;
 import common.utility.User;
 
 import java.io.*;
-import java.net.InetSocketAddress;
-import java.net.SocketAddress;
+import java.net.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
+import java.util.Scanner;
 import java.util.Set;
 
 public class Client {
     private String host;
     private int port;
     private User user;
-
-    private DatagramChannel datagramChannel;
+    private DatagramSocket socket;
     private SocketAddress address;
-    private ByteBuffer byteBuffer = ByteBuffer.allocate(16384);
-    private Selector selector;
 
     public void setUser(User user) {
         this.user = user;
@@ -35,25 +32,36 @@ public class Client {
         this.host = host;
         this.port = port;
         try {
-            startClient();
+            Scanner scanner = new Scanner(System.in);
+            socket = new DatagramSocket(scanner.nextInt());
+            address = new InetSocketAddress(this.host, this.port);
         } catch (IOException exception) {
             System.out.println("Произошла ошибка при работе с сервером!");
+            exception.printStackTrace();
             System.exit(0);
         }
     }
 
-    private void startClient() throws IOException {
-        datagramChannel = DatagramChannel.open();
-        address = new InetSocketAddress(this.host, this.port);
-        datagramChannel.connect(address);
-        datagramChannel.configureBlocking(false);
-        selector = Selector.open();
-        datagramChannel.register(selector, SelectionKey.OP_WRITE);
+    public Response receive() throws IOException, ClassNotFoundException {
+        byte[] getBuffer = new byte[socket.getReceiveBufferSize()];
+        DatagramPacket getPacket = new DatagramPacket(getBuffer, getBuffer.length);
+        socket.receive(getPacket);
+        return deserialize(getPacket);
     }
 
-    private void makeByteBufferToRequest(Request request) throws IOException {
-        byteBuffer.put(serialize(request));
-        byteBuffer.flip();
+    private Response deserialize(DatagramPacket getPacket) throws IOException, ClassNotFoundException {
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(getPacket.getData());
+        ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
+        Response response = (Response) objectInputStream.readObject();
+        byteArrayInputStream.close();
+        objectInputStream.close();
+        return response;
+    }
+
+    public void send(Request request) throws IOException {
+        byte[] sendBuffer = serialize(request);
+        DatagramPacket sendPacket = new DatagramPacket(sendBuffer, sendBuffer.length, address);
+        socket.send(sendPacket);
     }
 
     private byte[] serialize(Request request) throws IOException {
@@ -66,51 +74,5 @@ public class Client {
         byteArrayOutputStream.close();
         objectOutputStream.close();
         return buffer;
-    }
-
-    private Response deserialize() throws IOException, ClassNotFoundException {
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteBuffer.array());
-        ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
-        Response response = (Response) objectInputStream.readObject();
-        byteArrayInputStream.close();
-        objectInputStream.close();
-        byteBuffer.clear();
-        return response;
-    }
-
-    public void send(Request request) throws IOException {
-        makeByteBufferToRequest(request);
-        DatagramChannel channel = null;
-        while (channel == null) {
-            selector.select();
-            Set<SelectionKey> selectionKeys = selector.selectedKeys();
-            for (SelectionKey key : selectionKeys) {
-                if (key.isWritable()) {
-                    channel = (DatagramChannel) key.channel();
-                    channel.write(byteBuffer);
-                    channel.register(selector, SelectionKey.OP_READ);
-                    break;
-                }
-            }
-        }
-        byteBuffer.clear();
-    }
-
-    public Response receive() throws IOException, ClassNotFoundException {
-        DatagramChannel channel = null;
-        while (channel == null) {
-            selector.select();
-            Set<SelectionKey> selectionKeys = selector.selectedKeys();
-            for (SelectionKey key : selectionKeys) {
-                if (key.isReadable()) {
-                    channel = (DatagramChannel) key.channel();
-                    channel.read(byteBuffer);
-                    byteBuffer.flip();
-                    channel.register(selector, SelectionKey.OP_WRITE);
-                    break;
-                }
-            }
-        }
-        return deserialize();
     }
 }

@@ -79,4 +79,32 @@ public class SpaceMarineLite implements Serializable {
                 ", chapter=" + chapter +
                 '}';
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCoordinates(Coordinates coordinates) {
+        this.coordinates = coordinates;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public void setHeartCount(Integer heartCount) {
+        this.heartCount = heartCount;
+    }
+
+    public void setAchievements(String achievements) {
+        this.achievements = achievements;
+    }
+
+    public void setWeaponType(Weapon weaponType) {
+        this.weaponType = weaponType;
+    }
+
+    public void setChapter(Chapter chapter) {
+        this.chapter = chapter;
+    }
 }

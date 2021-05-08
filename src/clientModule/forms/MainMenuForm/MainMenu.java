@@ -184,6 +184,13 @@ public class MainMenu extends JPanel {
                 App.mainFrame.validate();
             }
         });
+        visualizeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                App.mainFrame.setContentPane(App.visualize.getVisualizePanel());
+                App.mainFrame.validate();
+            }
+        });
     }
 
     public void setUser(User user) {

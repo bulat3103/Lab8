@@ -18,7 +18,7 @@ public class SignUpCommand extends AbstractCommand{
     @Override
     public boolean execute(String argument, Object objectArgument, User user) {
         try {
-            if (argument.isEmpty() || objectArgument == null) throw new WrongAmountOfParametersException();
+            if (argument.isEmpty() || objectArgument != null) throw new WrongAmountOfParametersException();
             if (databaseUserManager.insertUser(user, argument))
                 ResponseOutputer.append("Регистрация прошла успешно!\n");
             else throw new UserAlreadyExistException();

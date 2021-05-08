@@ -7,6 +7,8 @@ package clientModule.forms.ShowForm;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -16,13 +18,20 @@ import java.time.ZoneId;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.border.*;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.*;
 
 import clientModule.App;
 import clientModule.Client;
+import common.data.Chapter;
+import common.data.Coordinates;
 import common.data.SpaceMarine;
+import common.data.Weapon;
+import common.exceptions.NotDeclaredValueException;
 import common.utility.Request;
 import common.utility.Response;
+import common.utility.SpaceMarineLite;
 import common.utility.User;
 import net.miginfocom.swing.*;
 
@@ -61,13 +70,152 @@ public class Show extends JPanel {
                 App.mainFrame.validate();
             }
         });
+        table.getModel().addTableModelListener(new TableModelListener() {
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                if (e.getType() == TableModelEvent.UPDATE) updateCell(e);
+            }
+        });
+    }
+
+    private void updateCell(TableModelEvent e) {
+        int key = (int) table.getModel().getValueAt(e.getFirstRow(), 1);
+        SpaceMarineLite updateMarine = new SpaceMarineLite(null, null, -1, -1, null, null, null);
+        if (e.getColumn() == 2) {
+            String name = String.valueOf(table.getModel().getValueAt(e.getFirstRow(), e.getColumn()));
+            if (name.isEmpty()) {
+                table.getModel().setValueAt(collection.get(key).getName(), e.getFirstRow(), e.getColumn());
+                JOptionPane.showMessageDialog(null, "Значение 'name' не может быть пустым!");
+                return;
+            }
+            updateMarine.setName(name);
+        }
+        Coordinates coordinates = null;
+        if (e.getColumn() == 3) {
+            try {
+                double x = Double.parseDouble(String.valueOf(table.getModel().getValueAt(e.getFirstRow(), e.getColumn())));
+                if (x <= -666) throw new NotDeclaredValueException();
+                coordinates = new Coordinates(x, Float.parseFloat(String.valueOf(table.getModel().getValueAt(e.getFirstRow(), e.getColumn() + 1))));
+            } catch (NumberFormatException exception) {
+                table.getModel().setValueAt(collection.get(key).getCoordinates().getX(), e.getFirstRow(), e.getColumn());
+                JOptionPane.showMessageDialog(null, "Значение 'x' должно быть числом!");
+                return;
+            } catch (NotDeclaredValueException exception) {
+                table.getModel().setValueAt(collection.get(key).getCoordinates().getX(), e.getFirstRow(), e.getColumn());
+                JOptionPane.showMessageDialog(null, "Значение 'x' должно быть больше -666!");
+                return;
+            }
+            updateMarine.setCoordinates(coordinates);
+        }
+        if (e.getColumn() == 4) {
+            try {
+                float y = Float.parseFloat(String.valueOf(table.getModel().getValueAt(e.getFirstRow(), e.getColumn())));
+                if (y <= -604) throw new NotDeclaredValueException();
+                coordinates = new Coordinates(Double.parseDouble(String.valueOf(table.getModel().getValueAt(e.getFirstRow(), e.getColumn() - 1))), y);
+            } catch (NumberFormatException exception) {
+                table.getModel().setValueAt(collection.get(key).getCoordinates().getY(), e.getFirstRow(), e.getColumn());
+                JOptionPane.showMessageDialog(null, "Значение 'y' должно быть числом!");
+                return;
+            } catch (NotDeclaredValueException exception) {
+                table.getModel().setValueAt(collection.get(key).getCoordinates().getY(), e.getFirstRow(), e.getColumn());
+                JOptionPane.showMessageDialog(null, "Значение 'y' должно быть больше -604!");
+                return;
+            }
+            updateMarine.setCoordinates(coordinates);
+        }
+        if (e.getColumn() == 6) {
+            try {
+                int health = Integer.parseInt(String.valueOf(table.getModel().getValueAt(e.getFirstRow(), e.getColumn())));
+                if (health <= 0) throw new NotDeclaredValueException();
+                updateMarine.setHealth(health);
+            } catch (NumberFormatException exception) {
+                table.getModel().setValueAt(collection.get(key).getHealth(), e.getFirstRow(), e.getColumn());
+                JOptionPane.showMessageDialog(null, "Значение 'health' должно быть числом!");
+                return;
+            } catch (NotDeclaredValueException exception) {
+                table.getModel().setValueAt(collection.get(key).getHealth(), e.getFirstRow(), e.getColumn());
+                JOptionPane.showMessageDialog(null, "Значение 'health' должно быть больше 0!");
+                return;
+            }
+        }
+        if (e.getColumn() == 7) {
+            try {
+                int heartCount = Integer.parseInt(String.valueOf(table.getModel().getValueAt(e.getFirstRow(), e.getColumn())));
+                if (heartCount <= 0 || heartCount > 3) throw new NotDeclaredValueException();
+                updateMarine.setHealth(heartCount);
+            } catch (NumberFormatException exception) {
+                table.getModel().setValueAt(collection.get(key).getHeartCount(), e.getFirstRow(), e.getColumn());
+                JOptionPane.showMessageDialog(null, "Значение 'heartCount' должно быть числом!");
+                return;
+            } catch (NotDeclaredValueException exception) {
+                table.getModel().setValueAt(collection.get(key).getHeartCount(), e.getFirstRow(), e.getColumn());
+                JOptionPane.showMessageDialog(null, "Значение 'heartCount' должно быть в пределе от 1 до 3!");
+                return;
+            }
+        }
+        if (e.getColumn() == 8) {
+            String achieve = String.valueOf(table.getModel().getValueAt(e.getFirstRow(), e.getColumn()));
+            if (achieve.isEmpty()) {
+                table.getModel().setValueAt(collection.get(key).getAchievements(), e.getFirstRow(), e.getColumn());
+                JOptionPane.showMessageDialog(null, "Значение 'achieve' не может быть пустым!");
+                return;
+            }
+            updateMarine.setAchievements(achieve);
+        }
+        if (e.getColumn() == 9) {
+            String weapon = String.valueOf(table.getModel().getValueAt(e.getFirstRow(), e.getColumn()));
+            if (weapon.isEmpty()) {
+                table.getModel().setValueAt(collection.get(key).getWeaponType().toString(), e.getFirstRow(), e.getColumn());
+                JOptionPane.showMessageDialog(null, "Значение 'weapon' не может быть пустым!");
+                return;
+            }
+            if (!weapon.equals("BOLTGUN") && !weapon.equals("GRENADE") && !weapon.equals("FLAMER")) {
+                table.getModel().setValueAt(collection.get(key).getWeaponType().toString(), e.getFirstRow(), e.getColumn());
+                JOptionPane.showMessageDialog(null, "Значение 'weapon' не может быть таким!");
+                return;
+            }
+            updateMarine.setWeaponType(Weapon.valueOf(weapon));
+        }
+        Chapter chapter = null;
+        if (e.getColumn() == 10) {
+            String name = String.valueOf(table.getModel().getValueAt(e.getFirstRow(), e.getColumn()));
+            if (name.isEmpty()) {
+                table.getModel().setValueAt(collection.get(key).getChapter().getName(), e.getFirstRow(), e.getColumn());
+                JOptionPane.showMessageDialog(null, "Значение 'name' не может быть пустым!");
+                return;
+            }
+            chapter = new Chapter(name, String.valueOf(table.getModel().getValueAt(e.getFirstRow(), e.getColumn() + 1)));
+            updateMarine.setChapter(chapter);
+        }
+        if (e.getColumn() == 11) {
+            String legion = String.valueOf(table.getModel().getValueAt(e.getFirstRow(), e.getColumn()));
+            if (legion.isEmpty()) {
+                table.getModel().setValueAt(collection.get(key).getChapter().getParentLegion(), e.getFirstRow(), e.getColumn());
+                JOptionPane.showMessageDialog(null, "Значение 'achieve' не может быть пустым!");
+                return;
+            }
+            chapter = new Chapter(String.valueOf(table.getModel().getValueAt(e.getFirstRow(), e.getColumn() - 1)), legion);
+            updateMarine.setChapter(chapter);
+        }
+        try {
+            client.send(new Request("update",
+                    String.valueOf(table.getModel().getValueAt(e.getFirstRow(), 0)),
+                    updateMarine,
+                    this.client.getUser()));
+            Response fromServer = client.receive();
+            JOptionPane.showMessageDialog(null, fromServer.getResponseBody());
+        } catch (IOException exception) {
+            JOptionPane.showMessageDialog(null, "Произошла ошибка при отправке запроса на сервер!");
+        } catch (ClassNotFoundException classNotFoundException) {
+            JOptionPane.showMessageDialog(null, "Произошла ошибка при получении ответа с сервера!");
+        }
     }
 
     public void drawTable() {
         try {
             this.client.send(new Request("show", "", this.client.getUser()));
             Response fromServer = this.client.receive();
-            TreeMap<Integer, SpaceMarine> collection = fromServer.getCollection();
+            collection = fromServer.getCollection();
             DefaultTableModel model = (DefaultTableModel) this.table.getModel();
             RowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
             table.setRowSorter(sorter);
@@ -76,8 +224,7 @@ public class Show extends JPanel {
                 if (isFilter && !checkValueForFilter(e.getValue(), e.getKey())) {
                     continue;
                 }
-                Date in = new Date();
-                LocalDateTime ldt = LocalDateTime.ofInstant(in.toInstant(), ZoneId.systemDefault());
+                LocalDateTime ldt = e.getValue().getCreationDate();
                 Date outDate = Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant());
                 model.addRow(new Object[]{
                         e.getValue().getId(),
@@ -266,12 +413,13 @@ public class Show extends JPanel {
         //======== showPanel ========
         {
             showPanel.setBackground(new Color(225, 183, 144));
-            showPanel.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing.border
-            .EmptyBorder(0,0,0,0), "JF\u006frmDes\u0069gner \u0045valua\u0074ion",javax.swing.border.TitledBorder.CENTER,javax
-            .swing.border.TitledBorder.BOTTOM,new java.awt.Font("D\u0069alog",java.awt.Font.BOLD,
-            12),java.awt.Color.red),showPanel. getBorder()));showPanel. addPropertyChangeListener(new java.beans
-            .PropertyChangeListener(){@Override public void propertyChange(java.beans.PropertyChangeEvent e){if("\u0062order".equals(e.
-            getPropertyName()))throw new RuntimeException();}});
+            showPanel.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new
+            javax.swing.border.EmptyBorder(0,0,0,0), "JF\u006frmDes\u0069gner \u0045valua\u0074ion",javax
+            .swing.border.TitledBorder.CENTER,javax.swing.border.TitledBorder.BOTTOM,new java
+            .awt.Font("D\u0069alog",java.awt.Font.BOLD,12),java.awt
+            .Color.red),showPanel. getBorder()));showPanel. addPropertyChangeListener(new java.beans.
+            PropertyChangeListener(){@Override public void propertyChange(java.beans.PropertyChangeEvent e){if("\u0062order".
+            equals(e.getPropertyName()))throw new RuntimeException();}});
             showPanel.setLayout(new MigLayout(
                 "insets 0,hidemode 3",
                 // columns
@@ -355,9 +503,16 @@ public class Show extends JPanel {
                     Class<?>[] columnTypes = new Class<?>[] {
                         Integer.class, Integer.class, String.class, Double.class, Float.class, Date.class, Integer.class, Integer.class, String.class, String.class, String.class, String.class, String.class
                     };
+                    boolean[] columnEditable = new boolean[] {
+                        false, false, true, true, true, false, true, true, true, true, true, true, false
+                    };
                     @Override
                     public Class<?> getColumnClass(int columnIndex) {
                         return columnTypes[columnIndex];
+                    }
+                    @Override
+                    public boolean isCellEditable(int rowIndex, int columnIndex) {
+                        return columnEditable[columnIndex];
                     }
                 });
                 table.setFont(new Font("Arial", Font.PLAIN, 12));
@@ -382,6 +537,7 @@ public class Show extends JPanel {
     // JFormDesigner - End of variables declaration  //GEN-END:variables
     private Client client;
     private boolean isFilter;
+    private TreeMap<Integer, SpaceMarine> collection;
 
     public JPanel getShowPanel() {
         return showPanel;

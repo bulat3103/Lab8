@@ -65,11 +65,10 @@ public class Visualize extends JPanel {
                 button.setBackground(color);
                 button.setForeground(new Color(255 - color.getRed(), 255 - color.getGreen(), 255 - color.getBlue()));
                 button.setBorder(new EtchedBorder());
-                button.setLocation(getWidth() / 2, getHeight() / 2);
-                button.setPreferredSize(new Dimension(30, 20));
+                button.setBounds(getWidth() / 2, getHeight() / 2, 30, 20);
                 button.setVisible(true);
                 drawSpace.add(button);
-                drawSpace.repaint();
+                System.out.println(drawSpace.getComponent(0));
                 drawSpace.revalidate();
                 return;
             }
@@ -99,11 +98,9 @@ public class Visualize extends JPanel {
                 button.setBackground(color);
                 button.setForeground(new Color(255 - color.getRed(), 255 - color.getGreen(), 255 - color.getBlue()));
                 button.setBorder(new EtchedBorder());
-                button.setLocation(x, y);
-                button.setPreferredSize(new Dimension(30, 20));
+                button.setBounds(x, y, 30, 20);
                 button.setVisible(true);
                 drawSpace.add(button);
-                drawSpace.repaint();
                 drawSpace.revalidate();
             }
         } catch (IOException | ClassNotFoundException ignored) {}

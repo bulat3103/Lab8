@@ -56,6 +56,8 @@ public class Login extends JPanel {
                         App.update.setUser(user);
                         App.script.setUser(user);
                         App.filter.setUser(user);
+                        App.visualize.setUser(user);
+                        App.visualize.startThread();
                         App.mainFrame.setContentPane(App.mainMenu.getMainMenuPanel());
                         App.mainFrame.validate();
                     } else {
