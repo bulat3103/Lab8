@@ -19,6 +19,7 @@ import common.utility.Request;
 import common.utility.Response;
 import common.utility.User;
 import net.miginfocom.swing.*;
+import resources.LocaleBundle;
 
 /**
  * @author unknown
@@ -55,6 +56,12 @@ public class RemoveByWeapon extends JPanel {
     public void setUser(User user) {
         this.client.setUser(user);
         this.currentUser.setText(user.getLogin());
+    }
+
+    public void localize() {
+        backButton.setText(LocaleBundle.getCurrentBundle().getString("back_button"));
+        label1.setText(LocaleBundle.getCurrentBundle().getString("removeByWeapon_label1"));
+        removeButton.setText(LocaleBundle.getCurrentBundle().getString("remove_button"));
     }
 
     private void initComponents() {

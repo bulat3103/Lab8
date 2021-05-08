@@ -40,7 +40,7 @@ new FormModel {
 				"value": "cell 6 0,align center center,grow 0 0"
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "name1"
+				name: "label1"
 				"text": "Добавление/изменение"
 				"foreground": &Color0 new java.awt.Color( 40, 61, 82, 255 )
 				"font": &Font0 new java.awt.Font( "Arial", 1, 14 )
@@ -69,7 +69,7 @@ new FormModel {
 				"value": "cell 4 2"
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "name2"
+				name: "label2"
 				"text": "Информация об объектах"
 				"foreground": #Color0
 				"font": #Font0
@@ -118,7 +118,7 @@ new FormModel {
 				"value": "cell 5 4"
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "name3"
+				name: "label3"
 				"text": "Удаление элементов"
 				"foreground": #Color0
 				"font": #Font0
@@ -167,7 +167,7 @@ new FormModel {
 				"value": "cell 5 6"
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "name4"
+				name: "label4"
 				"text": "Служебные команды"
 				"foreground": #Color0
 				"font": #Font0
@@ -221,4 +221,3 @@ new FormModel {
 		} )
 	}
 }
-

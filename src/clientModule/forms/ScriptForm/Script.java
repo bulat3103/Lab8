@@ -22,6 +22,7 @@ import common.utility.Request;
 import common.utility.Response;
 import common.utility.User;
 import net.miginfocom.swing.*;
+import resources.LocaleBundle;
 
 /**
  * @author unknown
@@ -154,6 +155,11 @@ public class Script extends JPanel {
             scriptPanel.add(scrollPane1, "cell 2 3 4 7");
         }
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
+    }
+
+    public void localize() {
+        backButton.setText(LocaleBundle.getCurrentBundle().getString("back_button"));
+        chooseFileButton.setText(LocaleBundle.getCurrentBundle().getString("script_chooseFileButton"));
     }
 
     public void setUser(User user) {

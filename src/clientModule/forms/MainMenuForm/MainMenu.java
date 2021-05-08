@@ -24,6 +24,7 @@ import common.utility.Response;
 import common.utility.ResponseCode;
 import common.utility.User;
 import net.miginfocom.swing.*;
+import resources.LocaleBundle;
 
 /**
  * @author unknown
@@ -194,6 +195,14 @@ public class MainMenu extends JPanel {
         });
     }
 
+    public void localize() {
+        signOutButton.setText(LocaleBundle.getCurrentBundle().getString("mainMenu_signOutButton"));
+        label1.setText(LocaleBundle.getCurrentBundle().getString("mainMenu_label1"));
+        label2.setText(LocaleBundle.getCurrentBundle().getString("mainMenu_label2"));
+        label3.setText(LocaleBundle.getCurrentBundle().getString("mainMenu_label3"));
+        label4.setText(LocaleBundle.getCurrentBundle().getString("mainMenu_label4"));
+    }
+
     public void setUser(User user) {
         this.client.setUser(user);
         this.currentUser.setText(user.getLogin());
@@ -206,20 +215,20 @@ public class MainMenu extends JPanel {
         currentUser = new JLabel();
         name = new JLabel();
         signOutButton = new JButton();
-        name1 = new JLabel();
+        label1 = new JLabel();
         insertButton = new JButton();
         updateButton = new JButton();
-        name2 = new JLabel();
+        label2 = new JLabel();
         showButton = new JButton();
         sumHealthButton = new JButton();
         visualizeButton = new JButton();
         averHeartButton = new JButton();
-        name3 = new JLabel();
+        label3 = new JLabel();
         rmKeyButton = new JButton();
         rmWeaponTypeButton = new JButton();
         rmGreaterButton = new JButton();
         clearButton = new JButton();
-        name4 = new JLabel();
+        label4 = new JLabel();
         infoButton = new JButton();
         historyButton = new JButton();
         scriptButton = new JButton();
@@ -228,13 +237,13 @@ public class MainMenu extends JPanel {
         //======== mainMenuPanel ========
         {
             mainMenuPanel.setBackground(new Color(225, 183, 144));
-            mainMenuPanel.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new
-            javax. swing. border. EmptyBorder( 0, 0, 0, 0) , "JFor\u006dDesi\u0067ner \u0045valu\u0061tion", javax
-            . swing. border. TitledBorder. CENTER, javax. swing. border. TitledBorder. BOTTOM, new java
-            .awt .Font ("Dia\u006cog" ,java .awt .Font .BOLD ,12 ), java. awt
-            . Color. red) ,mainMenuPanel. getBorder( )) ); mainMenuPanel. addPropertyChangeListener (new java. beans.
-            PropertyChangeListener( ){ @Override public void propertyChange (java .beans .PropertyChangeEvent e) {if ("bord\u0065r" .
-            equals (e .getPropertyName () )) throw new RuntimeException( ); }} );
+            mainMenuPanel.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing
+            .border.EmptyBorder(0,0,0,0), "JFor\u006dDesi\u0067ner \u0045valu\u0061tion",javax.swing.border.TitledBorder
+            .CENTER,javax.swing.border.TitledBorder.BOTTOM,new java.awt.Font("Dia\u006cog",java.
+            awt.Font.BOLD,12),java.awt.Color.red),mainMenuPanel. getBorder()))
+            ;mainMenuPanel. addPropertyChangeListener(new java.beans.PropertyChangeListener(){@Override public void propertyChange(java.beans.PropertyChangeEvent e
+            ){if("bord\u0065r".equals(e.getPropertyName()))throw new RuntimeException();}})
+            ;
             mainMenuPanel.setLayout(new MigLayout(
                 "insets 0,hidemode 3,align center center",
                 // columns
@@ -281,12 +290,12 @@ public class MainMenu extends JPanel {
             signOutButton.setBorder(new EtchedBorder());
             mainMenuPanel.add(signOutButton, "cell 6 0,align center center,grow 0 0");
 
-            //---- name1 ----
-            name1.setText("\u0414\u043e\u0431\u0430\u0432\u043b\u0435\u043d\u0438\u0435/\u0438\u0437\u043c\u0435\u043d\u0435\u043d\u0438\u0435");
-            name1.setForeground(new Color(40, 61, 82));
-            name1.setFont(new Font("Arial", Font.BOLD, 14));
-            name1.setHorizontalAlignment(SwingConstants.CENTER);
-            mainMenuPanel.add(name1, "cell 2 1 4 1");
+            //---- label1 ----
+            label1.setText("\u0414\u043e\u0431\u0430\u0432\u043b\u0435\u043d\u0438\u0435/\u0438\u0437\u043c\u0435\u043d\u0435\u043d\u0438\u0435");
+            label1.setForeground(new Color(40, 61, 82));
+            label1.setFont(new Font("Arial", Font.BOLD, 14));
+            label1.setHorizontalAlignment(SwingConstants.CENTER);
+            mainMenuPanel.add(label1, "cell 2 1 4 1");
 
             //---- insertButton ----
             insertButton.setText("insert");
@@ -304,12 +313,12 @@ public class MainMenu extends JPanel {
             updateButton.setBorder(new EtchedBorder());
             mainMenuPanel.add(updateButton, "cell 4 2");
 
-            //---- name2 ----
-            name2.setText("\u0418\u043d\u0444\u043e\u0440\u043c\u0430\u0446\u0438\u044f \u043e\u0431 \u043e\u0431\u044a\u0435\u043a\u0442\u0430\u0445");
-            name2.setForeground(new Color(40, 61, 82));
-            name2.setFont(new Font("Arial", Font.BOLD, 14));
-            name2.setHorizontalAlignment(SwingConstants.CENTER);
-            mainMenuPanel.add(name2, "cell 2 3 4 1");
+            //---- label2 ----
+            label2.setText("\u0418\u043d\u0444\u043e\u0440\u043c\u0430\u0446\u0438\u044f \u043e\u0431 \u043e\u0431\u044a\u0435\u043a\u0442\u0430\u0445");
+            label2.setForeground(new Color(40, 61, 82));
+            label2.setFont(new Font("Arial", Font.BOLD, 14));
+            label2.setHorizontalAlignment(SwingConstants.CENTER);
+            mainMenuPanel.add(label2, "cell 2 3 4 1");
 
             //---- showButton ----
             showButton.setText("show");
@@ -343,12 +352,12 @@ public class MainMenu extends JPanel {
             averHeartButton.setBorder(new EtchedBorder());
             mainMenuPanel.add(averHeartButton, "cell 5 4");
 
-            //---- name3 ----
-            name3.setText("\u0423\u0434\u0430\u043b\u0435\u043d\u0438\u0435 \u044d\u043b\u0435\u043c\u0435\u043d\u0442\u043e\u0432");
-            name3.setForeground(new Color(40, 61, 82));
-            name3.setFont(new Font("Arial", Font.BOLD, 14));
-            name3.setHorizontalAlignment(SwingConstants.CENTER);
-            mainMenuPanel.add(name3, "cell 2 5 4 1");
+            //---- label3 ----
+            label3.setText("\u0423\u0434\u0430\u043b\u0435\u043d\u0438\u0435 \u044d\u043b\u0435\u043c\u0435\u043d\u0442\u043e\u0432");
+            label3.setForeground(new Color(40, 61, 82));
+            label3.setFont(new Font("Arial", Font.BOLD, 14));
+            label3.setHorizontalAlignment(SwingConstants.CENTER);
+            mainMenuPanel.add(label3, "cell 2 5 4 1");
 
             //---- rmKeyButton ----
             rmKeyButton.setText("byKey");
@@ -382,12 +391,12 @@ public class MainMenu extends JPanel {
             clearButton.setBorder(new EtchedBorder());
             mainMenuPanel.add(clearButton, "cell 5 6");
 
-            //---- name4 ----
-            name4.setText("\u0421\u043b\u0443\u0436\u0435\u0431\u043d\u044b\u0435 \u043a\u043e\u043c\u0430\u043d\u0434\u044b");
-            name4.setForeground(new Color(40, 61, 82));
-            name4.setFont(new Font("Arial", Font.BOLD, 14));
-            name4.setHorizontalAlignment(SwingConstants.CENTER);
-            mainMenuPanel.add(name4, "cell 2 7 4 1");
+            //---- label4 ----
+            label4.setText("\u0421\u043b\u0443\u0436\u0435\u0431\u043d\u044b\u0435 \u043a\u043e\u043c\u0430\u043d\u0434\u044b");
+            label4.setForeground(new Color(40, 61, 82));
+            label4.setFont(new Font("Arial", Font.BOLD, 14));
+            label4.setHorizontalAlignment(SwingConstants.CENTER);
+            mainMenuPanel.add(label4, "cell 2 7 4 1");
 
             //---- infoButton ----
             infoButton.setText("info");
@@ -430,20 +439,20 @@ public class MainMenu extends JPanel {
     private JLabel currentUser;
     private JLabel name;
     private JButton signOutButton;
-    private JLabel name1;
+    private JLabel label1;
     private JButton insertButton;
     private JButton updateButton;
-    private JLabel name2;
+    private JLabel label2;
     private JButton showButton;
     private JButton sumHealthButton;
     private JButton visualizeButton;
     private JButton averHeartButton;
-    private JLabel name3;
+    private JLabel label3;
     private JButton rmKeyButton;
     private JButton rmWeaponTypeButton;
     private JButton rmGreaterButton;
     private JButton clearButton;
-    private JLabel name4;
+    private JLabel label4;
     private JButton infoButton;
     private JButton historyButton;
     private JButton scriptButton;

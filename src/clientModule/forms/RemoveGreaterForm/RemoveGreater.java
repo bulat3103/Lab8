@@ -23,6 +23,7 @@ import common.utility.Response;
 import common.utility.SpaceMarineLite;
 import common.utility.User;
 import net.miginfocom.swing.*;
+import resources.LocaleBundle;
 
 /**
  * @author unknown
@@ -130,6 +131,21 @@ public class RemoveGreater extends JPanel {
         });
     }
 
+    public void localize() {
+        backButton.setText(LocaleBundle.getCurrentBundle().getString("back_button"));
+        marineData.setText(LocaleBundle.getCurrentBundle().getString("marineData_Title"));
+        coordinatesData.setText(LocaleBundle.getCurrentBundle().getString("coordinatesData_Title"));
+        chapterData.setText(LocaleBundle.getCurrentBundle().getString("chapterData_Title"));
+        nameTitle.setText(LocaleBundle.getCurrentBundle().getString("nameTitle"));
+        healthTitle.setText(LocaleBundle.getCurrentBundle().getString("healthTitle"));
+        heartTitle.setText(LocaleBundle.getCurrentBundle().getString("heartTitle"));
+        achieveTitle.setText(LocaleBundle.getCurrentBundle().getString("achieveTitle"));
+        weaponTitle.setText(LocaleBundle.getCurrentBundle().getString("weaponTitle"));
+        chapterNameTitle.setText(LocaleBundle.getCurrentBundle().getString("nameTitle"));
+        chapterLegionTitle.setText(LocaleBundle.getCurrentBundle().getString("chapterLegionTitle"));
+        removeButton.setText(LocaleBundle.getCurrentBundle().getString("remove_button"));
+    }
+
     public void setUser(User user) {
         this.client.setUser(user);
         this.currentUser.setText(user.getLogin());
@@ -143,30 +159,38 @@ public class RemoveGreater extends JPanel {
         name = new JLabel();
         backButton = new JButton();
         marineData = new JLabel();
+        nameTitle = new JLabel();
+        healthTitle = new JLabel();
+        heartTitle = new JLabel();
+        achieveTitle = new JLabel();
+        weaponTitle = new JLabel();
         nameField = new JTextField();
         healthField = new JTextField();
         heartCountField = new JTextField();
         achieveField = new JTextField();
         weaponTypeField = new JComboBox<>();
         coordinatesData = new JLabel();
+        xTitle = new JLabel();
         coorX = new JTextField();
         coorY = new JTextField();
+        yTitle = new JLabel();
         chapterData = new JLabel();
+        chapterNameTitle = new JLabel();
         chapterName = new JTextField();
         chapterLegion = new JTextField();
+        chapterLegionTitle = new JLabel();
         removeButton = new JButton();
 
         //======== removeGreaterPanel ========
         {
             removeGreaterPanel.setBackground(new Color(225, 183, 144));
-            removeGreaterPanel.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(
-            new javax.swing.border.EmptyBorder(0,0,0,0), "JF\u006frmDes\u0069gner \u0045valua\u0074ion"
-            ,javax.swing.border.TitledBorder.CENTER,javax.swing.border.TitledBorder.BOTTOM
-            ,new java.awt.Font("D\u0069alog",java.awt.Font.BOLD,12)
-            ,java.awt.Color.red),removeGreaterPanel. getBorder()));removeGreaterPanel. addPropertyChangeListener(
-            new java.beans.PropertyChangeListener(){@Override public void propertyChange(java.beans.PropertyChangeEvent e
-            ){if("\u0062order".equals(e.getPropertyName()))throw new RuntimeException()
-            ;}});
+            removeGreaterPanel.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new
+            javax. swing. border. EmptyBorder( 0, 0, 0, 0) , "JFor\u006dDesi\u0067ner \u0045valu\u0061tion", javax
+            . swing. border. TitledBorder. CENTER, javax. swing. border. TitledBorder. BOTTOM, new java
+            .awt .Font ("Dia\u006cog" ,java .awt .Font .BOLD ,12 ), java. awt
+            . Color. red) ,removeGreaterPanel. getBorder( )) ); removeGreaterPanel. addPropertyChangeListener (new java. beans.
+            PropertyChangeListener( ){ @Override public void propertyChange (java .beans .PropertyChangeEvent e) {if ("bord\u0065r" .
+            equals (e .getPropertyName () )) throw new RuntimeException( ); }} );
             removeGreaterPanel.setLayout(new MigLayout(
                 "insets 0,hidemode 3,align center center",
                 // columns
@@ -182,9 +206,9 @@ public class RemoveGreater extends JPanel {
                 "[35,grow,fill]" +
                 "[25,grow,fill]" +
                 "[35,grow,fill]" +
-                "[25,grow,fill]" +
                 "[35,grow,fill]" +
-                "[25,grow,fill]" +
+                "[35,grow,fill]" +
+                "[35,grow,fill]" +
                 "[35,grow,fill]" +
                 "[35,grow,fill]" +
                 "[35,grow,fill]" +
@@ -218,7 +242,47 @@ public class RemoveGreater extends JPanel {
             marineData.setHorizontalAlignment(SwingConstants.CENTER);
             marineData.setFont(new Font("Arial", Font.BOLD, 14));
             marineData.setForeground(new Color(40, 61, 82));
-            removeGreaterPanel.add(marineData, "cell 2 2 3 1");
+            removeGreaterPanel.add(marineData, "cell 2 1 3 1");
+
+            //---- nameTitle ----
+            nameTitle.setText("\u0418\u043c\u044f");
+            nameTitle.setForeground(Color.white);
+            nameTitle.setHorizontalAlignment(SwingConstants.CENTER);
+            nameTitle.setFont(new Font("Arial", Font.BOLD, 12));
+            nameTitle.setVerticalAlignment(SwingConstants.BOTTOM);
+            removeGreaterPanel.add(nameTitle, "cell 1 2");
+
+            //---- healthTitle ----
+            healthTitle.setText("\u0417\u0434\u043e\u0440\u043e\u0432\u044c\u0435");
+            healthTitle.setForeground(Color.white);
+            healthTitle.setHorizontalAlignment(SwingConstants.CENTER);
+            healthTitle.setFont(new Font("Arial", Font.BOLD, 12));
+            healthTitle.setVerticalAlignment(SwingConstants.BOTTOM);
+            removeGreaterPanel.add(healthTitle, "cell 2 2");
+
+            //---- heartTitle ----
+            heartTitle.setText("\u0421\u0435\u0440\u0434\u0446\u0430");
+            heartTitle.setForeground(Color.white);
+            heartTitle.setHorizontalAlignment(SwingConstants.CENTER);
+            heartTitle.setFont(new Font("Arial", Font.BOLD, 12));
+            heartTitle.setVerticalAlignment(SwingConstants.BOTTOM);
+            removeGreaterPanel.add(heartTitle, "cell 3 2");
+
+            //---- achieveTitle ----
+            achieveTitle.setText("\u0414\u043e\u0441\u0442\u0438\u0436\u0435\u043d\u0438\u044f");
+            achieveTitle.setForeground(Color.white);
+            achieveTitle.setHorizontalAlignment(SwingConstants.CENTER);
+            achieveTitle.setFont(new Font("Arial", Font.BOLD, 12));
+            achieveTitle.setVerticalAlignment(SwingConstants.BOTTOM);
+            removeGreaterPanel.add(achieveTitle, "cell 4 2");
+
+            //---- weaponTitle ----
+            weaponTitle.setText("\u041e\u0440\u0443\u0436\u0438\u0435");
+            weaponTitle.setForeground(Color.white);
+            weaponTitle.setHorizontalAlignment(SwingConstants.CENTER);
+            weaponTitle.setFont(new Font("Arial", Font.BOLD, 12));
+            weaponTitle.setVerticalAlignment(SwingConstants.BOTTOM);
+            removeGreaterPanel.add(weaponTitle, "cell 5 2");
 
             //---- nameField ----
             nameField.setBackground(Color.white);
@@ -266,6 +330,13 @@ public class RemoveGreater extends JPanel {
             coordinatesData.setForeground(new Color(40, 61, 82));
             removeGreaterPanel.add(coordinatesData, "cell 2 4 3 1");
 
+            //---- xTitle ----
+            xTitle.setText("X");
+            xTitle.setForeground(Color.white);
+            xTitle.setHorizontalAlignment(SwingConstants.RIGHT);
+            xTitle.setFont(new Font("Arial", Font.BOLD, 12));
+            removeGreaterPanel.add(xTitle, "cell 1 5");
+
             //---- coorX ----
             coorX.setHorizontalAlignment(SwingConstants.CENTER);
             coorX.setBackground(Color.white);
@@ -280,12 +351,26 @@ public class RemoveGreater extends JPanel {
             coorY.setToolTipText("y");
             removeGreaterPanel.add(coorY, "cell 4 5,aligny center,grow 100 0,height 25:30:50");
 
+            //---- yTitle ----
+            yTitle.setText("Y");
+            yTitle.setForeground(Color.white);
+            yTitle.setHorizontalAlignment(SwingConstants.LEFT);
+            yTitle.setFont(new Font("Arial", Font.BOLD, 12));
+            removeGreaterPanel.add(yTitle, "cell 5 5");
+
             //---- chapterData ----
             chapterData.setText("\u0427\u0430\u0441\u0442\u044c");
             chapterData.setHorizontalAlignment(SwingConstants.CENTER);
             chapterData.setFont(new Font("Arial", Font.BOLD, 14));
             chapterData.setForeground(new Color(40, 61, 82));
             removeGreaterPanel.add(chapterData, "cell 2 6 3 1");
+
+            //---- chapterNameTitle ----
+            chapterNameTitle.setText("\u0418\u043c\u044f");
+            chapterNameTitle.setForeground(Color.white);
+            chapterNameTitle.setHorizontalAlignment(SwingConstants.RIGHT);
+            chapterNameTitle.setFont(new Font("Arial", Font.BOLD, 12));
+            removeGreaterPanel.add(chapterNameTitle, "cell 1 7");
 
             //---- chapterName ----
             chapterName.setHorizontalAlignment(SwingConstants.CENTER);
@@ -300,6 +385,13 @@ public class RemoveGreater extends JPanel {
             chapterLegion.setBorder(new EtchedBorder());
             chapterLegion.setToolTipText("ChapterLegion");
             removeGreaterPanel.add(chapterLegion, "cell 4 7,aligny center,grow 100 0,height 25:30:50");
+
+            //---- chapterLegionTitle ----
+            chapterLegionTitle.setText("\u041b\u0435\u0433\u0438\u043e\u043d");
+            chapterLegionTitle.setForeground(Color.white);
+            chapterLegionTitle.setHorizontalAlignment(SwingConstants.LEFT);
+            chapterLegionTitle.setFont(new Font("Arial", Font.BOLD, 12));
+            removeGreaterPanel.add(chapterLegionTitle, "cell 5 7");
 
             //---- removeButton ----
             removeButton.setText("Remove");
@@ -319,17 +411,26 @@ public class RemoveGreater extends JPanel {
     private JLabel name;
     private JButton backButton;
     private JLabel marineData;
+    private JLabel nameTitle;
+    private JLabel healthTitle;
+    private JLabel heartTitle;
+    private JLabel achieveTitle;
+    private JLabel weaponTitle;
     private JTextField nameField;
     private JTextField healthField;
     private JTextField heartCountField;
     private JTextField achieveField;
     private JComboBox<String> weaponTypeField;
     private JLabel coordinatesData;
+    private JLabel xTitle;
     private JTextField coorX;
     private JTextField coorY;
+    private JLabel yTitle;
     private JLabel chapterData;
+    private JLabel chapterNameTitle;
     private JTextField chapterName;
     private JTextField chapterLegion;
+    private JLabel chapterLegionTitle;
     private JButton removeButton;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
     private Client client;

@@ -83,7 +83,7 @@ new FormModel {
 						add( "health" )
 						add( "heart" )
 						add( "achieve" )
-						add( "weaponType" )
+						add( "weapon" )
 						add( "chapterName" )
 						add( "chapterLegion" )
 						add( "user" )

@@ -20,6 +20,7 @@ import common.utility.Request;
 import common.utility.Response;
 import common.utility.User;
 import net.miginfocom.swing.*;
+import resources.LocaleBundle;
 
 /**
  * @author unknown
@@ -108,6 +109,10 @@ public class Visualize extends JPanel {
                 drawSpace.repaint();
             }
         } catch (IOException | ClassNotFoundException ignored) {}
+    }
+
+    public void localize() {
+        backButton.setText(LocaleBundle.getCurrentBundle().getString("back_button"));
     }
 
     private void initComponents() {

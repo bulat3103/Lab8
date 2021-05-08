@@ -7,6 +7,9 @@ package clientModule.forms.StartMenuForm;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.ResourceBundle;
 import javax.swing.*;
 import javax.swing.border.*;
 
@@ -15,6 +18,7 @@ import clientModule.Client;
 import clientModule.forms.LoginForm.Login;
 import clientModule.forms.RegisterForm.Register;
 import net.miginfocom.swing.*;
+import resources.LocaleBundle;
 
 /**
  * @author unknown
@@ -23,6 +27,25 @@ public class StartMenu extends JPanel {
     public StartMenu(Client client) {
         initComponents();
         this.client = client;
+        chooseLang.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                LocaleBundle.setBundle(String.valueOf(e.getItem()));
+                localize();
+                App.filter.localize();
+                App.insert.localize();
+                App.login.localize();
+                App.mainMenu.localize();
+                App.register.localize();
+                App.removeByWeapon.localize();
+                App.removeGreater.localize();
+                App.removeKey.localize();
+                App.script.localize();
+                App.show.localize();
+                App.update.localize();
+                App.visualize.localize();
+            }
+        });
         signInButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -58,27 +81,34 @@ public class StartMenu extends JPanel {
         //======== startMenuPanel ========
         {
             startMenuPanel.setBackground(new Color(40, 61, 82));
+            startMenuPanel.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new
+            javax.swing.border.EmptyBorder(0,0,0,0), "JF\u006frmDesi\u0067ner Ev\u0061luatio\u006e",javax
+            .swing.border.TitledBorder.CENTER,javax.swing.border.TitledBorder.BOTTOM,new java
+            .awt.Font("Dialo\u0067",java.awt.Font.BOLD,12),java.awt
+            .Color.red),startMenuPanel. getBorder()));startMenuPanel. addPropertyChangeListener(new java.beans.
+            PropertyChangeListener(){@Override public void propertyChange(java.beans.PropertyChangeEvent e){if("borde\u0072".
+            equals(e.getPropertyName()))throw new RuntimeException();}});
             startMenuPanel.setLayout(new MigLayout(
-                    "insets 0,hidemode 3",
-                    // columns
-                    "[fill]" +
-                            "[fill]" +
-                            "[fill]" +
-                            "[fill]" +
-                            "[grow,fill]" +
-                            "[fill]" +
-                            "[fill]" +
-                            "[fill]" +
-                            "[fill]",
-                    // rows
-                    "[214,grow,fill]" +
-                            "[]" +
-                            "[48]" +
-                            "[]" +
-                            "[]" +
-                            "[214,grow,fill]" +
-                            "[]" +
-                            "[]"));
+                "insets 0,hidemode 3",
+                // columns
+                "[fill]" +
+                "[fill]" +
+                "[fill]" +
+                "[fill]" +
+                "[grow,fill]" +
+                "[fill]" +
+                "[fill]" +
+                "[fill]" +
+                "[fill]",
+                // rows
+                "[214,grow,fill]" +
+                "[]" +
+                "[48]" +
+                "[]" +
+                "[]" +
+                "[214,grow,fill]" +
+                "[]" +
+                "[]"));
 
             //---- name ----
             name.setText("SpaceMarine");
@@ -114,10 +144,10 @@ public class StartMenu extends JPanel {
 
             //---- chooseLang ----
             chooseLang.setModel(new DefaultComboBoxModel<>(new String[] {
-                    "Russian",
-                    "Slovenian",
-                    "Ukranian",
-                    "English(USA)"
+                "Russian",
+                "English(USA)",
+                "Slovenian",
+                "Ukranian"
             }));
             chooseLang.setBackground(new Color(225, 183, 144));
             chooseLang.setForeground(new Color(40, 61, 82));
@@ -126,6 +156,12 @@ public class StartMenu extends JPanel {
             startMenuPanel.add(chooseLang, "cell 4 4,align center center,grow 0 0,width 100:150:250,height 30:35:45");
         }
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
+    }
+
+    public void localize() {
+        signInButton.setText(LocaleBundle.getCurrentBundle().getString("login_button"));
+        registerButton.setText(LocaleBundle.getCurrentBundle().getString("registration"));
+        exitButton.setText(LocaleBundle.getCurrentBundle().getString("startMenu_closeButton"));
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables

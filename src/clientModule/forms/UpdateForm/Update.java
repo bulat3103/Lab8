@@ -23,6 +23,7 @@ import common.utility.Response;
 import common.utility.SpaceMarineLite;
 import common.utility.User;
 import net.miginfocom.swing.*;
+import resources.LocaleBundle;
 
 /**
  * @author unknown
@@ -160,6 +161,21 @@ public class Update extends JPanel {
         });
     }
 
+    public void localize() {
+        backButton.setText(LocaleBundle.getCurrentBundle().getString("back_button"));
+        marineData.setText(LocaleBundle.getCurrentBundle().getString("marineData_Title"));
+        coordinatesData.setText(LocaleBundle.getCurrentBundle().getString("coordinatesData_Title"));
+        chapterData.setText(LocaleBundle.getCurrentBundle().getString("chapterData_Title"));
+        nameTitle.setText(LocaleBundle.getCurrentBundle().getString("nameTitle"));
+        healthTitle.setText(LocaleBundle.getCurrentBundle().getString("healthTitle"));
+        heartTitle.setText(LocaleBundle.getCurrentBundle().getString("heartTitle"));
+        achieveTitle.setText(LocaleBundle.getCurrentBundle().getString("achieveTitle"));
+        weaponTitle.setText(LocaleBundle.getCurrentBundle().getString("weaponTitle"));
+        chapterNameTitle.setText(LocaleBundle.getCurrentBundle().getString("nameTitle"));
+        chapterLegionTitle.setText(LocaleBundle.getCurrentBundle().getString("chapterLegionTitle"));
+        updateButton.setText(LocaleBundle.getCurrentBundle().getString("show_updateButton"));
+    }
+
     public void setUser(User user) {
         this.client.setUser(user);
         this.currentUser.setText(user.getLogin());
@@ -174,8 +190,8 @@ public class Update extends JPanel {
         backButton = new JButton();
         idTitle = new JLabel();
         idField = new JTextField();
-        marineTitle = new JLabel();
-        marineTitle2 = new JLabel();
+        marineData = new JLabel();
+        coordinatesData = new JLabel();
         nameTitle = new JLabel();
         nameField = new JTextField();
         nameCheck = new JCheckBox();
@@ -190,7 +206,7 @@ public class Update extends JPanel {
         heartTitle = new JLabel();
         heartField = new JTextField();
         heartCheck = new JCheckBox();
-        marineTitle3 = new JLabel();
+        chapterData = new JLabel();
         achieveTitle = new JLabel();
         achieveField = new JTextField();
         achieveCheck = new JCheckBox();
@@ -207,11 +223,12 @@ public class Update extends JPanel {
         //======== updatePanel ========
         {
             updatePanel.setBackground(new Color(225, 183, 144));
-            updatePanel.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax. swing. border. EmptyBorder( 0
-            , 0, 0, 0) , "JF\u006frmDes\u0069gner \u0045valua\u0074ion", javax. swing. border. TitledBorder. CENTER, javax. swing. border. TitledBorder. BOTTOM
-            , new java .awt .Font ("D\u0069alog" ,java .awt .Font .BOLD ,12 ), java. awt. Color. red) ,
-            updatePanel. getBorder( )) ); updatePanel. addPropertyChangeListener (new java. beans. PropertyChangeListener( ){ @Override public void propertyChange (java .beans .PropertyChangeEvent e
-            ) {if ("\u0062order" .equals (e .getPropertyName () )) throw new RuntimeException( ); }} );
+            updatePanel.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax. swing.
+            border. EmptyBorder( 0, 0, 0, 0) , "JF\u006frmDesi\u0067ner Ev\u0061luatio\u006e", javax. swing. border. TitledBorder. CENTER
+            , javax. swing. border. TitledBorder. BOTTOM, new java .awt .Font ("Dialo\u0067" ,java .awt .Font
+            .BOLD ,12 ), java. awt. Color. red) ,updatePanel. getBorder( )) ); updatePanel. addPropertyChangeListener (
+            new java. beans. PropertyChangeListener( ){ @Override public void propertyChange (java .beans .PropertyChangeEvent e) {if ("borde\u0072"
+            .equals (e .getPropertyName () )) throw new RuntimeException( ); }} );
             updatePanel.setLayout(new MigLayout(
                 "insets 0,hidemode 3,align center center",
                 // columns
@@ -270,19 +287,19 @@ public class Update extends JPanel {
             idField.setHorizontalAlignment(SwingConstants.CENTER);
             updatePanel.add(idField, "cell 2 1,aligny center,grow 100 0,height 30:30:60");
 
-            //---- marineTitle ----
-            marineTitle.setText("\u0414\u0430\u043d\u043d\u044b\u0435 \u043e Spacemarine");
-            marineTitle.setForeground(new Color(40, 61, 82));
-            marineTitle.setHorizontalAlignment(SwingConstants.CENTER);
-            marineTitle.setFont(new Font("Arial", Font.BOLD, 14));
-            updatePanel.add(marineTitle, "cell 4 1 3 1");
+            //---- marineData ----
+            marineData.setText("\u0414\u0430\u043d\u043d\u044b\u0435 \u043e Spacemarine");
+            marineData.setForeground(new Color(40, 61, 82));
+            marineData.setHorizontalAlignment(SwingConstants.CENTER);
+            marineData.setFont(new Font("Arial", Font.BOLD, 14));
+            updatePanel.add(marineData, "cell 4 1 3 1");
 
-            //---- marineTitle2 ----
-            marineTitle2.setText("\u041a\u043e\u043e\u0440\u0434\u0438\u043d\u0430\u0442\u044b");
-            marineTitle2.setForeground(new Color(40, 61, 82));
-            marineTitle2.setHorizontalAlignment(SwingConstants.CENTER);
-            marineTitle2.setFont(new Font("Arial", Font.BOLD, 14));
-            updatePanel.add(marineTitle2, "cell 1 2 3 1");
+            //---- coordinatesData ----
+            coordinatesData.setText("\u041a\u043e\u043e\u0440\u0434\u0438\u043d\u0430\u0442\u044b");
+            coordinatesData.setForeground(new Color(40, 61, 82));
+            coordinatesData.setHorizontalAlignment(SwingConstants.CENTER);
+            coordinatesData.setFont(new Font("Arial", Font.BOLD, 14));
+            updatePanel.add(coordinatesData, "cell 1 2 3 1");
 
             //---- nameTitle ----
             nameTitle.setText("\u0418\u043c\u044f");
@@ -360,12 +377,12 @@ public class Update extends JPanel {
             heartCheck.setBackground(new Color(225, 183, 144));
             updatePanel.add(heartCheck, "cell 6 4");
 
-            //---- marineTitle3 ----
-            marineTitle3.setText("\u0427\u0430\u0441\u0442\u044c");
-            marineTitle3.setForeground(new Color(40, 61, 82));
-            marineTitle3.setHorizontalAlignment(SwingConstants.CENTER);
-            marineTitle3.setFont(new Font("Arial", Font.BOLD, 14));
-            updatePanel.add(marineTitle3, "cell 1 5 3 1");
+            //---- chapterData ----
+            chapterData.setText("\u0427\u0430\u0441\u0442\u044c");
+            chapterData.setForeground(new Color(40, 61, 82));
+            chapterData.setHorizontalAlignment(SwingConstants.CENTER);
+            chapterData.setFont(new Font("Arial", Font.BOLD, 14));
+            updatePanel.add(chapterData, "cell 1 5 3 1");
 
             //---- achieveTitle ----
             achieveTitle.setText("\u0414\u043e\u0441\u0442\u0438\u0436\u0435\u043d\u0438\u044f");
@@ -450,8 +467,8 @@ public class Update extends JPanel {
     private JButton backButton;
     private JLabel idTitle;
     private JTextField idField;
-    private JLabel marineTitle;
-    private JLabel marineTitle2;
+    private JLabel marineData;
+    private JLabel coordinatesData;
     private JLabel nameTitle;
     private JTextField nameField;
     private JCheckBox nameCheck;
@@ -466,7 +483,7 @@ public class Update extends JPanel {
     private JLabel heartTitle;
     private JTextField heartField;
     private JCheckBox heartCheck;
-    private JLabel marineTitle3;
+    private JLabel chapterData;
     private JLabel achieveTitle;
     private JTextField achieveField;
     private JCheckBox achieveCheck;

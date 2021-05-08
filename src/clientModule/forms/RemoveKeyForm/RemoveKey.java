@@ -23,6 +23,7 @@ import common.utility.Response;
 import common.utility.SpaceMarineLite;
 import common.utility.User;
 import net.miginfocom.swing.*;
+import resources.LocaleBundle;
 
 /**
  * @author unknown
@@ -73,6 +74,12 @@ public class RemoveKey extends JPanel {
     public void setUser(User user) {
         this.client.setUser(user);
         this.currentUser.setText(user.getLogin());
+    }
+
+    public void localize() {
+        backButton.setText(LocaleBundle.getCurrentBundle().getString("back_button"));
+        label1.setText(LocaleBundle.getCurrentBundle().getString("removeKey_label1"));
+        removeButton.setText(LocaleBundle.getCurrentBundle().getString("remove_button"));
     }
 
     private void initComponents() {

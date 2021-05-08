@@ -20,6 +20,7 @@ import common.utility.Response;
 import common.utility.ResponseCode;
 import common.utility.User;
 import net.miginfocom.swing.*;
+import resources.LocaleBundle;
 
 /**
  * @author unknown
@@ -69,6 +70,14 @@ public class Login extends JPanel {
                 }
             }
         });
+    }
+
+    public void localize() {
+        backButton.setText(LocaleBundle.getCurrentBundle().getString("back_button"));
+        loginButton.setText(LocaleBundle.getCurrentBundle().getString("login_button"));
+        passwordName.setText(LocaleBundle.getCurrentBundle().getString("login_passwordName"));
+        loginName.setText(LocaleBundle.getCurrentBundle().getString("login_loginName"));
+        name.setText(LocaleBundle.getCurrentBundle().getString("login_name"));
     }
 
     private void initComponents() {

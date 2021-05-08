@@ -14,6 +14,7 @@ import clientModule.App;
 import clientModule.Client;
 import common.utility.User;
 import net.miginfocom.swing.*;
+import resources.LocaleBundle;
 
 /**
  * @author unknown
@@ -52,6 +53,30 @@ public class Filter extends JPanel {
         });
     }
 
+    public void localize() {
+        backButton.setText(LocaleBundle.getCurrentBundle().getString("back_button"));
+        label1.setText(LocaleBundle.getCurrentBundle().getString("filter_label1"));
+        label2.setText(LocaleBundle.getCurrentBundle().getString("filter_label2"));
+        label3.setText(LocaleBundle.getCurrentBundle().getString("filter_label3"));
+        filterButton.setText(LocaleBundle.getCurrentBundle().getString("filter_filterButton"));
+        String chooseFieldValues[] = new String[]{
+                "None",
+                "id",
+                LocaleBundle.getCurrentBundle().getString("show_keyColumn"),
+                LocaleBundle.getCurrentBundle().getString("show_nameColumn"),
+                "x", "y",
+                LocaleBundle.getCurrentBundle().getString("show_dateColumn"),
+                LocaleBundle.getCurrentBundle().getString("show_healthColumn"),
+                LocaleBundle.getCurrentBundle().getString("show_heartColumn"),
+                LocaleBundle.getCurrentBundle().getString("show_achieveColumn"),
+                LocaleBundle.getCurrentBundle().getString("show_weaponColumn"),
+                LocaleBundle.getCurrentBundle().getString("show_chapterNameColumn"),
+                LocaleBundle.getCurrentBundle().getString("show_chapterLegionColumn"),
+                LocaleBundle.getCurrentBundle().getString("show_userColumn")
+        };
+        chooseField.setModel(new DefaultComboBoxModel<>(chooseFieldValues));
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - unknown
@@ -70,12 +95,11 @@ public class Filter extends JPanel {
         //======== filterPanel ========
         {
             filterPanel.setBackground(new Color(225, 183, 144));
-            filterPanel.setBorder ( new javax . swing. border .CompoundBorder ( new javax . swing. border .TitledBorder ( new javax . swing. border .
-            EmptyBorder ( 0, 0 ,0 , 0) ,  "JFor\u006dDesi\u0067ner \u0045valu\u0061tion" , javax. swing .border . TitledBorder. CENTER ,javax . swing
-            . border .TitledBorder . BOTTOM, new java. awt .Font ( "Dia\u006cog", java .awt . Font. BOLD ,12 ) ,
-            java . awt. Color .red ) ,filterPanel. getBorder () ) ); filterPanel. addPropertyChangeListener( new java. beans .PropertyChangeListener ( )
-            { @Override public void propertyChange (java . beans. PropertyChangeEvent e) { if( "bord\u0065r" .equals ( e. getPropertyName () ) )
-            throw new RuntimeException( ) ;} } );
+            filterPanel.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing.border.EmptyBorder(
+            0,0,0,0), "JF\u006frmD\u0065sig\u006eer \u0045val\u0075ati\u006fn",javax.swing.border.TitledBorder.CENTER,javax.swing.border.TitledBorder
+            .BOTTOM,new java.awt.Font("Dia\u006cog",java.awt.Font.BOLD,12),java.awt.Color.
+            red),filterPanel. getBorder()));filterPanel. addPropertyChangeListener(new java.beans.PropertyChangeListener(){@Override public void propertyChange(java.
+            beans.PropertyChangeEvent e){if("\u0062ord\u0065r".equals(e.getPropertyName()))throw new RuntimeException();}});
             filterPanel.setLayout(new MigLayout(
                 "insets 0,hidemode 3,align center center",
                 // columns

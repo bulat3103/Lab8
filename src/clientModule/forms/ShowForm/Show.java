@@ -34,6 +34,7 @@ import common.utility.Response;
 import common.utility.SpaceMarineLite;
 import common.utility.User;
 import net.miginfocom.swing.*;
+import resources.LocaleBundle;
 
 /**
  * @author unknown
@@ -209,6 +210,25 @@ public class Show extends JPanel {
         } catch (ClassNotFoundException classNotFoundException) {
             JOptionPane.showMessageDialog(null, "Произошла ошибка при получении ответа с сервера!");
         }
+    }
+
+    public void localize() {
+        backButton.setText(LocaleBundle.getCurrentBundle().getString("back_button"));
+        filterButton.setText(LocaleBundle.getCurrentBundle().getString("show_filterButton"));
+        resetButton.setText(LocaleBundle.getCurrentBundle().getString("show_resetButton"));
+        updateButton.setText(LocaleBundle.getCurrentBundle().getString("show_updateButton"));
+        TableColumnModel model = table.getTableHeader().getColumnModel();
+        model.getColumn(1).setHeaderValue(LocaleBundle.getCurrentBundle().getString("show_keyColumn"));
+        model.getColumn(2).setHeaderValue(LocaleBundle.getCurrentBundle().getString("show_nameColumn"));
+        model.getColumn(5).setHeaderValue(LocaleBundle.getCurrentBundle().getString("show_dateColumn"));
+        model.getColumn(6).setHeaderValue(LocaleBundle.getCurrentBundle().getString("show_healthColumn"));
+        model.getColumn(7).setHeaderValue(LocaleBundle.getCurrentBundle().getString("show_heartColumn"));
+        model.getColumn(8).setHeaderValue(LocaleBundle.getCurrentBundle().getString("show_achieveColumn"));
+        model.getColumn(9).setHeaderValue(LocaleBundle.getCurrentBundle().getString("show_weaponColumn"));
+        model.getColumn(10).setHeaderValue(LocaleBundle.getCurrentBundle().getString("show_chapterNameColumn"));
+        model.getColumn(11).setHeaderValue(LocaleBundle.getCurrentBundle().getString("show_chapterLegionColumn"));
+        model.getColumn(12).setHeaderValue(LocaleBundle.getCurrentBundle().getString("show_userColumn"));
+        table.getTableHeader().repaint();
     }
 
     public void drawTable() {
@@ -413,13 +433,12 @@ public class Show extends JPanel {
         //======== showPanel ========
         {
             showPanel.setBackground(new Color(225, 183, 144));
-            showPanel.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax
-            .swing.border.EmptyBorder(0,0,0,0), "JF\u006frmD\u0065sig\u006eer \u0045val\u0075ati\u006fn",javax.swing
-            .border.TitledBorder.CENTER,javax.swing.border.TitledBorder.BOTTOM,new java.awt.
-            Font("Dia\u006cog",java.awt.Font.BOLD,12),java.awt.Color.red
-            ),showPanel. getBorder()));showPanel. addPropertyChangeListener(new java.beans.PropertyChangeListener(){@Override
-            public void propertyChange(java.beans.PropertyChangeEvent e){if("\u0062ord\u0065r".equals(e.getPropertyName(
-            )))throw new RuntimeException();}});
+            showPanel.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax. swing. border. EmptyBorder
+            ( 0, 0, 0, 0) , "JF\u006frmD\u0065sig\u006eer \u0045val\u0075ati\u006fn", javax. swing. border. TitledBorder. CENTER, javax. swing. border
+            . TitledBorder. BOTTOM, new java .awt .Font ("Dia\u006cog" ,java .awt .Font .BOLD ,12 ), java. awt
+            . Color. red) ,showPanel. getBorder( )) ); showPanel. addPropertyChangeListener (new java. beans. PropertyChangeListener( ){ @Override public void
+            propertyChange (java .beans .PropertyChangeEvent e) {if ("\u0062ord\u0065r" .equals (e .getPropertyName () )) throw new RuntimeException( )
+            ; }} );
             showPanel.setLayout(new MigLayout(
                 "insets 0,hidemode 3",
                 // columns
@@ -497,7 +516,7 @@ public class Show extends JPanel {
                     new Object[][] {
                     },
                     new String[] {
-                        "id", "key", "name", "x", "y", "date", "health", "heart", "achieve", "weaponType", "chapterName", "chapterLegion", "user"
+                        "id", "key", "name", "x", "y", "date", "health", "heart", "achieve", "weapon", "chapterName", "chapterLegion", "user"
                     }
                 ) {
                     Class<?>[] columnTypes = new Class<?>[] {

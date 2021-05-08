@@ -55,9 +55,9 @@ new FormModel {
 				"model": new javax.swing.DefaultComboBoxModel {
 					selectedItem: "Russian"
 					addElement( "Russian" )
+					addElement( "English(USA)" )
 					addElement( "Slovenian" )
 					addElement( "Ukranian" )
-					addElement( "English(USA)" )
 				}
 				"background": new java.awt.Color( 225, 183, 144, 255 )
 				"foreground": new java.awt.Color( 40, 61, 82, 255 )

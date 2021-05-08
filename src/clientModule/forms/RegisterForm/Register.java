@@ -22,6 +22,7 @@ import common.utility.Response;
 import common.utility.ResponseCode;
 import common.utility.User;
 import net.miginfocom.swing.*;
+import resources.LocaleBundle;
 
 /**
  * @author unknown
@@ -79,6 +80,15 @@ public class Register extends JPanel {
                 }
             }
         });
+    }
+
+    public void localize() {
+        backButton.setText(LocaleBundle.getCurrentBundle().getString("back_button"));
+        registerButton.setText(LocaleBundle.getCurrentBundle().getString("registration"));
+        passwordName.setText(LocaleBundle.getCurrentBundle().getString("register_passwordName"));
+        confirmPassword.setText(LocaleBundle.getCurrentBundle().getString("register_confirmPassword"));
+        loginName.setText(LocaleBundle.getCurrentBundle().getString("register_loginName"));
+        name.setText(LocaleBundle.getCurrentBundle().getString("registration"));
     }
 
     private void initComponents() {
