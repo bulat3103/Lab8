@@ -85,8 +85,9 @@ public class Show extends JPanel {
         if (e.getColumn() == 2) {
             String name = String.valueOf(table.getModel().getValueAt(e.getFirstRow(), e.getColumn()));
             if (name.isEmpty()) {
-                table.getModel().setValueAt(collection.get(key).getName(), e.getFirstRow(), e.getColumn());
+                isNotValued = false;
                 JOptionPane.showMessageDialog(null, "Значение 'name' не может быть пустым!");
+                table.getModel().setValueAt(collection.get(key).getName(), e.getFirstRow(), e.getColumn());
                 return;
             }
             updateMarine.setName(name);
@@ -98,12 +99,14 @@ public class Show extends JPanel {
                 if (x <= -666) throw new NotDeclaredValueException();
                 coordinates = new Coordinates(x, Float.parseFloat(String.valueOf(table.getModel().getValueAt(e.getFirstRow(), e.getColumn() + 1))));
             } catch (NumberFormatException exception) {
-                table.getModel().setValueAt(collection.get(key).getCoordinates().getX(), e.getFirstRow(), e.getColumn());
+                isNotValued = false;
                 JOptionPane.showMessageDialog(null, "Значение 'x' должно быть числом!");
+                table.getModel().setValueAt(collection.get(key).getCoordinates().getX(), e.getFirstRow(), e.getColumn());
                 return;
             } catch (NotDeclaredValueException exception) {
-                table.getModel().setValueAt(collection.get(key).getCoordinates().getX(), e.getFirstRow(), e.getColumn());
+                isNotValued = false;
                 JOptionPane.showMessageDialog(null, "Значение 'x' должно быть больше -666!");
+                table.getModel().setValueAt(collection.get(key).getCoordinates().getX(), e.getFirstRow(), e.getColumn());
                 return;
             }
             updateMarine.setCoordinates(coordinates);
@@ -114,12 +117,14 @@ public class Show extends JPanel {
                 if (y <= -604) throw new NotDeclaredValueException();
                 coordinates = new Coordinates(Double.parseDouble(String.valueOf(table.getModel().getValueAt(e.getFirstRow(), e.getColumn() - 1))), y);
             } catch (NumberFormatException exception) {
-                table.getModel().setValueAt(collection.get(key).getCoordinates().getY(), e.getFirstRow(), e.getColumn());
+                isNotValued = false;
                 JOptionPane.showMessageDialog(null, "Значение 'y' должно быть числом!");
+                table.getModel().setValueAt(collection.get(key).getCoordinates().getY(), e.getFirstRow(), e.getColumn());
                 return;
             } catch (NotDeclaredValueException exception) {
-                table.getModel().setValueAt(collection.get(key).getCoordinates().getY(), e.getFirstRow(), e.getColumn());
+                isNotValued = false;
                 JOptionPane.showMessageDialog(null, "Значение 'y' должно быть больше -604!");
+                table.getModel().setValueAt(collection.get(key).getCoordinates().getY(), e.getFirstRow(), e.getColumn());
                 return;
             }
             updateMarine.setCoordinates(coordinates);
@@ -130,12 +135,14 @@ public class Show extends JPanel {
                 if (health <= 0) throw new NotDeclaredValueException();
                 updateMarine.setHealth(health);
             } catch (NumberFormatException exception) {
-                table.getModel().setValueAt(collection.get(key).getHealth(), e.getFirstRow(), e.getColumn());
+                isNotValued = false;
                 JOptionPane.showMessageDialog(null, "Значение 'health' должно быть числом!");
+                table.getModel().setValueAt(collection.get(key).getHealth(), e.getFirstRow(), e.getColumn());
                 return;
             } catch (NotDeclaredValueException exception) {
-                table.getModel().setValueAt(collection.get(key).getHealth(), e.getFirstRow(), e.getColumn());
+                isNotValued = false;
                 JOptionPane.showMessageDialog(null, "Значение 'health' должно быть больше 0!");
+                table.getModel().setValueAt(collection.get(key).getHealth(), e.getFirstRow(), e.getColumn());
                 return;
             }
         }
@@ -145,20 +152,23 @@ public class Show extends JPanel {
                 if (heartCount <= 0 || heartCount > 3) throw new NotDeclaredValueException();
                 updateMarine.setHealth(heartCount);
             } catch (NumberFormatException exception) {
-                table.getModel().setValueAt(collection.get(key).getHeartCount(), e.getFirstRow(), e.getColumn());
+                isNotValued = false;
                 JOptionPane.showMessageDialog(null, "Значение 'heartCount' должно быть числом!");
+                table.getModel().setValueAt(collection.get(key).getHeartCount(), e.getFirstRow(), e.getColumn());
                 return;
             } catch (NotDeclaredValueException exception) {
-                table.getModel().setValueAt(collection.get(key).getHeartCount(), e.getFirstRow(), e.getColumn());
+                isNotValued = false;
                 JOptionPane.showMessageDialog(null, "Значение 'heartCount' должно быть в пределе от 1 до 3!");
+                table.getModel().setValueAt(collection.get(key).getHeartCount(), e.getFirstRow(), e.getColumn());
                 return;
             }
         }
         if (e.getColumn() == 8) {
             String achieve = String.valueOf(table.getModel().getValueAt(e.getFirstRow(), e.getColumn()));
             if (achieve.isEmpty()) {
-                table.getModel().setValueAt(collection.get(key).getAchievements(), e.getFirstRow(), e.getColumn());
+                isNotValued = false;
                 JOptionPane.showMessageDialog(null, "Значение 'achieve' не может быть пустым!");
+                table.getModel().setValueAt(collection.get(key).getAchievements(), e.getFirstRow(), e.getColumn());
                 return;
             }
             updateMarine.setAchievements(achieve);
@@ -166,13 +176,15 @@ public class Show extends JPanel {
         if (e.getColumn() == 9) {
             String weapon = String.valueOf(table.getModel().getValueAt(e.getFirstRow(), e.getColumn()));
             if (weapon.isEmpty()) {
-                table.getModel().setValueAt(collection.get(key).getWeaponType().toString(), e.getFirstRow(), e.getColumn());
+                isNotValued = false;
                 JOptionPane.showMessageDialog(null, "Значение 'weapon' не может быть пустым!");
+                table.getModel().setValueAt(collection.get(key).getWeaponType().toString(), e.getFirstRow(), e.getColumn());
                 return;
             }
             if (!weapon.equals("BOLTGUN") && !weapon.equals("GRENADE") && !weapon.equals("FLAMER")) {
-                table.getModel().setValueAt(collection.get(key).getWeaponType().toString(), e.getFirstRow(), e.getColumn());
+                isNotValued = false;
                 JOptionPane.showMessageDialog(null, "Значение 'weapon' не может быть таким!");
+                table.getModel().setValueAt(collection.get(key).getWeaponType().toString(), e.getFirstRow(), e.getColumn());
                 return;
             }
             updateMarine.setWeaponType(Weapon.valueOf(weapon));
@@ -181,8 +193,9 @@ public class Show extends JPanel {
         if (e.getColumn() == 10) {
             String name = String.valueOf(table.getModel().getValueAt(e.getFirstRow(), e.getColumn()));
             if (name.isEmpty()) {
-                table.getModel().setValueAt(collection.get(key).getChapter().getName(), e.getFirstRow(), e.getColumn());
+                isNotValued = false;
                 JOptionPane.showMessageDialog(null, "Значение 'name' не может быть пустым!");
+                table.getModel().setValueAt(collection.get(key).getChapter().getName(), e.getFirstRow(), e.getColumn());
                 return;
             }
             chapter = new Chapter(name, String.valueOf(table.getModel().getValueAt(e.getFirstRow(), e.getColumn() + 1)));
@@ -191,8 +204,9 @@ public class Show extends JPanel {
         if (e.getColumn() == 11) {
             String legion = String.valueOf(table.getModel().getValueAt(e.getFirstRow(), e.getColumn()));
             if (legion.isEmpty()) {
-                table.getModel().setValueAt(collection.get(key).getChapter().getParentLegion(), e.getFirstRow(), e.getColumn());
+                isNotValued = false;
                 JOptionPane.showMessageDialog(null, "Значение 'achieve' не может быть пустым!");
+                table.getModel().setValueAt(collection.get(key).getChapter().getParentLegion(), e.getFirstRow(), e.getColumn());
                 return;
             }
             chapter = new Chapter(String.valueOf(table.getModel().getValueAt(e.getFirstRow(), e.getColumn() - 1)), legion);
@@ -204,7 +218,8 @@ public class Show extends JPanel {
                     updateMarine,
                     this.client.getUser()));
             Response fromServer = client.receive();
-            JOptionPane.showMessageDialog(null, fromServer.getResponseBody());
+            if (isNotValued) JOptionPane.showMessageDialog(null, fromServer.getResponseBody());
+            else isNotValued = true;
         } catch (IOException exception) {
             JOptionPane.showMessageDialog(null, "Произошла ошибка при отправке запроса на сервер!");
         } catch (ClassNotFoundException classNotFoundException) {
@@ -557,6 +572,7 @@ public class Show extends JPanel {
     private Client client;
     private boolean isFilter;
     private TreeMap<Integer, SpaceMarine> collection;
+    private boolean isNotValued;
 
     public JPanel getShowPanel() {
         return showPanel;

@@ -32,7 +32,6 @@ public class Visualize extends JPanel {
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
                 App.mainFrame.setContentPane(App.mainMenu.getMainMenuPanel());
                 App.mainFrame.validate();
             }
@@ -44,7 +43,9 @@ public class Visualize extends JPanel {
             @Override
             public void run() {
                 while (true) {
-                    drawObject();
+                    drawSpace.clearPoints();
+                    setObjects();
+                    drawSpace.repaint();
                     try {
                         Thread.sleep(1500);
                     } catch (InterruptedException ignored) {}
@@ -54,28 +55,11 @@ public class Visualize extends JPanel {
         draw.start();
     }
 
-    public void drawObject() {
+    public void setObjects() {
         try {
-            drawSpace.removeAll();
             client.send(new Request("show", "", client.getUser()));
             Response fromServer = client.receive();
             TreeMap<Integer, SpaceMarine> collection = fromServer.getCollection();
-            if (collection.size() == 1) {
-                SpaceMarine marine = collection.get(collection.firstKey());
-                JButton button = new JButton(String.valueOf(marine.getId()));
-                button.setFont(new Font("Arial", Font.BOLD, 12));
-                Color color = Color.decode(marine.getOwner().getColor());
-                button.setBackground(color);
-                button.setForeground(new Color(255 - color.getRed(), 255 - color.getGreen(), 255 - color.getBlue()));
-                button.setBorder(new EtchedBorder());
-                button.setPreferredSize(new Dimension(30, 20));
-                button.setBounds(new Rectangle(new Point(getWidth() / 2, getHeight() / 2), button.getPreferredSize()));
-                button.setVisible(true);
-                drawSpace.add(button);
-                System.out.println(drawSpace.getComponent(0));
-                drawSpace.revalidate();
-                return;
-            }
             int maxX = -1000;
             int minX = Integer.MAX_VALUE;
             int maxY = -1000;
@@ -94,19 +78,15 @@ public class Visualize extends JPanel {
                 int oldX = (int) e.getValue().getCoordinates().getX();
                 int oldY = (int) (double) e.getValue().getCoordinates().getY();
                 int x = (int) ((oldX - minX) * (weight / (maxX - minX)) + (drawSpace.getWidth() * 0.05));
-                int y = (oldY - minY) * (height / (maxY - minY));
-                JButton button = new JButton();
-                button.setText(String.valueOf(e.getValue().getId()));
-                button.setFont(new Font("Arial", Font.BOLD, 12));
-                Color color = Color.decode(e.getValue().getOwner().getColor());
-                button.setBackground(color);
-                button.setForeground(new Color(255 - color.getRed(), 255 - color.getGreen(), 255 - color.getBlue()));
-                button.setBorder(new EtchedBorder());
-                button.setPreferredSize(new Dimension(30, 20));
-                button.setBounds(new Rectangle(new Point(x, y), button.getPreferredSize()));
-                button.setVisible(true);
-                drawSpace.add(button);
-                drawSpace.repaint();
+                int y = (int) ((oldY - minY) * (height / (maxY - minY)) + (drawSpace.getHeight() * 0.05));
+                PointWithColor point = new PointWithColor(
+                        x,
+                        y,
+                        Color.decode(e.getValue().getOwner().getColor()),
+                        height / 10,
+                        String.valueOf(e.getValue().getId()),
+                        e.getValue());
+                drawSpace.addPointWithColor(point);
             }
         } catch (IOException | ClassNotFoundException ignored) {}
     }
@@ -122,7 +102,7 @@ public class Visualize extends JPanel {
         currentUser = new JLabel();
         name = new JLabel();
         backButton = new JButton();
-        drawSpace = new JPanel();
+        drawSpace = new DrawSpace();
 
         //======== visualizePanel ========
         {
@@ -211,7 +191,7 @@ public class Visualize extends JPanel {
     private JLabel currentUser;
     private JLabel name;
     private JButton backButton;
-    private JPanel drawSpace;
+    private DrawSpace drawSpace;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
     private Client client;
     private Thread draw;
@@ -220,7 +200,24 @@ public class Visualize extends JPanel {
         return visualizePanel;
     }
 
-    public JPanel getDrawSpace() {
-        return drawSpace;
+    public Thread getDraw() {
+        return draw;
     }
 }
+
+/*if (collection.size() == 1) {
+                SpaceMarine marine = collection.get(collection.firstKey());
+                JButton button = new JButton(String.valueOf(marine.getId()));
+                button.setFont(new Font("Arial", Font.BOLD, 12));
+                Color color = Color.decode(marine.getOwner().getColor());
+                button.setBackground(color);
+                button.setForeground(new Color(255 - color.getRed(), 255 - color.getGreen(), 255 - color.getBlue()));
+                button.setBorder(new EtchedBorder());
+                button.setPreferredSize(new Dimension(30, 20));
+                button.setBounds(new Rectangle(new Point(getWidth() / 2, getHeight() / 2), button.getPreferredSize()));
+                button.setVisible(true);
+                drawSpace.add(button);
+                System.out.println(drawSpace.getComponent(0));
+                drawSpace.revalidate();
+                return;
+            }*/

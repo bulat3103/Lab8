@@ -40,7 +40,6 @@ public class MainMenu extends JPanel {
                     client.send(new Request("log_out", "", client.getUser()));
                     Response fromServer = client.receive();
                     if (fromServer.getResponseCode().equals(ResponseCode.OK)) {
-                        client.setUser(null);
                         App.mainFrame.setContentPane(App.startMenu.getStartMenuPanel());
                         App.mainFrame.validate();
                     }

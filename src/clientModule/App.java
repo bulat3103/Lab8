@@ -49,8 +49,7 @@ public class App {
         update = new Update(client);
         script = new Script(client);
         filter = new Filter(client);
-        visualize = new Visualize(client);
-        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        visualize = new Visualize(client);mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setSize(600, 400);
         mainFrame.setContentPane(startMenu.getStartMenuPanel());
         mainFrame.setVisible(true);
