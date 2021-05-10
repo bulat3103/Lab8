@@ -84,13 +84,12 @@ public class Script extends JPanel {
         //======== scriptPanel ========
         {
             scriptPanel.setBackground(new Color(225, 183, 144));
-            scriptPanel.setBorder ( new javax . swing. border .CompoundBorder ( new javax . swing. border .TitledBorder ( new
-            javax . swing. border .EmptyBorder ( 0, 0 ,0 , 0) ,  "JF\u006frm\u0044es\u0069gn\u0065r \u0045va\u006cua\u0074io\u006e" , javax
-            . swing .border . TitledBorder. CENTER ,javax . swing. border .TitledBorder . BOTTOM, new java
-            . awt .Font ( "D\u0069al\u006fg", java .awt . Font. BOLD ,12 ) ,java . awt
-            . Color .red ) ,scriptPanel. getBorder () ) ); scriptPanel. addPropertyChangeListener( new java. beans .
-            PropertyChangeListener ( ){ @Override public void propertyChange (java . beans. PropertyChangeEvent e) { if( "\u0062or\u0064er" .
-            equals ( e. getPropertyName () ) )throw new RuntimeException( ) ;} } );
+            scriptPanel.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing.border.
+            EmptyBorder(0,0,0,0), "JF\u006frmD\u0065sig\u006eer \u0045val\u0075ati\u006fn",javax.swing.border.TitledBorder.CENTER,javax.swing
+            .border.TitledBorder.BOTTOM,new java.awt.Font("Dia\u006cog",java.awt.Font.BOLD,12),
+            java.awt.Color.red),scriptPanel. getBorder()));scriptPanel. addPropertyChangeListener(new java.beans.PropertyChangeListener()
+            {@Override public void propertyChange(java.beans.PropertyChangeEvent e){if("\u0062ord\u0065r".equals(e.getPropertyName()))
+            throw new RuntimeException();}});
             scriptPanel.setLayout(new MigLayout(
                 "insets 0,hidemode 3,align center center",
                 // columns
@@ -136,7 +135,7 @@ public class Script extends JPanel {
             backButton.setForeground(new Color(40, 61, 82));
             backButton.setFont(new Font("Arial", Font.BOLD, 12));
             backButton.setBorder(new EtchedBorder());
-            scriptPanel.add(backButton, "cell 6 0,align center center,grow 0 0");
+            scriptPanel.add(backButton, "cell 6 0,align center center,grow 0 0,width 80:80:110,height 30:30:50");
 
             //---- chooseFileButton ----
             chooseFileButton.setText("\u0412\u044b\u0431\u0440\u0430\u0442\u044c \u0444\u0430\u0439\u043b");

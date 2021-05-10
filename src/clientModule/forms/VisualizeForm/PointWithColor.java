@@ -4,8 +4,9 @@ import common.data.SpaceMarine;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
+import java.util.Objects;
 
-public class PointWithColor extends Point2D implements Comparable<PointWithColor>{
+public class PointWithColor extends Point2D{
     public int x;
     public int y;
     public Color color;
@@ -36,10 +37,6 @@ public class PointWithColor extends Point2D implements Comparable<PointWithColor
         return marine;
     }
 
-    public int getRadius() {
-        return radius;
-    }
-
     public Color getColor() {
         return color;
     }
@@ -61,7 +58,15 @@ public class PointWithColor extends Point2D implements Comparable<PointWithColor
     }
 
     @Override
-    public int compareTo(PointWithColor o) {
-        return this.marine.compareTo(o.marine);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PointWithColor that = (PointWithColor) o;
+        return this.marine.compareTo(that.marine) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(color, text, marine, key);
     }
 }

@@ -45,8 +45,7 @@ public class RemoveGreaterCommand extends AbstractCommand{
                     marineLite.getAchievements(),
                     marineLite.getWeaponType(),
                     marineLite.getChapter(),
-                    user,
-                    true
+                    user
             );
             List<SpaceMarine> marines = collectionManager.getGreater(marineToCompare);
             for (SpaceMarine marine : marines) {

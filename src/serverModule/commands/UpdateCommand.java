@@ -63,8 +63,7 @@ public class UpdateCommand extends AbstractCommand{
                     achievements,
                     weapon,
                     chapter,
-                    user,
-                    databaseCollectionManager.getIsDrewById(id)
+                    user
             ));
             ResponseOutputer.append("updateCommandSuccess");
             return true;

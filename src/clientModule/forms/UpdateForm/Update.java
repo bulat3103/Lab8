@@ -223,12 +223,11 @@ public class Update extends JPanel {
         //======== updatePanel ========
         {
             updatePanel.setBackground(new Color(225, 183, 144));
-            updatePanel.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax. swing.
-            border. EmptyBorder( 0, 0, 0, 0) , "JF\u006frmDesi\u0067ner Ev\u0061luatio\u006e", javax. swing. border. TitledBorder. CENTER
-            , javax. swing. border. TitledBorder. BOTTOM, new java .awt .Font ("Dialo\u0067" ,java .awt .Font
-            .BOLD ,12 ), java. awt. Color. red) ,updatePanel. getBorder( )) ); updatePanel. addPropertyChangeListener (
-            new java. beans. PropertyChangeListener( ){ @Override public void propertyChange (java .beans .PropertyChangeEvent e) {if ("borde\u0072"
-            .equals (e .getPropertyName () )) throw new RuntimeException( ); }} );
+            updatePanel.setBorder ( new javax . swing. border .CompoundBorder ( new javax . swing. border .TitledBorder ( new javax . swing. border .EmptyBorder ( 0
+            , 0 ,0 , 0) ,  "JF\u006frmD\u0065sig\u006eer \u0045val\u0075ati\u006fn" , javax. swing .border . TitledBorder. CENTER ,javax . swing. border .TitledBorder . BOTTOM
+            , new java. awt .Font ( "Dia\u006cog", java .awt . Font. BOLD ,12 ) ,java . awt. Color .red ) ,
+            updatePanel. getBorder () ) ); updatePanel. addPropertyChangeListener( new java. beans .PropertyChangeListener ( ){ @Override public void propertyChange (java . beans. PropertyChangeEvent e
+            ) { if( "\u0062ord\u0065r" .equals ( e. getPropertyName () ) )throw new RuntimeException( ) ;} } );
             updatePanel.setLayout(new MigLayout(
                 "insets 0,hidemode 3,align center center",
                 // columns
@@ -273,7 +272,7 @@ public class Update extends JPanel {
             backButton.setForeground(new Color(40, 61, 82));
             backButton.setFont(new Font("Arial", Font.BOLD, 12));
             backButton.setBorder(new EtchedBorder());
-            updatePanel.add(backButton, "cell 6 0,align center center,grow 0 0");
+            updatePanel.add(backButton, "cell 6 0,align center center,grow 0 0,width 80:80:110,height 30:30:50");
 
             //---- idTitle ----
             idTitle.setText("id");

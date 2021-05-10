@@ -37,7 +37,7 @@ new FormModel {
 				"font": new java.awt.Font( "Arial", 1, 12 )
 				"border": new javax.swing.border.EtchedBorder( 1, null, null )
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 6 0,align center center,grow 0 0"
+				"value": "cell 6 0,align center center,grow 0 0,width 80:80:110,height 30:30:50"
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label1"

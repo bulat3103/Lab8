@@ -78,12 +78,13 @@ public class RemoveByWeapon extends JPanel {
         //======== removeByWeaponPanel ========
         {
             removeByWeaponPanel.setBackground(new Color(225, 183, 144));
-            removeByWeaponPanel.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing.border.EmptyBorder
-            (0,0,0,0), "JFor\u006dDesi\u0067ner \u0045valu\u0061tion",javax.swing.border.TitledBorder.CENTER,javax.swing.border
-            .TitledBorder.BOTTOM,new java.awt.Font("Dia\u006cog",java.awt.Font.BOLD,12),java.awt
-            .Color.red),removeByWeaponPanel. getBorder()));removeByWeaponPanel. addPropertyChangeListener(new java.beans.PropertyChangeListener(){@Override public void
-            propertyChange(java.beans.PropertyChangeEvent e){if("bord\u0065r".equals(e.getPropertyName()))throw new RuntimeException()
-            ;}});
+            removeByWeaponPanel.setBorder ( new javax . swing. border .CompoundBorder ( new javax . swing. border .TitledBorder ( new javax
+            . swing. border .EmptyBorder ( 0, 0 ,0 , 0) ,  "JFor\u006dDesi\u0067ner \u0045valu\u0061tion" , javax. swing
+            .border . TitledBorder. CENTER ,javax . swing. border .TitledBorder . BOTTOM, new java. awt .
+            Font ( "Dia\u006cog", java .awt . Font. BOLD ,12 ) ,java . awt. Color .red
+            ) ,removeByWeaponPanel. getBorder () ) ); removeByWeaponPanel. addPropertyChangeListener( new java. beans .PropertyChangeListener ( ){ @Override
+            public void propertyChange (java . beans. PropertyChangeEvent e) { if( "bord\u0065r" .equals ( e. getPropertyName (
+            ) ) )throw new RuntimeException( ) ;} } );
             removeByWeaponPanel.setLayout(new MigLayout(
                 "insets 0,hidemode 3,align center center",
                 // columns
@@ -129,7 +130,7 @@ public class RemoveByWeapon extends JPanel {
             backButton.setForeground(new Color(40, 61, 82));
             backButton.setFont(new Font("Arial", Font.BOLD, 12));
             backButton.setBorder(new EtchedBorder());
-            removeByWeaponPanel.add(backButton, "cell 6 0,align center center,grow 0 0");
+            removeByWeaponPanel.add(backButton, "cell 6 0,align center center,grow 0 0,width 80:80:110,height 30:30:50");
 
             //---- label1 ----
             label1.setText("\u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u043e\u0440\u0443\u0436\u0438\u0435");

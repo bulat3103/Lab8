@@ -35,17 +35,15 @@ public class CommandManager {
     private AbstractCommand signInCommand;
     private AbstractCommand logOutCommand;
     private AbstractCommand getUserColor;
-    private AbstractCommand updateIsDrew;
 
     private ReentrantLock locker = new ReentrantLock();
 
-    public CommandManager(AbstractCommand helpCommand, AbstractCommand infoCommand, AbstractCommand showCommand, AbstractCommand insertCommand, AbstractCommand updateCommand, AbstractCommand removeKeyCommand, AbstractCommand clearCommand, AbstractCommand executeScriptCommand, AbstractCommand exitCommand, AbstractCommand removeGreaterCommand, AbstractCommand historyCommand, AbstractCommand removeLowerKeyCommand, AbstractCommand removeAllByWeaponTypeCommand, AbstractCommand sumOfHealthCommand, AbstractCommand averageOfHeartCountCommand, AbstractCommand signUpCommand, AbstractCommand signInCommand, AbstractCommand logOutCommand, AbstractCommand getUserColor, AbstractCommand updateIsDrew) {
+    public CommandManager(AbstractCommand helpCommand, AbstractCommand infoCommand, AbstractCommand showCommand, AbstractCommand insertCommand, AbstractCommand updateCommand, AbstractCommand removeKeyCommand, AbstractCommand clearCommand, AbstractCommand executeScriptCommand, AbstractCommand exitCommand, AbstractCommand removeGreaterCommand, AbstractCommand historyCommand, AbstractCommand removeLowerKeyCommand, AbstractCommand removeAllByWeaponTypeCommand, AbstractCommand sumOfHealthCommand, AbstractCommand averageOfHeartCountCommand, AbstractCommand signUpCommand, AbstractCommand signInCommand, AbstractCommand logOutCommand, AbstractCommand getUserColor) {
         this.helpCommand = helpCommand;
         commands.add(helpCommand);
         this.infoCommand = infoCommand;
         commands.add(infoCommand);
         this.showCommand = showCommand;
-        commands.add(showCommand);
         this.insertCommand = insertCommand;
         commands.add(insertCommand);
         this.updateCommand = updateCommand;
@@ -81,7 +79,6 @@ public class CommandManager {
         this.logOutCommand = logOutCommand;
         commands.add(logOutCommand);
         this.getUserColor = getUserColor;
-        this.updateIsDrew = updateIsDrew;
     }
 
     /**
@@ -112,7 +109,7 @@ public class CommandManager {
     public boolean help(String argument, Object objectArgument, User user) {
         if (helpCommand.execute(argument, objectArgument, user)) {
             for (AbstractCommand command : commands) {
-                ResponseOutputer.append(command.getName() + ":\t" + command.getDescription());
+                ResponseOutputer.append(command.getName() + "-----------:" + command.getDescription());
             }
             return true;
         } else return false;
@@ -339,9 +336,5 @@ public class CommandManager {
 
     public boolean get_user_color(String argument, Object objectArgument, User user) {
         return getUserColor.execute(argument, objectArgument, user);
-    }
-
-    public boolean update_is_drew(String argument, Object objectArgument, User user) {
-        return updateIsDrew.execute(argument, objectArgument, user);
     }
 }

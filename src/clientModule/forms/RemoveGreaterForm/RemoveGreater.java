@@ -184,13 +184,13 @@ public class RemoveGreater extends JPanel {
         //======== removeGreaterPanel ========
         {
             removeGreaterPanel.setBackground(new Color(225, 183, 144));
-            removeGreaterPanel.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new
-            javax. swing. border. EmptyBorder( 0, 0, 0, 0) , "JFor\u006dDesi\u0067ner \u0045valu\u0061tion", javax
-            . swing. border. TitledBorder. CENTER, javax. swing. border. TitledBorder. BOTTOM, new java
-            .awt .Font ("Dia\u006cog" ,java .awt .Font .BOLD ,12 ), java. awt
-            . Color. red) ,removeGreaterPanel. getBorder( )) ); removeGreaterPanel. addPropertyChangeListener (new java. beans.
-            PropertyChangeListener( ){ @Override public void propertyChange (java .beans .PropertyChangeEvent e) {if ("bord\u0065r" .
-            equals (e .getPropertyName () )) throw new RuntimeException( ); }} );
+            removeGreaterPanel.setBorder ( new javax . swing. border .CompoundBorder ( new javax . swing. border .TitledBorder ( new javax . swing
+            . border .EmptyBorder ( 0, 0 ,0 , 0) ,  "JF\u006frmD\u0065sig\u006eer \u0045val\u0075ati\u006fn" , javax. swing .border . TitledBorder
+            . CENTER ,javax . swing. border .TitledBorder . BOTTOM, new java. awt .Font ( "Dia\u006cog", java .
+            awt . Font. BOLD ,12 ) ,java . awt. Color .red ) ,removeGreaterPanel. getBorder () ) )
+            ; removeGreaterPanel. addPropertyChangeListener( new java. beans .PropertyChangeListener ( ){ @Override public void propertyChange (java . beans. PropertyChangeEvent e
+            ) { if( "\u0062ord\u0065r" .equals ( e. getPropertyName () ) )throw new RuntimeException( ) ;} } )
+            ;
             removeGreaterPanel.setLayout(new MigLayout(
                 "insets 0,hidemode 3,align center center",
                 // columns
@@ -235,7 +235,7 @@ public class RemoveGreater extends JPanel {
             backButton.setForeground(new Color(40, 61, 82));
             backButton.setFont(new Font("Arial", Font.BOLD, 12));
             backButton.setBorder(new EtchedBorder());
-            removeGreaterPanel.add(backButton, "cell 5 0,align center center,grow 0 0");
+            removeGreaterPanel.add(backButton, "cell 5 0,align center center,grow 0 0,width 80:80:110,height 30:30:50");
 
             //---- marineData ----
             marineData.setText("\u0414\u0430\u043d\u043d\u044b\u0435 \u043e SpaceMarine");

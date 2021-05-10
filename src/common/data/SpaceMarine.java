@@ -20,9 +20,8 @@ public class SpaceMarine implements Comparable<SpaceMarine>, Serializable {
     private Weapon weaponType;
     private Chapter chapter;
     private User owner;
-    private boolean isDrew;
 
-    public SpaceMarine(int id, String name, Coordinates coordinates, LocalDateTime creationDate, int health, Integer heartCount, String achievements, Weapon weaponType, Chapter chapter, User owner, boolean isDrew) {
+    public SpaceMarine(int id, String name, Coordinates coordinates, LocalDateTime creationDate, int health, Integer heartCount, String achievements, Weapon weaponType, Chapter chapter, User owner) {
         this.id = id;
         this.name = name;
         this.coordinates = coordinates;
@@ -33,15 +32,6 @@ public class SpaceMarine implements Comparable<SpaceMarine>, Serializable {
         this.weaponType = weaponType;
         this.chapter = chapter;
         this.owner = owner;
-        this.isDrew = isDrew;
-    }
-
-    public boolean isDrew() {
-        return isDrew;
-    }
-
-    public void setDrew(boolean drew) {
-        isDrew = drew;
     }
 
     /**
@@ -113,10 +103,7 @@ public class SpaceMarine implements Comparable<SpaceMarine>, Serializable {
 
     @Override
     public int compareTo(SpaceMarine o) {
-        if (this.health == o.health) {
-            return Integer.compare(this.heartCount, o.heartCount);
-        }
-        return Integer.compare(this.health, o.health);
+        return Integer.compare(this.id, o.id);
     }
 
     @Override
@@ -139,7 +126,7 @@ public class SpaceMarine implements Comparable<SpaceMarine>, Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SpaceMarine that = (SpaceMarine) o;
-        return id == that.id && health == that.health && Objects.equals(name, that.name) && Objects.equals(coordinates, that.coordinates) && Objects.equals(creationDate, that.creationDate) && Objects.equals(heartCount, that.heartCount) && Objects.equals(achievements, that.achievements) && weaponType == that.weaponType && Objects.equals(chapter, that.chapter) && Objects.equals(owner, that.owner);
+        return id == that.id;
     }
 
     @Override

@@ -95,11 +95,12 @@ public class Filter extends JPanel {
         //======== filterPanel ========
         {
             filterPanel.setBackground(new Color(225, 183, 144));
-            filterPanel.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing.border.EmptyBorder(
-            0,0,0,0), "JF\u006frmD\u0065sig\u006eer \u0045val\u0075ati\u006fn",javax.swing.border.TitledBorder.CENTER,javax.swing.border.TitledBorder
-            .BOTTOM,new java.awt.Font("Dia\u006cog",java.awt.Font.BOLD,12),java.awt.Color.
-            red),filterPanel. getBorder()));filterPanel. addPropertyChangeListener(new java.beans.PropertyChangeListener(){@Override public void propertyChange(java.
-            beans.PropertyChangeEvent e){if("\u0062ord\u0065r".equals(e.getPropertyName()))throw new RuntimeException();}});
+            filterPanel.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax. swing. border. EmptyBorder
+            ( 0, 0, 0, 0) , "JF\u006frmDes\u0069gner \u0045valua\u0074ion", javax. swing. border. TitledBorder. CENTER, javax. swing. border
+            . TitledBorder. BOTTOM, new java .awt .Font ("D\u0069alog" ,java .awt .Font .BOLD ,12 ), java. awt
+            . Color. red) ,filterPanel. getBorder( )) ); filterPanel. addPropertyChangeListener (new java. beans. PropertyChangeListener( ){ @Override public void
+            propertyChange (java .beans .PropertyChangeEvent e) {if ("\u0062order" .equals (e .getPropertyName () )) throw new RuntimeException( )
+            ; }} );
             filterPanel.setLayout(new MigLayout(
                 "insets 0,hidemode 3,align center center",
                 // columns
@@ -145,7 +146,7 @@ public class Filter extends JPanel {
             backButton.setForeground(new Color(40, 61, 82));
             backButton.setFont(new Font("Arial", Font.BOLD, 12));
             backButton.setBorder(new EtchedBorder());
-            filterPanel.add(backButton, "cell 6 0,align center center,grow 0 0");
+            filterPanel.add(backButton, "cell 6 0,align center center,grow 0 0,width 80:80:110,height 30:30:50");
 
             //---- label1 ----
             label1.setText("\u041f\u043e\u043b\u0435 \u0444\u0438\u043b\u044c\u0442\u0440\u0430:");
@@ -212,7 +213,7 @@ public class Filter extends JPanel {
             filterButton.setBackground(new Color(40, 61, 82));
             filterButton.setFont(new Font("Arial", Font.BOLD, 12));
             filterButton.setForeground(Color.white);
-            filterPanel.add(filterButton, "cell 3 8 2 1,aligny center,grow 100 0,height 30:30:40");
+            filterPanel.add(filterButton, "cell 3 8 2 1,aligny center,grow 100 0,height 30:30:50");
         }
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }

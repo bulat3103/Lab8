@@ -236,13 +236,12 @@ public class MainMenu extends JPanel {
         //======== mainMenuPanel ========
         {
             mainMenuPanel.setBackground(new Color(225, 183, 144));
-            mainMenuPanel.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing
-            .border.EmptyBorder(0,0,0,0), "JFor\u006dDesi\u0067ner \u0045valu\u0061tion",javax.swing.border.TitledBorder
-            .CENTER,javax.swing.border.TitledBorder.BOTTOM,new java.awt.Font("Dia\u006cog",java.
-            awt.Font.BOLD,12),java.awt.Color.red),mainMenuPanel. getBorder()))
-            ;mainMenuPanel. addPropertyChangeListener(new java.beans.PropertyChangeListener(){@Override public void propertyChange(java.beans.PropertyChangeEvent e
-            ){if("bord\u0065r".equals(e.getPropertyName()))throw new RuntimeException();}})
-            ;
+            mainMenuPanel.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing.border.
+            EmptyBorder(0,0,0,0), "JFor\u006dDesi\u0067ner \u0045valu\u0061tion",javax.swing.border.TitledBorder.CENTER,javax.swing
+            .border.TitledBorder.BOTTOM,new java.awt.Font("Dia\u006cog",java.awt.Font.BOLD,12),
+            java.awt.Color.red),mainMenuPanel. getBorder()));mainMenuPanel. addPropertyChangeListener(new java.beans.PropertyChangeListener()
+            {@Override public void propertyChange(java.beans.PropertyChangeEvent e){if("bord\u0065r".equals(e.getPropertyName()))
+            throw new RuntimeException();}});
             mainMenuPanel.setLayout(new MigLayout(
                 "insets 0,hidemode 3,align center center",
                 // columns
@@ -287,7 +286,7 @@ public class MainMenu extends JPanel {
             signOutButton.setForeground(new Color(40, 61, 82));
             signOutButton.setFont(new Font("Arial", Font.BOLD, 12));
             signOutButton.setBorder(new EtchedBorder());
-            mainMenuPanel.add(signOutButton, "cell 6 0,align center center,grow 0 0");
+            mainMenuPanel.add(signOutButton, "cell 6 0,align center center,grow 0 0,width 80:80:110,height 30:30:50");
 
             //---- label1 ----
             label1.setText("\u0414\u043e\u0431\u0430\u0432\u043b\u0435\u043d\u0438\u0435/\u0438\u0437\u043c\u0435\u043d\u0435\u043d\u0438\u0435");

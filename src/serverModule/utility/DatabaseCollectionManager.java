@@ -33,8 +33,7 @@ public class DatabaseCollectionManager {
             DatabaseManager.MARINE_TABLE_ACHIEVEMENTS_COLUMN + ", " +
             DatabaseManager.MARINE_TABLE_WEAPON_TYPE_COLUMN + ", " +
             DatabaseManager.MARINE_TABLE_CHAPTER_ID_COLUMN + ", " +
-            DatabaseManager.MARINE_TABLE_USER_ID_COLUMN + ", " +
-            DatabaseManager.MARINE_TABLE_IS_DREW_COLUMN + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            DatabaseManager.MARINE_TABLE_USER_ID_COLUMN + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private final String DELETE_MARINE_BY_ID = "DELETE FROM " + DatabaseManager.MARINE_TABLE +
             " WHERE " + DatabaseManager.MARINE_TABLE_ID_COLUMN + " = ?";
     private final String UPDATE_MARINE_NAME_BY_ID = "UPDATE " + DatabaseManager.MARINE_TABLE + " SET " +
@@ -51,9 +50,6 @@ public class DatabaseCollectionManager {
             DatabaseManager.MARINE_TABLE_ID_COLUMN + " = ?";
     private final String UPDATE_MARINE_WEAPON_TYPE_BY_ID = "UPDATE " + DatabaseManager.MARINE_TABLE + " SET " +
             DatabaseManager.MARINE_TABLE_WEAPON_TYPE_COLUMN + " = ?" + " WHERE " +
-            DatabaseManager.MARINE_TABLE_ID_COLUMN + " = ?";
-    private final String UPDATE_MARINE_IS_DREW_BY_ID = "UPDATE " + DatabaseManager.MARINE_TABLE + " SET " +
-            DatabaseManager.MARINE_TABLE_IS_DREW_COLUMN + " = ?" + " WHERE " +
             DatabaseManager.MARINE_TABLE_ID_COLUMN + " = ?";
     private final String SELECT_MARINE_IS_DREW_BY_ID = "SELECT is_drew FROM " + DatabaseManager.MARINE_TABLE + " WHERE " +
             DatabaseManager.MARINE_TABLE_ID_COLUMN + " = ?";
@@ -105,8 +101,7 @@ public class DatabaseCollectionManager {
         Weapon weaponType = Weapon.valueOf(weaponString);
         Chapter chapter = getChapterByID(resultSet.getInt(DatabaseManager.MARINE_TABLE_CHAPTER_ID_COLUMN));
         User owner = databaseUserManager.getUserById(resultSet.getInt(DatabaseManager.MARINE_TABLE_USER_ID_COLUMN));
-        boolean isDrew = resultSet.getBoolean(DatabaseManager.MARINE_TABLE_IS_DREW_COLUMN);
-        return new SpaceMarine(id, name, coordinates, creationDate, health, heartCount, achieve, weaponType, chapter, owner, isDrew);
+        return new SpaceMarine(id, name, coordinates, creationDate, health, heartCount, achieve, weaponType, chapter, owner);
     }
 
     public TreeMap<Integer, SpaceMarine> getCollection() {
@@ -252,7 +247,6 @@ public class DatabaseCollectionManager {
             insertMarine.setString(8, marineLite.getWeaponType().toString());
             insertMarine.setInt(9, chapterID);
             insertMarine.setInt(10, databaseUserManager.getUserIdByUsername(user));
-            insertMarine.setBoolean(11, false);
             if (insertMarine.executeUpdate() == 0) throw new SQLException();
             ResultSet resultSetMarine = insertMarine.getGeneratedKeys();
             int spaceMarineID;
@@ -268,8 +262,7 @@ public class DatabaseCollectionManager {
                     marineLite.getAchievements(),
                     marineLite.getWeaponType(),
                     marineLite.getChapter(),
-                    user,
-                    false
+                    user
             );
             databaseManager.commit();
             return marineToInsert;
@@ -283,39 +276,6 @@ public class DatabaseCollectionManager {
             databaseManager.closePreparedStatement(insertCoordinates);
             databaseManager.closePreparedStatement(insertMarine);
             databaseManager.setAutoCommit();
-        }
-    }
-
-    public boolean getIsDrewById(int spaceMarineId) throws DatabaseManagerException {
-        PreparedStatement preparedStatement = null;
-        boolean isDrew;
-        try {
-            preparedStatement = databaseManager.doPreparedStatement(SELECT_MARINE_IS_DREW_BY_ID, false);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next())
-                isDrew = resultSet.getBoolean(DatabaseManager.MARINE_TABLE_IS_DREW_COLUMN);
-            else throw new SQLException();
-        } catch (SQLException exception) {
-            System.out.println("Произошла ошибка при выполнении запроса SELECT_MARINE_IS_DREW_BY_ID!");
-            throw new DatabaseManagerException();
-        } finally {
-            databaseManager.closePreparedStatement(preparedStatement);
-        }
-        return isDrew;
-    }
-
-    public void updateIsDrewById(boolean value, int spaceMarineID) throws DatabaseManagerException {
-        PreparedStatement preparedStatement = null;
-        try {
-            preparedStatement = databaseManager.doPreparedStatement(UPDATE_MARINE_IS_DREW_BY_ID, false);
-            preparedStatement.setBoolean(1, value);
-            preparedStatement.setInt(2, spaceMarineID);
-            if (preparedStatement.executeUpdate() == 0) throw new SQLException();
-        } catch (SQLException exception) {
-            System.out.println("Произошла ошибка при выполнении запроса UPDATE_MARINE_IS_DREW_BY_ID!");
-            throw new DatabaseManagerException();
-        } finally {
-            databaseManager.closePreparedStatement(preparedStatement);
         }
     }
 

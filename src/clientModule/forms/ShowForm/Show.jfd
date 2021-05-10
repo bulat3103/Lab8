@@ -37,7 +37,7 @@ new FormModel {
 				"foreground": &Color0 new java.awt.Color( 255, 255, 255, 255 )
 				"border": &EtchedBorder0 new javax.swing.border.EtchedBorder( 1, null, null )
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 6 0,align center center,grow 0 0,width 70:70:100"
+				"value": "cell 6 0,align center center,grow 0 0,width 70:70:110,height 30:30:50"
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "filterButton"

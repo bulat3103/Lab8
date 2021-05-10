@@ -197,12 +197,14 @@ public class Insert extends JPanel {
         //======== insertPanel ========
         {
             insertPanel.setBackground(new Color(225, 183, 144));
-            insertPanel.setBorder ( new javax . swing. border .CompoundBorder ( new javax . swing. border .TitledBorder ( new javax . swing. border .EmptyBorder
-            ( 0, 0 ,0 , 0) ,  "JF\u006frmD\u0065sig\u006eer \u0045val\u0075ati\u006fn" , javax. swing .border . TitledBorder. CENTER ,javax . swing. border
-            .TitledBorder . BOTTOM, new java. awt .Font ( "Dia\u006cog", java .awt . Font. BOLD ,12 ) ,java . awt
-            . Color .red ) ,insertPanel. getBorder () ) ); insertPanel. addPropertyChangeListener( new java. beans .PropertyChangeListener ( ){ @Override public void
-            propertyChange (java . beans. PropertyChangeEvent e) { if( "\u0062ord\u0065r" .equals ( e. getPropertyName () ) )throw new RuntimeException( )
-            ;} } );
+            insertPanel.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(
+            new javax.swing.border.EmptyBorder(0,0,0,0), "JF\u006frmDes\u0069gner \u0045valua\u0074ion"
+            ,javax.swing.border.TitledBorder.CENTER,javax.swing.border.TitledBorder.BOTTOM
+            ,new java.awt.Font("D\u0069alog",java.awt.Font.BOLD,12)
+            ,java.awt.Color.red),insertPanel. getBorder()));insertPanel. addPropertyChangeListener(
+            new java.beans.PropertyChangeListener(){@Override public void propertyChange(java.beans.PropertyChangeEvent e
+            ){if("\u0062order".equals(e.getPropertyName()))throw new RuntimeException()
+            ;}});
             insertPanel.setLayout(new MigLayout(
                 "insets 0,hidemode 3,align center center",
                 // columns
@@ -247,7 +249,7 @@ public class Insert extends JPanel {
             backButton.setForeground(new Color(40, 61, 82));
             backButton.setFont(new Font("Arial", Font.BOLD, 12));
             backButton.setBorder(new EtchedBorder());
-            insertPanel.add(backButton, "cell 6 0,align center center,grow 0 0");
+            insertPanel.add(backButton, "cell 6 0,align center center,grow 0 0,width 80:80:110,height 30:30:50");
 
             //---- keyName ----
             keyName.setText("\u041a\u043b\u044e\u0447");
@@ -421,7 +423,7 @@ public class Insert extends JPanel {
             insertButton.setFont(new Font("Arial", Font.BOLD, 12));
             insertButton.setBackground(new Color(40, 61, 82));
             insertButton.setBorder(new EtchedBorder());
-            insertPanel.add(insertButton, "cell 3 8 2 1,aligny center,grow 100 0,height 25:30:50");
+            insertPanel.add(insertButton, "cell 3 8 2 1,aligny center,grow 100 0,height 30:30:50");
         }
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }

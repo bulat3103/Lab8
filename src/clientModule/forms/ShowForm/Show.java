@@ -448,12 +448,11 @@ public class Show extends JPanel {
         //======== showPanel ========
         {
             showPanel.setBackground(new Color(225, 183, 144));
-            showPanel.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax. swing. border. EmptyBorder
-            ( 0, 0, 0, 0) , "JF\u006frmD\u0065sig\u006eer \u0045val\u0075ati\u006fn", javax. swing. border. TitledBorder. CENTER, javax. swing. border
-            . TitledBorder. BOTTOM, new java .awt .Font ("Dia\u006cog" ,java .awt .Font .BOLD ,12 ), java. awt
-            . Color. red) ,showPanel. getBorder( )) ); showPanel. addPropertyChangeListener (new java. beans. PropertyChangeListener( ){ @Override public void
-            propertyChange (java .beans .PropertyChangeEvent e) {if ("\u0062ord\u0065r" .equals (e .getPropertyName () )) throw new RuntimeException( )
-            ; }} );
+            showPanel.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing.border.EmptyBorder(
+            0,0,0,0), "JF\u006frmD\u0065sig\u006eer \u0045val\u0075ati\u006fn",javax.swing.border.TitledBorder.CENTER,javax.swing.border.TitledBorder
+            .BOTTOM,new java.awt.Font("Dia\u006cog",java.awt.Font.BOLD,12),java.awt.Color.
+            red),showPanel. getBorder()));showPanel. addPropertyChangeListener(new java.beans.PropertyChangeListener(){@Override public void propertyChange(java.
+            beans.PropertyChangeEvent e){if("\u0062ord\u0065r".equals(e.getPropertyName()))throw new RuntimeException();}});
             showPanel.setLayout(new MigLayout(
                 "insets 0,hidemode 3",
                 // columns
@@ -497,7 +496,7 @@ public class Show extends JPanel {
             backButton.setFont(new Font("Arial", Font.BOLD, 12));
             backButton.setForeground(Color.white);
             backButton.setBorder(new EtchedBorder());
-            showPanel.add(backButton, "cell 6 0,align center center,grow 0 0,width 70:70:100");
+            showPanel.add(backButton, "cell 6 0,align center center,grow 0 0,width 70:70:110,height 30:30:50");
 
             //---- filterButton ----
             filterButton.setText("\u0424\u0438\u043b\u044c\u0442\u0440");
