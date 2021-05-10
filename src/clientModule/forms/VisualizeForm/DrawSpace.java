@@ -65,6 +65,10 @@ public class DrawSpace extends JPanel {
         points.add(point);
     }
 
+    public void removeAddPointWithColor(PointWithColor point) {
+        points.remove(point);
+    }
+
     public void clearPoints() {
         points.clear();
     }

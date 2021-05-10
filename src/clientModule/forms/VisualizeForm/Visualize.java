@@ -49,7 +49,7 @@ public class Visualize extends JPanel {
                     setObjects();
                     drawSpace.repaint();
                     try {
-                        Thread.sleep(1500);
+                        Thread.sleep(100);
                     } catch (InterruptedException ignored) {}
                 }
             }
@@ -62,6 +62,7 @@ public class Visualize extends JPanel {
             client.send(new Request("show", "", client.getUser()));
             Response fromServer = client.receive();
             TreeMap<Integer, SpaceMarine> collection = fromServer.getCollection();
+            myCopy.removeIf(point -> !collection.containsValue(point.getMarine()));
             int maxX = -1000;
             int minX = Integer.MAX_VALUE;
             int maxY = -1000;
@@ -89,6 +90,20 @@ public class Visualize extends JPanel {
                         String.valueOf(e.getValue().getId()),
                         e.getValue(),
                         e.getKey());
+                if (!myCopy.contains(point)) {
+                    point.radius = 1;
+                    myCopy.add(point);
+                } else {
+                    int index = 0;
+                    for (PointWithColor fromList : myCopy) {
+                        if (fromList.equals(point)) break;
+                        index++;
+                    }
+                    myCopy.get(index).radius += 1;
+                    if (myCopy.get(index).radius > height / 10)
+                        myCopy.get(index).radius = height / 10;
+                    point.radius = myCopy.get(index).radius;
+                }
                 drawSpace.addPointWithColor(point);
             }
         } catch (IOException | ClassNotFoundException ignored) {}
@@ -200,6 +215,7 @@ public class Visualize extends JPanel {
     private Client client;
     private boolean isActive;
     private Thread draw;
+    private ArrayList<PointWithColor> myCopy = new ArrayList<>();
 
     public JPanel getVisualizePanel() {
         return visualizePanel;
