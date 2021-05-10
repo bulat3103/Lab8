@@ -3,6 +3,7 @@ package serverModule.commands;
 import common.data.SpaceMarine;
 import common.exceptions.*;
 import common.utility.User;
+import resources.LocaleBundle;
 import serverModule.utility.CollectionManager;
 import serverModule.utility.DatabaseCollectionManager;
 import serverModule.utility.ResponseOutputer;
@@ -15,7 +16,7 @@ public class RemoveKeyCommand extends AbstractCommand{
     private DatabaseCollectionManager databaseCollectionManager;
 
     public RemoveKeyCommand(CollectionManager collectionManager, DatabaseCollectionManager databaseCollectionManager) {
-        super("remove_key", "удалить элемент из коллекции по его ключу");
+        super("remove_key", "removeKeyCommandDescription");
         this.collectionManager = collectionManager;
         this.databaseCollectionManager = databaseCollectionManager;
     }
@@ -27,7 +28,6 @@ public class RemoveKeyCommand extends AbstractCommand{
     @Override
     public boolean execute(String argument, Object objectArgument, User user) {
         try {
-            if (user == null) throw new NonAuthorizedUserException();
             if (argument.isEmpty() || objectArgument != null) throw new WrongAmountOfParametersException();
             if (collectionManager.collectionSize() == 0) throw new EmptyCollectionException();
             int key = Integer.parseInt(argument);
@@ -37,23 +37,20 @@ public class RemoveKeyCommand extends AbstractCommand{
             if (!databaseCollectionManager.checkSpaceMarineByIdAndUserId(o.getId(), user)) throw new IllegalDatabaseEditException();
             databaseCollectionManager.deleteSpaceMarineById(o.getId());
             collectionManager.removeFromCollection(key);
-            ResponseOutputer.append("Солдат успешно удален!\n");
+            ResponseOutputer.append("removeKeySuccess");
             return true;
         } catch (WrongAmountOfParametersException exception) {
             ResponseOutputer.append("Вместе с этой командой должен быть передан параметр! Наберит 'help' для справки\n");
         } catch (EmptyCollectionException exception) {
-            ResponseOutputer.append("Коллекция пуста!\n");
+            ResponseOutputer.append("emptyError");
         } catch (NotFoundMarineException exception) {
-            ResponseOutputer.append("Космический десант не найден!\n");
+            ResponseOutputer.append("notFoundError");
         } catch (DatabaseManagerException e) {
-            ResponseOutputer.append("Произошла ошибка при обращении к базе данных!\n");
+            ResponseOutputer.append("databaseError");
         } catch (IllegalDatabaseEditException exception) {
-            ResponseOutputer.append("Произошло нелегальное изменение объекта в базе данных!\n");
-            ResponseOutputer.append("Перезапустите клиент для избежания ошибок!\n");
+            ResponseOutputer.append("illegalError");
         } catch (PermissionDeniedException exception) {
-            ResponseOutputer.append("Принадлежащие другим пользователям объекты доступны только для чтения!\n");
-        } catch (NonAuthorizedUserException e) {
-            ResponseOutputer.append("Необходимо авторизоваться!\n");
+            ResponseOutputer.append("permissionError");
         }
         return false;
     }

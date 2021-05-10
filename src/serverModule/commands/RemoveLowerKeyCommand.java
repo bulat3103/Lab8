@@ -3,6 +3,7 @@ package serverModule.commands;
 import common.data.SpaceMarine;
 import common.exceptions.*;
 import common.utility.User;
+import resources.LocaleBundle;
 import serverModule.utility.CollectionManager;
 import serverModule.utility.DatabaseCollectionManager;
 import serverModule.utility.ResponseOutputer;
@@ -17,7 +18,7 @@ public class RemoveLowerKeyCommand extends AbstractCommand{
     private DatabaseCollectionManager databaseCollectionManager;
 
     public RemoveLowerKeyCommand(CollectionManager collectionManager, DatabaseCollectionManager databaseCollectionManager) {
-        super("remove_lower_key null", "удалить из коллекции все элементы, ключ которых меньше, чем заданный");
+        super("remove_lower_key null", "removeLowerKeyCommandDescription");
         this.collectionManager = collectionManager;
         this.databaseCollectionManager = databaseCollectionManager;
     }

@@ -1,6 +1,7 @@
 package serverModule.utility;
 
 import common.utility.User;
+import resources.LocaleBundle;
 import serverModule.commands.AbstractCommand;
 
 import java.util.ArrayList;
@@ -34,10 +35,11 @@ public class CommandManager {
     private AbstractCommand signInCommand;
     private AbstractCommand logOutCommand;
     private AbstractCommand getUserColor;
+    private AbstractCommand updateIsDrew;
 
     private ReentrantLock locker = new ReentrantLock();
 
-    public CommandManager(AbstractCommand helpCommand, AbstractCommand infoCommand, AbstractCommand showCommand, AbstractCommand insertCommand, AbstractCommand updateCommand, AbstractCommand removeKeyCommand, AbstractCommand clearCommand, AbstractCommand executeScriptCommand, AbstractCommand exitCommand, AbstractCommand removeGreaterCommand, AbstractCommand historyCommand, AbstractCommand removeLowerKeyCommand, AbstractCommand removeAllByWeaponTypeCommand, AbstractCommand sumOfHealthCommand, AbstractCommand averageOfHeartCountCommand, AbstractCommand signUpCommand, AbstractCommand signInCommand, AbstractCommand logOutCommand, AbstractCommand getUserColor) {
+    public CommandManager(AbstractCommand helpCommand, AbstractCommand infoCommand, AbstractCommand showCommand, AbstractCommand insertCommand, AbstractCommand updateCommand, AbstractCommand removeKeyCommand, AbstractCommand clearCommand, AbstractCommand executeScriptCommand, AbstractCommand exitCommand, AbstractCommand removeGreaterCommand, AbstractCommand historyCommand, AbstractCommand removeLowerKeyCommand, AbstractCommand removeAllByWeaponTypeCommand, AbstractCommand sumOfHealthCommand, AbstractCommand averageOfHeartCountCommand, AbstractCommand signUpCommand, AbstractCommand signInCommand, AbstractCommand logOutCommand, AbstractCommand getUserColor, AbstractCommand updateIsDrew) {
         this.helpCommand = helpCommand;
         commands.add(helpCommand);
         this.infoCommand = infoCommand;
@@ -70,7 +72,7 @@ public class CommandManager {
         commands.add(averageOfHeartCountCommand);
         this.signUpCommand = signUpCommand;
         this.signInCommand = signInCommand;
-        commands.add(new AbstractCommand("log_in", "авторизоваться") {
+        commands.add(new AbstractCommand("log_in", LocaleBundle.getCurrentBundle().getString("loginCommandDescription")) {
             @Override
             public boolean execute(String argument, Object objectArgument, User user) {
                 return false;
@@ -79,6 +81,7 @@ public class CommandManager {
         this.logOutCommand = logOutCommand;
         commands.add(logOutCommand);
         this.getUserColor = getUserColor;
+        this.updateIsDrew = updateIsDrew;
     }
 
     /**
@@ -109,7 +112,7 @@ public class CommandManager {
     public boolean help(String argument, Object objectArgument, User user) {
         if (helpCommand.execute(argument, objectArgument, user)) {
             for (AbstractCommand command : commands) {
-                ResponseOutputer.appendTable(command.getName(), command.getDescription());
+                ResponseOutputer.append(command.getName() + ":\t" + command.getDescription());
             }
             return true;
         } else return false;
@@ -237,12 +240,12 @@ public class CommandManager {
             locker.lock();
             try {
                 if (commandHistory.length == 0) {
-                    ResponseOutputer.append("Ни одной команды еще не было использовано!\n");
+                    ResponseOutputer.append("historyError");
                     return false;
                 }
-                ResponseOutputer.append("Последние использованные команды:\n");
+                ResponseOutputer.append("historyText");
                 for (int i = 0; i < commandHistory.length; i++) {
-                    if (commandHistory[i] != null) ResponseOutputer.append(" " + commandHistory[i] + "\n");
+                    if (commandHistory[i] != null) ResponseOutputer.append(" " + commandHistory[i]);
                 }
                 return true;
             } finally {
@@ -336,5 +339,9 @@ public class CommandManager {
 
     public boolean get_user_color(String argument, Object objectArgument, User user) {
         return getUserColor.execute(argument, objectArgument, user);
+    }
+
+    public boolean update_is_drew(String argument, Object objectArgument, User user) {
+        return updateIsDrew.execute(argument, objectArgument, user);
     }
 }

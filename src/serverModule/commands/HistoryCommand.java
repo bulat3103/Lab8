@@ -3,6 +3,7 @@ package serverModule.commands;
 import common.exceptions.NonAuthorizedUserException;
 import common.exceptions.WrongAmountOfParametersException;
 import common.utility.User;
+import resources.LocaleBundle;
 import serverModule.utility.ResponseOutputer;
 
 /**
@@ -11,7 +12,7 @@ import serverModule.utility.ResponseOutputer;
 public class HistoryCommand extends AbstractCommand{
 
     public HistoryCommand() {
-        super("history", "вывести историю использованных команд");
+        super("history", "historyCommandDescription");
     }
 
     /**

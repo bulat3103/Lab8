@@ -44,9 +44,9 @@ public class MainMenu extends JPanel {
                         App.mainFrame.validate();
                     }
                 } catch (IOException exception) {
-                    JOptionPane.showMessageDialog(null, "Произошла ошибка при отправке запроса на сервер!");
+                    JOptionPane.showMessageDialog(null, LocaleBundle.getCurrentBundle().getString("ioPaneError"));
                 } catch (ClassNotFoundException classNotFoundException) {
-                    JOptionPane.showMessageDialog(null, "Произошла ошибка при получении ответа с сервера!");
+                    JOptionPane.showMessageDialog(null, LocaleBundle.getCurrentBundle().getString("classNotFoundError"));
                 }
             }
         });
@@ -56,11 +56,11 @@ public class MainMenu extends JPanel {
                 try {
                     client.send(new Request("info", "", client.getUser()));
                     Response fromServer = client.receive();
-                    JOptionPane.showMessageDialog(null, fromServer.getResponseBody());
+                    JOptionPane.showMessageDialog(null, fromServer.localize());
                 } catch (IOException exception) {
-                    JOptionPane.showMessageDialog(null, "Произошла ошибка при отправке запроса на сервер!");
+                    JOptionPane.showMessageDialog(null, LocaleBundle.getCurrentBundle().getString("ioPaneError"));
                 } catch (ClassNotFoundException classNotFoundException) {
-                    JOptionPane.showMessageDialog(null, "Произошла ошибка при получении ответа с сервера!");
+                    JOptionPane.showMessageDialog(null, LocaleBundle.getCurrentBundle().getString("classNotFoundError"));
                 }
             }
         });
@@ -70,11 +70,11 @@ public class MainMenu extends JPanel {
                 try {
                     client.send(new Request("history", "", client.getUser()));
                     Response fromServer = client.receive();
-                    JOptionPane.showMessageDialog(null, fromServer.getResponseBody());
+                    JOptionPane.showMessageDialog(null, fromServer.localize());
                 } catch (IOException exception) {
-                    JOptionPane.showMessageDialog(null, "Произошла ошибка при отправке запроса на сервер!");
+                    JOptionPane.showMessageDialog(null, LocaleBundle.getCurrentBundle().getString("ioPaneError"));
                 } catch (ClassNotFoundException classNotFoundException) {
-                    JOptionPane.showMessageDialog(null, "Произошла ошибка при получении ответа с сервера!");
+                    JOptionPane.showMessageDialog(null, LocaleBundle.getCurrentBundle().getString("classNotFoundError"));
                 }
             }
         });
@@ -84,11 +84,11 @@ public class MainMenu extends JPanel {
                 try {
                     client.send(new Request("average_of_heart_count", "", client.getUser()));
                     Response fromServer = client.receive();
-                    JOptionPane.showMessageDialog(null, fromServer.getResponseBody());
+                    JOptionPane.showMessageDialog(null, fromServer.localize());
                 } catch (IOException exception) {
-                    JOptionPane.showMessageDialog(null, "Произошла ошибка при отправке запроса на сервер!");
+                    JOptionPane.showMessageDialog(null, LocaleBundle.getCurrentBundle().getString("ioPaneError"));
                 } catch (ClassNotFoundException classNotFoundException) {
-                    JOptionPane.showMessageDialog(null, "Произошла ошибка при получении ответа с сервера!");
+                    JOptionPane.showMessageDialog(null, LocaleBundle.getCurrentBundle().getString("classNotFoundError"));
                 }
             }
         });
@@ -98,11 +98,11 @@ public class MainMenu extends JPanel {
                 try {
                     client.send(new Request("sum_of_health", "", client.getUser()));
                     Response fromServer = client.receive();
-                    JOptionPane.showMessageDialog(null, fromServer.getResponseBody());
+                    JOptionPane.showMessageDialog(null, fromServer.localize());
                 } catch (IOException exception) {
-                    JOptionPane.showMessageDialog(null, "Произошла ошибка при отправке запроса на сервер!");
+                    JOptionPane.showMessageDialog(null, LocaleBundle.getCurrentBundle().getString("ioPaneError"));
                 } catch (ClassNotFoundException classNotFoundException) {
-                    JOptionPane.showMessageDialog(null, "Произошла ошибка при получении ответа с сервера!");
+                    JOptionPane.showMessageDialog(null, LocaleBundle.getCurrentBundle().getString("classNotFoundError"));
                 }
             }
         });
@@ -112,11 +112,11 @@ public class MainMenu extends JPanel {
                 try {
                     client.send(new Request("help", "", client.getUser()));
                     Response fromServer = client.receive();
-                    JOptionPane.showMessageDialog(null, fromServer.getResponseBody());
+                    JOptionPane.showMessageDialog(null, fromServer.localize());
                 } catch (IOException exception) {
-                    JOptionPane.showMessageDialog(null, "Произошла ошибка при отправке запроса на сервер!");
+                    JOptionPane.showMessageDialog(null, LocaleBundle.getCurrentBundle().getString("ioPaneError"));
                 } catch (ClassNotFoundException classNotFoundException) {
-                    JOptionPane.showMessageDialog(null, "Произошла ошибка при получении ответа с сервера!");
+                    JOptionPane.showMessageDialog(null, LocaleBundle.getCurrentBundle().getString("classNotFoundError"));
                 }
             }
         });
@@ -140,11 +140,11 @@ public class MainMenu extends JPanel {
                 try {
                     client.send(new Request("clear", "", client.getUser()));
                     Response fromServer = client.receive();
-                    JOptionPane.showMessageDialog(null, fromServer.getResponseBody());
+                    JOptionPane.showMessageDialog(null, fromServer.localize());
                 } catch (IOException exception) {
-                    JOptionPane.showMessageDialog(null, "Произошла ошибка при отправке запроса на сервер!");
+                    JOptionPane.showMessageDialog(null, LocaleBundle.getCurrentBundle().getString("ioPaneError"));
                 } catch (ClassNotFoundException classNotFoundException) {
-                    JOptionPane.showMessageDialog(null, "Произошла ошибка при получении ответа с сервера!");
+                    JOptionPane.showMessageDialog(null, LocaleBundle.getCurrentBundle().getString("classNotFoundError"));
                 }
             }
         });

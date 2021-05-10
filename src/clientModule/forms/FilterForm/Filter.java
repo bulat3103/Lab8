@@ -34,15 +34,15 @@ public class Filter extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (chooseField.getItemAt(chooseField.getSelectedIndex()).equals("None")) {
-                    JOptionPane.showMessageDialog(null, "Не выбрано поле!");
+                    JOptionPane.showMessageDialog(null, LocaleBundle.getCurrentBundle().getString("filterOptionPaneError1"));
                     return;
                 }
                 if (argumentField.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Не введен аргумент!");
+                    JOptionPane.showMessageDialog(null, LocaleBundle.getCurrentBundle().getString("filterOptionPaneError2"));
                     return;
                 }
                 if (chooseTypeFilter.getItemAt(chooseTypeFilter.getSelectedIndex()).equals("None")) {
-                    JOptionPane.showMessageDialog(null, "Не выбран тип фильтра!");
+                    JOptionPane.showMessageDialog(null, LocaleBundle.getCurrentBundle().getString("filterOptionPaneError3"));
                     return;
                 }
                 App.show.setFilter(true);
@@ -59,7 +59,7 @@ public class Filter extends JPanel {
         label2.setText(LocaleBundle.getCurrentBundle().getString("filter_label2"));
         label3.setText(LocaleBundle.getCurrentBundle().getString("filter_label3"));
         filterButton.setText(LocaleBundle.getCurrentBundle().getString("filter_filterButton"));
-        String chooseFieldValues[] = new String[]{
+        String[] chooseFieldValues = new String[]{
                 "None",
                 "id",
                 LocaleBundle.getCurrentBundle().getString("show_keyColumn"),

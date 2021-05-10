@@ -8,7 +8,7 @@ public class LocaleBundle {
     private static ResourceBundle bundle_sv = ResourceBundle.getBundle("resources.Resource_sv");
     private static ResourceBundle bundle_uk = ResourceBundle.getBundle("resources.Resource_uk");
 
-    private static ResourceBundle currentBundle;
+    private static ResourceBundle currentBundle = bundle_ru;
 
     public static void setBundle(String lang) {
         switch (lang) {

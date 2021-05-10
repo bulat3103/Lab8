@@ -2,6 +2,7 @@ package serverModule.commands;
 
 import common.exceptions.WrongAmountOfParametersException;
 import common.utility.User;
+import resources.LocaleBundle;
 
 /**
  * Command 'exit'. Checks for wrong arguments then do nothing.
@@ -9,7 +10,7 @@ import common.utility.User;
 public class ExitCommand extends AbstractCommand {
 
     public ExitCommand() {
-        super("exit", "завершить программу");
+        super("exit", "exitCommandDescription");
     }
 
     /**

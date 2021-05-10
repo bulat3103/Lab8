@@ -12,18 +12,28 @@ public class PointWithColor extends Point2D {
     public int radius;
     public String text;
     private SpaceMarine marine;
+    private int key;
 
-    public PointWithColor(int x, int y, Color color, int radius, String text, SpaceMarine marine) {
+    public PointWithColor(int x, int y, Color color, int radius, String text, SpaceMarine marine, int key) {
         this.x = x;
         this.y = y;
         this.color = color;
         this.radius = radius;
         this.text = text;
         this.marine = marine;
+        this.key = key;
     }
 
     public String getText() {
         return text;
+    }
+
+    public int getKey() {
+        return key;
+    }
+
+    public SpaceMarine getMarine() {
+        return marine;
     }
 
     public int getRadius() {

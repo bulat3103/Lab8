@@ -3,6 +3,7 @@ package serverModule.commands;
 import common.exceptions.NonAuthorizedUserException;
 import common.exceptions.WrongAmountOfParametersException;
 import common.utility.User;
+import resources.LocaleBundle;
 import serverModule.utility.CollectionManager;
 import serverModule.utility.ResponseOutputer;
 
@@ -13,7 +14,7 @@ public class ShowCommand extends AbstractCommand{
     private CollectionManager collectionManager;
 
     public ShowCommand(CollectionManager collectionManager) {
-        super("show", "вывести все элементы коллекции");
+        super("show", "showCommandDescription");
         this.collectionManager = collectionManager;
     }
 

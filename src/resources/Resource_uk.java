@@ -74,7 +74,98 @@ public class Resource_uk extends ListResourceBundle {
                     {"removeByWeapon_label1", "Виберіть зброю"},
 
                     {"insert_keyName", "Ключ"},
-                    {"insert_insertButton", "Додавши"}
+                    {"insert_insertButton", "Додавши"},
+
+                    {"averCommandDescription", "вивести середнє значення поля heartCount для всіх елементів колекції"},
+                    {"clearCommandDescription", "очистити колекцію"},
+                    {"scriptCommandDescription", "виконати скрипт із зазначеного файлу"},
+                    {"exitCommandDescription", "завершити програму"},
+                    {"helpCommandDescription", "вивести довідку за доступними командам"},
+                    {"historyCommandDescription", "вивести історію використаних команд"},
+                    {"infoCommandDescription", "вивести інформацію про колекцію"},
+                    {"removeWeaponCommandDescription", "видалити з колекції всі елементи, значення поля weaponType якого еквівалентно заданому"},
+                    {"removeGreaterCommandDescription", "видалити з колекції всі елементи, що перевищують заданий"},
+                    {"removeKeyCommandDescription", "видалити елемент з колекції по його ключу"},
+                    {"removeLowerKeyCommandDescription", "видалити з колекції всі елементи, ключ яких менше, ніж заданий"},
+                    {"showCommandDescription", "вивести всі елементи колекції"},
+                    {"signInCommandDescription", "увійти в акаунт"},
+                    {"logOutCommandDescription", "вийти з облікового запису"},
+                    {"signUpCommandDescription", "реєстрація нового користувача"},
+                    {"sumHealthCommandDescription", "вивести суму значень поля health для всіх елементів колекції"},
+                    {"updateCommandDescription", "оновити значення елемента колекції по id"},
+                    {"loginCommandDescription", "авторизувати"},
+                    {"insertCommandDescription", "додати елемент"},
+
+                    {"nonUserError", "Необхідно авторизуватися!"},
+                    {"illegalError", "Відбулася нелегальна зміна об'єкта в базі даних!\nПерезапустіть клієнт для уникнення помилок!"},
+                    {"permissionError", "Об'єкти, що належать іншим користувачам, доступні лише для читання!"},
+                    {"databaseError", "Сталася помилка при зверненні до бази даних!"},
+                    {"emptyError", "Колекція порожня!"},
+                    {"notFoundError", "Космічний десант не знайдено!"},
+                    {"multiUserError", "Цей користувач вже авторизований!"},
+                    {"userNotFoundError", "Неправильні ім'я користувача або пароль!"},
+                    {"classCastError", "Переданий клієнтом об'єкт невірний!"},
+                    {"userExistError", "Цей користувач вже існує!"},
+
+                    {"clearCommandSuccess", "Колекція успішно очищена!"},
+
+                    {"infoCommandText1", "у даній сесії ініціалізації ще не відбувалося"},
+                    {"infoCommandText2", "Інформація про колекцію:"},
+                    {"infoCommandText3", " Тип: "},
+                    {"infoCommandText4", " Кількість елементів: "},
+                    {"infoCommandText5", " Дата останньої ініціалізації: "},
+
+                    {"insertCommandSuccess", "Успішно додано в колекцію!"},
+
+                    {"removeWeaponSuccessText", "Успішно видалені всі солдати з типом зброї: "},
+
+                    {"removeGreaterSuccess", "Солдати успішно видалені!"},
+
+                    {"removeKeySuccess", "Солдат успішно видалений!"},
+
+                    {"signInCommandSuccess", "Авторизація пройшла успішно!"},
+
+                    {"signUpCommandSuccess", "Реєстрація пройшла успішно!"},
+
+                    {"sumHealthCommandText", "Сума здоров'я всіх космічних десантів: "},
+
+                    {"updateCommandSuccess", "Успішно змінено!"},
+
+                    {"averCommandText", "Середнє значення поля heartCount всіх космічних десантів: "},
+
+                    {"historyError", "Жодної команди ще не було використано!"},
+                    {"historyText", "Останні використані команди:"},
+
+                    {"ioPaneError", "Сталася помилка при відправці запиту на сервер!"},
+                    {"classNotFoundError", "Сталася помилка при отриманні відповіді з сервера!"},
+
+                    {"filterOptionPaneError1", "Не вибрано поле!"},
+                    {"filterOptionPaneError2", "Не введений аргумент!"},
+                    {"filterOptionPaneError3", "Не вибрано тип фільтра!"},
+
+                    {"valuesOptionPaneError13", "Ключ повинен бути числом!\n"},
+                    {"valuesOptionPaneError14", "Ключ повинен бути більше 0!\n"},
+
+                    {"valuesOptionPaneError1", "Значення поля 'name' не може бути порожнім!\n"},
+                    {"valuesOptionPaneError2", "Здоров'я має бути числом!\n"},
+                    {"valuesOptionPaneError3", "Здоров'я має бути більше 0!\n"},
+                    {"valuesOptionPaneError4", "Кількість сердець має бути числом!\n"},
+                    {"valuesOptionPaneError5", "Кількість сердець має бути більше 0!\n"},
+                    {"valuesOptionPaneError6", "Значення поля 'achievements' не може бути порожнім!\n"},
+                    {"valuesOptionPaneError7", "Координата 'x' повинна бути числом!\n"},
+                    {"valuesOptionPaneError8", "Координата 'x' повинна бути більше -666!\n"},
+                    {"valuesOptionPaneError9", "Координата 'y' повинна бути числом!\n"},
+                    {"valuesOptionPaneError10", "Координата 'y' повинна бути більше -666!\n"},
+                    {"valuesOptionPaneError11", "Значення поля 'chapterName' не може бути порожнім!\n"},
+                    {"valuesOptionPaneError12", "Значення поля 'chapterLegion' не може бути порожнім!\n"},
+
+                    {"valuesOptionPaneError15", "Значення 'weapon' не може бути порожнім!"},
+                    {"valuesOptionPaneError16", "Значення 'weapon' не може бути таким!"},
+
+                    {"registerOptionPaneError", "Паролі різняться!"},
+
+                    {"scriptOptionPaneError1", "Не вдалося виконати команду! Перевірте правильність введення аргументів!\n"},
+                    {"scriptOptionPaneError2", "Не вдалося знайти файл!"}
             };
     @Override
     protected Object[][] getContents() {

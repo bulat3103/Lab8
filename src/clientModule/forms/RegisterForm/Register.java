@@ -68,15 +68,15 @@ public class Register extends JPanel {
                             App.mainFrame.setContentPane(App.mainMenu.getMainMenuPanel());
                             App.mainFrame.validate();
                         } else {
-                            JOptionPane.showMessageDialog(null, fromServer.getResponseBody());
+                            JOptionPane.showMessageDialog(null, fromServer.localize());
                         }
                     } else {
-                        JOptionPane.showMessageDialog(null, "Пароли различаются!");
+                        JOptionPane.showMessageDialog(null, LocaleBundle.getCurrentBundle().getString("registerOptionPaneError"));
                     }
                 } catch (IOException exception) {
-                    JOptionPane.showMessageDialog(null, "Произошла ошибка при отправке запроса на сервер!");
+                    JOptionPane.showMessageDialog(null, LocaleBundle.getCurrentBundle().getString("ioPaneError"));
                 } catch (ClassNotFoundException classNotFoundException) {
-                    JOptionPane.showMessageDialog(null, "Произошла ошибка при получении ответа с сервера!");
+                    JOptionPane.showMessageDialog(null, LocaleBundle.getCurrentBundle().getString("classNotFoundError"));
                 }
             }
         });

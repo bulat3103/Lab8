@@ -4,6 +4,7 @@ import common.exceptions.EmptyCollectionException;
 import common.exceptions.NonAuthorizedUserException;
 import common.exceptions.WrongAmountOfParametersException;
 import common.utility.User;
+import resources.LocaleBundle;
 import serverModule.utility.CollectionManager;
 import serverModule.utility.ResponseOutputer;
 
@@ -14,7 +15,7 @@ public class AverageOfHeartCountCommand extends AbstractCommand{
     private CollectionManager collectionManager;
 
     public AverageOfHeartCountCommand(CollectionManager collectionManager) {
-        super("average_of_heart_count", "вывести среднее значение поля heartCount для всех элементов коллекции");
+        super("average_of_heart_count", "averCommandDescription");
         this.collectionManager = collectionManager;
     }
 
@@ -25,18 +26,15 @@ public class AverageOfHeartCountCommand extends AbstractCommand{
     @Override
     public boolean execute(String argument, Object objectArgument, User user) {
         try {
-            if (user == null) throw new NonAuthorizedUserException();
             if (!argument.isEmpty() || objectArgument != null) throw new WrongAmountOfParametersException();
             double average_of_heart_count = collectionManager.averageOfHeartCount();
             if (average_of_heart_count == 0) throw new EmptyCollectionException();
-            ResponseOutputer.append("Среднее значение поля heartCount всех космических десантов: " + average_of_heart_count + "\n");
+            ResponseOutputer.append("averCommandText:" + average_of_heart_count);
             return true;
         } catch (WrongAmountOfParametersException exception) {
             ResponseOutputer.append("У этой команды нет параметров!\n");
         } catch (EmptyCollectionException exception) {
-            ResponseOutputer.append("Коллекция пуста!\n");
-        } catch (NonAuthorizedUserException e) {
-            ResponseOutputer.append("Необходимо авторизоваться!\n");
+            ResponseOutputer.append("emptyError");
         }
         return false;
     }

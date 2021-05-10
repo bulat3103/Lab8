@@ -86,7 +86,7 @@ public class Show extends JPanel {
             String name = String.valueOf(table.getModel().getValueAt(e.getFirstRow(), e.getColumn()));
             if (name.isEmpty()) {
                 isNotValued = false;
-                JOptionPane.showMessageDialog(null, "Значение 'name' не может быть пустым!");
+                JOptionPane.showMessageDialog(null, LocaleBundle.getCurrentBundle().getString("valuesOptionPaneError1"));
                 table.getModel().setValueAt(collection.get(key).getName(), e.getFirstRow(), e.getColumn());
                 return;
             }
@@ -100,12 +100,12 @@ public class Show extends JPanel {
                 coordinates = new Coordinates(x, Float.parseFloat(String.valueOf(table.getModel().getValueAt(e.getFirstRow(), e.getColumn() + 1))));
             } catch (NumberFormatException exception) {
                 isNotValued = false;
-                JOptionPane.showMessageDialog(null, "Значение 'x' должно быть числом!");
+                JOptionPane.showMessageDialog(null, LocaleBundle.getCurrentBundle().getString("valuesOptionPaneError7"));
                 table.getModel().setValueAt(collection.get(key).getCoordinates().getX(), e.getFirstRow(), e.getColumn());
                 return;
             } catch (NotDeclaredValueException exception) {
                 isNotValued = false;
-                JOptionPane.showMessageDialog(null, "Значение 'x' должно быть больше -666!");
+                JOptionPane.showMessageDialog(null, LocaleBundle.getCurrentBundle().getString("valuesOptionPaneError8"));
                 table.getModel().setValueAt(collection.get(key).getCoordinates().getX(), e.getFirstRow(), e.getColumn());
                 return;
             }
@@ -118,12 +118,12 @@ public class Show extends JPanel {
                 coordinates = new Coordinates(Double.parseDouble(String.valueOf(table.getModel().getValueAt(e.getFirstRow(), e.getColumn() - 1))), y);
             } catch (NumberFormatException exception) {
                 isNotValued = false;
-                JOptionPane.showMessageDialog(null, "Значение 'y' должно быть числом!");
+                JOptionPane.showMessageDialog(null, LocaleBundle.getCurrentBundle().getString("valuesOptionPaneError9"));
                 table.getModel().setValueAt(collection.get(key).getCoordinates().getY(), e.getFirstRow(), e.getColumn());
                 return;
             } catch (NotDeclaredValueException exception) {
                 isNotValued = false;
-                JOptionPane.showMessageDialog(null, "Значение 'y' должно быть больше -604!");
+                JOptionPane.showMessageDialog(null, LocaleBundle.getCurrentBundle().getString("valuesOptionPaneError10"));
                 table.getModel().setValueAt(collection.get(key).getCoordinates().getY(), e.getFirstRow(), e.getColumn());
                 return;
             }
@@ -136,12 +136,12 @@ public class Show extends JPanel {
                 updateMarine.setHealth(health);
             } catch (NumberFormatException exception) {
                 isNotValued = false;
-                JOptionPane.showMessageDialog(null, "Значение 'health' должно быть числом!");
+                JOptionPane.showMessageDialog(null, LocaleBundle.getCurrentBundle().getString("valuesOptionPaneError2"));
                 table.getModel().setValueAt(collection.get(key).getHealth(), e.getFirstRow(), e.getColumn());
                 return;
             } catch (NotDeclaredValueException exception) {
                 isNotValued = false;
-                JOptionPane.showMessageDialog(null, "Значение 'health' должно быть больше 0!");
+                JOptionPane.showMessageDialog(null, LocaleBundle.getCurrentBundle().getString("valuesOptionPaneError3"));
                 table.getModel().setValueAt(collection.get(key).getHealth(), e.getFirstRow(), e.getColumn());
                 return;
             }
@@ -153,12 +153,12 @@ public class Show extends JPanel {
                 updateMarine.setHealth(heartCount);
             } catch (NumberFormatException exception) {
                 isNotValued = false;
-                JOptionPane.showMessageDialog(null, "Значение 'heartCount' должно быть числом!");
+                JOptionPane.showMessageDialog(null, LocaleBundle.getCurrentBundle().getString("valuesOptionPaneError4"));
                 table.getModel().setValueAt(collection.get(key).getHeartCount(), e.getFirstRow(), e.getColumn());
                 return;
             } catch (NotDeclaredValueException exception) {
                 isNotValued = false;
-                JOptionPane.showMessageDialog(null, "Значение 'heartCount' должно быть в пределе от 1 до 3!");
+                JOptionPane.showMessageDialog(null, LocaleBundle.getCurrentBundle().getString("valuesOptionPaneError5"));
                 table.getModel().setValueAt(collection.get(key).getHeartCount(), e.getFirstRow(), e.getColumn());
                 return;
             }
@@ -167,7 +167,7 @@ public class Show extends JPanel {
             String achieve = String.valueOf(table.getModel().getValueAt(e.getFirstRow(), e.getColumn()));
             if (achieve.isEmpty()) {
                 isNotValued = false;
-                JOptionPane.showMessageDialog(null, "Значение 'achieve' не может быть пустым!");
+                JOptionPane.showMessageDialog(null, LocaleBundle.getCurrentBundle().getString("valuesOptionPaneError6"));
                 table.getModel().setValueAt(collection.get(key).getAchievements(), e.getFirstRow(), e.getColumn());
                 return;
             }
@@ -177,13 +177,13 @@ public class Show extends JPanel {
             String weapon = String.valueOf(table.getModel().getValueAt(e.getFirstRow(), e.getColumn()));
             if (weapon.isEmpty()) {
                 isNotValued = false;
-                JOptionPane.showMessageDialog(null, "Значение 'weapon' не может быть пустым!");
+                JOptionPane.showMessageDialog(null, LocaleBundle.getCurrentBundle().getString("valuesOptionPaneError15"));
                 table.getModel().setValueAt(collection.get(key).getWeaponType().toString(), e.getFirstRow(), e.getColumn());
                 return;
             }
             if (!weapon.equals("BOLTGUN") && !weapon.equals("GRENADE") && !weapon.equals("FLAMER")) {
                 isNotValued = false;
-                JOptionPane.showMessageDialog(null, "Значение 'weapon' не может быть таким!");
+                JOptionPane.showMessageDialog(null, LocaleBundle.getCurrentBundle().getString("valuesOptionPaneError16"));
                 table.getModel().setValueAt(collection.get(key).getWeaponType().toString(), e.getFirstRow(), e.getColumn());
                 return;
             }
@@ -194,7 +194,7 @@ public class Show extends JPanel {
             String name = String.valueOf(table.getModel().getValueAt(e.getFirstRow(), e.getColumn()));
             if (name.isEmpty()) {
                 isNotValued = false;
-                JOptionPane.showMessageDialog(null, "Значение 'name' не может быть пустым!");
+                JOptionPane.showMessageDialog(null, LocaleBundle.getCurrentBundle().getString("valuesOptionPaneError11"));
                 table.getModel().setValueAt(collection.get(key).getChapter().getName(), e.getFirstRow(), e.getColumn());
                 return;
             }
@@ -205,7 +205,7 @@ public class Show extends JPanel {
             String legion = String.valueOf(table.getModel().getValueAt(e.getFirstRow(), e.getColumn()));
             if (legion.isEmpty()) {
                 isNotValued = false;
-                JOptionPane.showMessageDialog(null, "Значение 'achieve' не может быть пустым!");
+                JOptionPane.showMessageDialog(null, LocaleBundle.getCurrentBundle().getString("valuesOptionPaneError12"));
                 table.getModel().setValueAt(collection.get(key).getChapter().getParentLegion(), e.getFirstRow(), e.getColumn());
                 return;
             }
@@ -218,12 +218,12 @@ public class Show extends JPanel {
                     updateMarine,
                     this.client.getUser()));
             Response fromServer = client.receive();
-            if (isNotValued) JOptionPane.showMessageDialog(null, fromServer.getResponseBody());
+            if (isNotValued) JOptionPane.showMessageDialog(null, fromServer.localize());
             else isNotValued = true;
         } catch (IOException exception) {
-            JOptionPane.showMessageDialog(null, "Произошла ошибка при отправке запроса на сервер!");
+            JOptionPane.showMessageDialog(null, LocaleBundle.getCurrentBundle().getString("ioPaneError"));
         } catch (ClassNotFoundException classNotFoundException) {
-            JOptionPane.showMessageDialog(null, "Произошла ошибка при получении ответа с сервера!");
+            JOptionPane.showMessageDialog(null, LocaleBundle.getCurrentBundle().getString("classNotFoundError"));
         }
     }
 

@@ -49,73 +49,73 @@ public class Insert extends JPanel {
                     key = Integer.parseInt(keyField.getText());
                     if (key <= 0) throw new NotDeclaredValueException();
                 } catch (NumberFormatException exception) {
-                    errors.append("Ключ должен быть числом!\n");
+                    errors.append(LocaleBundle.getCurrentBundle().getString("valuesOptionPaneError13"));
                 } catch (NotDeclaredValueException notDeclaredValueException) {
-                    errors.append("Ключ должен быть больше 0!\n");
+                    errors.append(LocaleBundle.getCurrentBundle().getString("valuesOptionPaneError14"));
                 }
                 String name = null;
                 try {
                     name = nameField.getText();
                     if (name.isEmpty()) throw new NotDeclaredValueException();
                 } catch (NotDeclaredValueException notDeclaredValueException) {
-                    errors.append("Значение поля 'name' не может быть пустым!\n");
+                    errors.append(LocaleBundle.getCurrentBundle().getString("valuesOptionPaneError1"));
                 }
                 int health = 0;
                 try {
                     health = Integer.parseInt(healthField.getText());
                     if (health <= 0) throw new NotDeclaredValueException();
                 } catch (NumberFormatException exception) {
-                    errors.append("Здоровье должно быть числом!\n");
+                    errors.append(LocaleBundle.getCurrentBundle().getString("valuesOptionPaneError2"));
                 } catch (NotDeclaredValueException notDeclaredValueException) {
-                    errors.append("Здоровье должно быть больше 0!\n");
+                    errors.append(LocaleBundle.getCurrentBundle().getString("valuesOptionPaneError3"));
                 }
                 int heartCount = 0;
                 try {
                     heartCount = Integer.parseInt(heartCountField.getText());
                     if (heartCount <= 0) throw new NotDeclaredValueException();
                 } catch (NumberFormatException exception) {
-                    errors.append("Кол-во сердец должно быть числом!\n");
+                    errors.append(LocaleBundle.getCurrentBundle().getString("valuesOptionPaneError4"));
                 } catch (NotDeclaredValueException notDeclaredValueException) {
-                    errors.append("Кол-во сердец должно быть больше 0!\n");
+                    errors.append(LocaleBundle.getCurrentBundle().getString("valuesOptionPaneError5"));
                 }
                 String achieve = null;
                 try {
                     achieve = achieveField.getText();
                     if (achieve.isEmpty()) throw new NotDeclaredValueException();
                 } catch (NotDeclaredValueException notDeclaredValueException) {
-                    errors.append("Значение поля 'achievements' не может быть пустым!\n");
+                    errors.append(LocaleBundle.getCurrentBundle().getString("valuesOptionPaneError6"));
                 }
                 double x = 0;
                 try {
                     x = Double.parseDouble(coorX.getText());
                     if (x <= -666) throw new NotDeclaredValueException();
                 } catch (NumberFormatException exception) {
-                    errors.append("Координата 'x' должна быть числом!\n");
+                    errors.append(LocaleBundle.getCurrentBundle().getString("valuesOptionPaneError7"));
                 } catch (NotDeclaredValueException notDeclaredValueException) {
-                    errors.append("Координата 'x' должна быть больше -666!\n");
+                    errors.append(LocaleBundle.getCurrentBundle().getString("valuesOptionPaneError8"));
                 }
                 float y = 0;
                 try {
                     y = Float.parseFloat(coorY.getText());
                     if (y <= -603) throw new NotDeclaredValueException();
                 } catch (NumberFormatException exception) {
-                    errors.append("Координата 'y' должна быть числом!\n");
+                    errors.append(LocaleBundle.getCurrentBundle().getString("valuesOptionPaneError9"));
                 } catch (NotDeclaredValueException notDeclaredValueException) {
-                    errors.append("Координата 'y' должна быть больше -666!\n");
+                    errors.append(LocaleBundle.getCurrentBundle().getString("valuesOptionPaneError10"));
                 }
                 String chapterN = null;
                 try {
                     chapterN = chapterName.getText();
                     if (chapterN.isEmpty()) throw new NotDeclaredValueException();
                 } catch (NotDeclaredValueException notDeclaredValueException) {
-                    errors.append("Значение поля 'chapterName' не может быть пустым!\n");
+                    errors.append(LocaleBundle.getCurrentBundle().getString("valuesOptionPaneError11"));
                 }
                 String chapterL = null;
                 try {
                     chapterL = chapterLegion.getText();
                     if (chapterL.isEmpty()) throw new NotDeclaredValueException();
                 } catch (NotDeclaredValueException notDeclaredValueException) {
-                    errors.append("Значение поля 'chapterLegion' не может быть пустым!\n");
+                    errors.append(LocaleBundle.getCurrentBundle().getString("valuesOptionPaneError12"));
                 }
                 if (errors.toString().equals("")) {
                     try {
@@ -126,11 +126,11 @@ public class Insert extends JPanel {
                                 ),
                                 client.getUser()));
                         Response fromServer = client.receive();
-                        JOptionPane.showMessageDialog(null, fromServer.getResponseBody());
+                        JOptionPane.showMessageDialog(null, fromServer.localize());
                     } catch (IOException exception) {
-                        JOptionPane.showMessageDialog(null, "Произошла ошибка при отправке запроса на сервер!");
+                        JOptionPane.showMessageDialog(null, LocaleBundle.getCurrentBundle().getString("ioPaneError"));
                     } catch (ClassNotFoundException classNotFoundException) {
-                        JOptionPane.showMessageDialog(null, "Произошла ошибка при получении ответа с сервера!");
+                        JOptionPane.showMessageDialog(null, LocaleBundle.getCurrentBundle().getString("classNotFoundError"));
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, errors.toString());

@@ -20,8 +20,9 @@ public class SpaceMarine implements Comparable<SpaceMarine>, Serializable {
     private Weapon weaponType;
     private Chapter chapter;
     private User owner;
+    private boolean isDrew;
 
-    public SpaceMarine(int id, String name, Coordinates coordinates, LocalDateTime creationDate, int health, Integer heartCount, String achievements, Weapon weaponType, Chapter chapter, User owner) {
+    public SpaceMarine(int id, String name, Coordinates coordinates, LocalDateTime creationDate, int health, Integer heartCount, String achievements, Weapon weaponType, Chapter chapter, User owner, boolean isDrew) {
         this.id = id;
         this.name = name;
         this.coordinates = coordinates;
@@ -32,6 +33,15 @@ public class SpaceMarine implements Comparable<SpaceMarine>, Serializable {
         this.weaponType = weaponType;
         this.chapter = chapter;
         this.owner = owner;
+        this.isDrew = isDrew;
+    }
+
+    public boolean isDrew() {
+        return isDrew;
+    }
+
+    public void setDrew(boolean drew) {
+        isDrew = drew;
     }
 
     /**

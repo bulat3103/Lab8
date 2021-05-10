@@ -4,6 +4,7 @@ import common.exceptions.DatabaseManagerException;
 import common.exceptions.UserAlreadyExistException;
 import common.exceptions.WrongAmountOfParametersException;
 import common.utility.User;
+import resources.LocaleBundle;
 import serverModule.utility.DatabaseUserManager;
 import serverModule.utility.ResponseOutputer;
 
@@ -11,7 +12,7 @@ public class SignUpCommand extends AbstractCommand{
     private DatabaseUserManager databaseUserManager;
 
     public SignUpCommand(DatabaseUserManager databaseUserManager) {
-        super("sign_up", "регистрация нового пользователя");
+        super("sign_up", "signUpCommandDescription");
         this.databaseUserManager = databaseUserManager;
     }
 
@@ -20,17 +21,17 @@ public class SignUpCommand extends AbstractCommand{
         try {
             if (argument.isEmpty() || objectArgument != null) throw new WrongAmountOfParametersException();
             if (databaseUserManager.insertUser(user))
-                ResponseOutputer.append("Регистрация прошла успешно!\n");
+                ResponseOutputer.append("signUpCommandSuccess");
             else throw new UserAlreadyExistException();
             return true;
         } catch (WrongAmountOfParametersException e) {
             ResponseOutputer.append("У этой команды должен быть только один параметр: 'user'\n");
         } catch (DatabaseManagerException exception) {
-            ResponseOutputer.append("Произошла ошибка при обращении к базе данных!\n");
+            ResponseOutputer.append("databaseError");
         } catch (UserAlreadyExistException e) {
-            ResponseOutputer.append("Этот пользователь уже существует!\n");
+            ResponseOutputer.append("userExistError");
         } catch (ClassCastException e) {
-            ResponseOutputer.append("Переданный клиентом объект неверен!\n");
+            ResponseOutputer.append("classCastError");
         }
         return false;
     }

@@ -21,6 +21,7 @@ public class DatabaseManager {
     public static final String MARINE_TABLE_WEAPON_TYPE_COLUMN = "weapon_type";
     public static final String MARINE_TABLE_CHAPTER_ID_COLUMN = "chapter_id";
     public static final String MARINE_TABLE_USER_ID_COLUMN = "user_id";
+    public static final String MARINE_TABLE_IS_DREW_COLUMN = "is_drew";
 
     public static final String USER_TABLE_ID_COLUMN = "id";
     public static final String USER_TABLE_USERNAME_COLUMN = "username";

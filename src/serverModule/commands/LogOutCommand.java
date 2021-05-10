@@ -3,6 +3,7 @@ package serverModule.commands;
 import common.exceptions.DatabaseManagerException;
 import common.exceptions.WrongAmountOfParametersException;
 import common.utility.User;
+import resources.LocaleBundle;
 import serverModule.utility.DatabaseUserManager;
 import serverModule.utility.ResponseOutputer;
 
@@ -10,7 +11,7 @@ public class LogOutCommand extends AbstractCommand{
     private DatabaseUserManager databaseUserManager;
 
     public LogOutCommand(DatabaseUserManager databaseUserManager) {
-        super("log_out", "выйти из аккаунта");
+        super("log_out", "logOutCommandDescription");
         this.databaseUserManager = databaseUserManager;
     }
 

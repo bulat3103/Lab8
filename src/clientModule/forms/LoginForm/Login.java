@@ -46,7 +46,7 @@ public class Login extends JPanel {
                     if (fromServer.getResponseCode().equals(ResponseCode.OK)) {
                         client.send(new Request("get_user_color", "", user));
                         Response response = client.receive();
-                        if (response.getResponseBody() != null) user.setColor(response.getResponseBody());
+                        if (response.getResponseBody() != null) user.setColor(response.getResponseBody().replaceAll("[\\n]",""));
                         client.setUser(user);
                         App.mainMenu.setUser(user);
                         App.insert.setUser(user);
@@ -61,12 +61,12 @@ public class Login extends JPanel {
                         App.mainFrame.setContentPane(App.mainMenu.getMainMenuPanel());
                         App.mainFrame.validate();
                     } else {
-                        JOptionPane.showMessageDialog(null, fromServer.getResponseBody());
+                        JOptionPane.showMessageDialog(null, fromServer.localize());
                     }
                 } catch (IOException exception) {
-                    JOptionPane.showMessageDialog(null, "Произошла ошибка при отправке запроса на сервер!");
+                    JOptionPane.showMessageDialog(null, LocaleBundle.getCurrentBundle().getString("ioPaneError"));
                 } catch (ClassNotFoundException classNotFoundException) {
-                    JOptionPane.showMessageDialog(null, "Произошла ошибка при получении ответа с сервера!");
+                    JOptionPane.showMessageDialog(null, LocaleBundle.getCurrentBundle().getString("classNotFoundError"));
                 }
             }
         });

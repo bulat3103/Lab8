@@ -27,11 +27,12 @@ import resources.LocaleBundle;
  */
 public class Visualize extends JPanel {
     public Visualize(Client client) {
-        initComponents();
         this.client = client;
+        initComponents();
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                isActive = false;
                 App.mainFrame.setContentPane(App.mainMenu.getMainMenuPanel());
                 App.mainFrame.validate();
             }
@@ -39,10 +40,11 @@ public class Visualize extends JPanel {
     }
 
     public void startThread() {
+        isActive = true;
         draw = new Thread(new Runnable() {
             @Override
             public void run() {
-                while (true) {
+                while (isActive) {
                     drawSpace.clearPoints();
                     setObjects();
                     drawSpace.repaint();
@@ -85,7 +87,8 @@ public class Visualize extends JPanel {
                         Color.decode(e.getValue().getOwner().getColor()),
                         height / 10,
                         String.valueOf(e.getValue().getId()),
-                        e.getValue());
+                        e.getValue(),
+                        e.getKey());
                 drawSpace.addPointWithColor(point);
             }
         } catch (IOException | ClassNotFoundException ignored) {}
@@ -102,7 +105,7 @@ public class Visualize extends JPanel {
         currentUser = new JLabel();
         name = new JLabel();
         backButton = new JButton();
-        drawSpace = new DrawSpace();
+        drawSpace = new DrawSpace(this.client);
 
         //======== visualizePanel ========
         {
@@ -183,6 +186,7 @@ public class Visualize extends JPanel {
     public void setUser(User user) {
         this.client.setUser(user);
         this.currentUser.setText(user.getLogin());
+        this.drawSpace.setUser(user);
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
@@ -194,14 +198,11 @@ public class Visualize extends JPanel {
     private DrawSpace drawSpace;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
     private Client client;
+    private boolean isActive;
     private Thread draw;
 
     public JPanel getVisualizePanel() {
         return visualizePanel;
-    }
-
-    public Thread getDraw() {
-        return draw;
     }
 }
 

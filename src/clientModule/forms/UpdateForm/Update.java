@@ -48,9 +48,9 @@ public class Update extends JPanel {
                     id = Integer.parseInt(idField.getText());
                     if (id <= 0) throw new NotDeclaredValueException();
                 } catch (NumberFormatException exception) {
-                    errors.append("Ключ должен быть числом!\n");
+                    errors.append(LocaleBundle.getCurrentBundle().getString("valuesOptionPaneError13"));
                 } catch (NotDeclaredValueException notDeclaredValueException) {
-                    errors.append("Ключ должен быть больше 0!\n");
+                    errors.append(LocaleBundle.getCurrentBundle().getString("valuesOptionPaneError14"));
                 }
                 String name = null;
                 if (nameCheck.isSelected()) {
@@ -58,7 +58,7 @@ public class Update extends JPanel {
                         name = nameField.getText();
                         if (name.isEmpty()) throw new NotDeclaredValueException();
                     } catch (NotDeclaredValueException notDeclaredValueException) {
-                        errors.append("Значение поля 'name' не может быть пустым!\n");
+                        errors.append(LocaleBundle.getCurrentBundle().getString("valuesOptionPaneError1"));
                     }
                 }
                 int health = -1;
@@ -67,9 +67,9 @@ public class Update extends JPanel {
                         health = Integer.parseInt(healthField.getText());
                         if (health <= 0) throw new NotDeclaredValueException();
                     } catch (NumberFormatException exception) {
-                        errors.append("Здоровье должно быть числом!\n");
+                        errors.append(LocaleBundle.getCurrentBundle().getString("valuesOptionPaneError2"));
                     } catch (NotDeclaredValueException notDeclaredValueException) {
-                        errors.append("Здоровье должно быть больше 0!\n");
+                        errors.append(LocaleBundle.getCurrentBundle().getString("valuesOptionPaneError3"));
                     }
                 }
                 int heartCount = -1;
@@ -78,9 +78,9 @@ public class Update extends JPanel {
                         heartCount = Integer.parseInt(heartField.getText());
                         if (heartCount <= 0) throw new NotDeclaredValueException();
                     } catch (NumberFormatException exception) {
-                        errors.append("Кол-во сердец должно быть числом!\n");
+                        errors.append(LocaleBundle.getCurrentBundle().getString("valuesOptionPaneError4"));
                     } catch (NotDeclaredValueException notDeclaredValueException) {
-                        errors.append("Кол-во сердец должно быть больше 0!\n");
+                        errors.append(LocaleBundle.getCurrentBundle().getString("valuesOptionPaneError5"));
                     }
                 }
                 String achieve = null;
@@ -89,7 +89,7 @@ public class Update extends JPanel {
                         achieve = achieveField.getText();
                         if (achieve.isEmpty()) throw new NotDeclaredValueException();
                     } catch (NotDeclaredValueException notDeclaredValueException) {
-                        errors.append("Значение поля 'achievements' не может быть пустым!\n");
+                        errors.append(LocaleBundle.getCurrentBundle().getString("valuesOptionPaneError6"));
                     }
                 }
                 Coordinates newCoor = null;
@@ -100,9 +100,9 @@ public class Update extends JPanel {
                         if (x1 <= -666) throw new NotDeclaredValueException();
                         x = x1;
                     } catch (NumberFormatException exception) {
-                        errors.append("Координата 'x' должна быть числом!\n");
+                        errors.append(LocaleBundle.getCurrentBundle().getString("valuesOptionPaneError7"));
                     } catch (NotDeclaredValueException notDeclaredValueException) {
-                        errors.append("Координата 'x' должна быть больше -666!\n");
+                        errors.append(LocaleBundle.getCurrentBundle().getString("valuesOptionPaneError8"));
                     }
                     float y = -604;
                     try {
@@ -110,9 +110,9 @@ public class Update extends JPanel {
                         if (y1 <= -603) throw new NotDeclaredValueException();
                         y = y1;
                     } catch (NumberFormatException exception) {
-                        errors.append("Координата 'y' должна быть числом!\n");
+                        errors.append(LocaleBundle.getCurrentBundle().getString("valuesOptionPaneError9"));
                     } catch (NotDeclaredValueException notDeclaredValueException) {
-                        errors.append("Координата 'y' должна быть больше -666!\n");
+                        errors.append(LocaleBundle.getCurrentBundle().getString("valuesOptionPaneError10"));
                     }
                     if (x != -667 && y != -604) newCoor = new Coordinates(x, y);
                 }
@@ -123,14 +123,14 @@ public class Update extends JPanel {
                         chapterN = chapterNameField.getText();
                         if (chapterN.isEmpty()) throw new NotDeclaredValueException();
                     } catch (NotDeclaredValueException notDeclaredValueException) {
-                        errors.append("Значение поля 'chapterName' не может быть пустым!\n");
+                        errors.append(LocaleBundle.getCurrentBundle().getString("valuesOptionPaneError11"));
                     }
                     String chapterL = null;
                     try {
                         chapterL = chapterLegionField.getText();
                         if (chapterL.isEmpty()) throw new NotDeclaredValueException();
                     } catch (NotDeclaredValueException notDeclaredValueException) {
-                        errors.append("Значение поля 'chapterLegion' не может быть пустым!\n");
+                        errors.append(LocaleBundle.getCurrentBundle().getString("valuesOptionPaneError12"));
                     }
                     if (!chapterN.isEmpty() && !chapterL.isEmpty()) newChapter = new Chapter(chapterN, chapterL);
                 }
@@ -146,11 +146,11 @@ public class Update extends JPanel {
                                         name, newCoor, health, heartCount, achieve, newWeapon, newChapter),
                                 client.getUser()));
                         Response fromServer = client.receive();
-                        JOptionPane.showMessageDialog(null, fromServer.getResponseBody());
+                        JOptionPane.showMessageDialog(null, fromServer.localize());
                     } catch (IOException exception) {
-                        JOptionPane.showMessageDialog(null, "Произошла ошибка при отправке запроса на сервер!");
+                        JOptionPane.showMessageDialog(null, LocaleBundle.getCurrentBundle().getString("ioPaneError"));
                     } catch (ClassNotFoundException classNotFoundException) {
-                        JOptionPane.showMessageDialog(null, "Произошла ошибка при получении ответа с сервера!");
+                        JOptionPane.showMessageDialog(null, LocaleBundle.getCurrentBundle().getString("classNotFoundError"));
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, errors.toString());

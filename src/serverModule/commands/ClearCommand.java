@@ -3,6 +3,7 @@ package serverModule.commands;
 import common.data.SpaceMarine;
 import common.exceptions.*;
 import common.utility.User;
+import resources.LocaleBundle;
 import serverModule.utility.CollectionManager;
 import serverModule.utility.DatabaseCollectionManager;
 import serverModule.utility.ResponseOutputer;
@@ -15,7 +16,7 @@ public class ClearCommand extends AbstractCommand{
     private DatabaseCollectionManager databaseCollectionManager;
 
     public ClearCommand(CollectionManager collectionManager, DatabaseCollectionManager databaseCollectionManager) {
-        super("clear", "очистить коллекцию");
+        super("clear", "clearCommandDescription");
         this.collectionManager = collectionManager;
         this.databaseCollectionManager = databaseCollectionManager;
     }
@@ -27,7 +28,6 @@ public class ClearCommand extends AbstractCommand{
     @Override
     public boolean execute(String argument, Object objectArgument, User user) {
         try {
-            if (user == null) throw new NonAuthorizedUserException();
             if(!argument.isEmpty() || objectArgument != null) throw new WrongAmountOfParametersException();
             for (SpaceMarine marine : collectionManager.getCollection().values()) {
                 if (!marine.getOwner().equals(user)) throw new PermissionDeniedException();
@@ -35,19 +35,16 @@ public class ClearCommand extends AbstractCommand{
             }
             databaseCollectionManager.clearCollection();
             collectionManager.clearCollection();
-            ResponseOutputer.append("Коллекция успешно очищена!\n");
+            ResponseOutputer.append("clearCommandSuccess");
             return true;
         } catch (WrongAmountOfParametersException exception) {
             ResponseOutputer.append("У этой команды нет параметров!\n");
         } catch (PermissionDeniedException exception) {
-            ResponseOutputer.append("Принадлежащие другим пользователям объекты доступны только для чтения!\n");
+            ResponseOutputer.append("permissionError");
         } catch (DatabaseManagerException exception) {
-            ResponseOutputer.append("Произошла ошибка при обращении к базе данных!\n");
+            ResponseOutputer.append("databaseError");
         } catch (IllegalDatabaseEditException exception) {
-            ResponseOutputer.append("Произошло нелегальное изменение объекта в базе данных!\n");
-            ResponseOutputer.append("Перезапустите клиент для избежания ошибок!\n");
-        } catch (NonAuthorizedUserException e) {
-            ResponseOutputer.append("Необходимо авторизоваться!\n");
+            ResponseOutputer.append("illegalError");
         }
         return false;
     }

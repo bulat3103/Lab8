@@ -2,6 +2,7 @@ package serverModule.commands;
 
 import common.exceptions.WrongAmountOfParametersException;
 import common.utility.User;
+import resources.LocaleBundle;
 import serverModule.utility.ResponseOutputer;
 
 /**
@@ -10,7 +11,7 @@ import serverModule.utility.ResponseOutputer;
 public class HelpCommand extends AbstractCommand{
 
     public HelpCommand() {
-        super("help", "вывести справку по доступным командам");
+        super("help", "helpCommandDescription");
     }
 
     /**

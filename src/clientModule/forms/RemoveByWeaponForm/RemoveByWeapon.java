@@ -43,11 +43,11 @@ public class RemoveByWeapon extends JPanel {
                             choice.getItemAt(choice.getSelectedIndex()),
                             client.getUser()));
                     Response fromServer = client.receive();
-                    JOptionPane.showMessageDialog(null, fromServer.getResponseBody());
+                    JOptionPane.showMessageDialog(null, fromServer.localize());
                 } catch (IOException exception) {
-                    JOptionPane.showMessageDialog(null, "Произошла ошибка при отправке запроса на сервер!");
+                    JOptionPane.showMessageDialog(null, LocaleBundle.getCurrentBundle().getString("ioPaneError"));
                 } catch (ClassNotFoundException classNotFoundException) {
-                    JOptionPane.showMessageDialog(null, "Произошла ошибка при получении ответа с сервера!");
+                    JOptionPane.showMessageDialog(null, LocaleBundle.getCurrentBundle().getString("classNotFoundError"));
                 }
             }
         });

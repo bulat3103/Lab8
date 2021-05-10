@@ -4,6 +4,7 @@ import common.exceptions.EmptyCollectionException;
 import common.exceptions.NonAuthorizedUserException;
 import common.exceptions.WrongAmountOfParametersException;
 import common.utility.User;
+import resources.LocaleBundle;
 import serverModule.utility.CollectionManager;
 import serverModule.utility.ResponseOutputer;
 
@@ -14,7 +15,7 @@ public class SumOfHealthCommand extends AbstractCommand{
     private CollectionManager collectionManager;
 
     public SumOfHealthCommand(CollectionManager collectionManager) {
-        super("sum_of_health", "вывести сумму значений поля health для всех элементов коллекции");
+        super("sum_of_health", "sumHealthCommandDescription");
         this.collectionManager = collectionManager;
     }
 
@@ -29,12 +30,12 @@ public class SumOfHealthCommand extends AbstractCommand{
             if (!argument.isEmpty() || objectArgument != null) throw new WrongAmountOfParametersException();
             double sum_of_health = collectionManager.getSumOfHealth();
             if (sum_of_health == 0) throw new EmptyCollectionException();
-            ResponseOutputer.append("Сумма здоровья всех космических десантов: " + sum_of_health + "\n");
+            ResponseOutputer.append("sumHealthCommandText:" + sum_of_health);
             return true;
         } catch (WrongAmountOfParametersException exception) {
             ResponseOutputer.append("У этой команды нет параметров!\n");
         } catch (EmptyCollectionException exception) {
-            ResponseOutputer.append("Коллекция пуста!\n");
+            ResponseOutputer.append("emptyError");
         } catch (NonAuthorizedUserException e) {
             ResponseOutputer.append("Необходимо авторизоваться!\n");
         }

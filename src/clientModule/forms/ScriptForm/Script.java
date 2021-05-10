@@ -50,20 +50,20 @@ public class Script extends JPanel {
                         Console console = new Console(new Scanner(file), file, textPane);
                         Request request = console.interactiveMode(null, client.getUser());
                         if (request == null) {
-                            textPane.setText(textPane.getText() + "Не удалось выполнить команду! Проверьте правильность ввода аргументов!\n");
+                            textPane.setText(textPane.getText() + LocaleBundle.getCurrentBundle().getString("scriptOptionPaneError1"));
                         } else {
                             try {
                                 client.send(request);
                                 Response fromServer = client.receive();
-                                textPane.setText(textPane.getText() + fromServer.getResponseBody() + "\n");
+                                textPane.setText(textPane.getText() + fromServer.localize());
                             } catch (IOException exception) {
-                                textPane.setText(textPane.getText() + "Произошла ошибка при отправке запроса на сервер!\n");
+                                JOptionPane.showMessageDialog(null, LocaleBundle.getCurrentBundle().getString("ioPaneError"));
                             } catch (ClassNotFoundException classNotFoundException) {
-                                textPane.setText(textPane.getText() + "Произошла ошибка при получении ответа с сервера!\n");
+                                JOptionPane.showMessageDialog(null, LocaleBundle.getCurrentBundle().getString("classNotFoundError"));
                             }
                         }
                     } catch (FileNotFoundException exception) {
-                        JOptionPane.showMessageDialog(null, "Не удалось найти файл!");
+                        JOptionPane.showMessageDialog(null, LocaleBundle.getCurrentBundle().getString("scriptOptionPaneError2"));
                     }
                 }
             }

@@ -7,6 +7,7 @@ import common.data.Weapon;
 import common.exceptions.*;
 import common.utility.SpaceMarineLite;
 import common.utility.User;
+import resources.LocaleBundle;
 import serverModule.utility.CollectionManager;
 import serverModule.utility.DatabaseCollectionManager;
 import serverModule.utility.ResponseOutputer;
@@ -21,7 +22,7 @@ public class UpdateCommand extends AbstractCommand{
     private DatabaseCollectionManager databaseCollectionManager;
 
     public UpdateCommand(CollectionManager collectionManager, DatabaseCollectionManager databaseCollectionManager) {
-        super("update id {element}", "обновить значение элемента коллекции по id");
+        super("update id {element}", "updateCommandDescription");
         this.collectionManager = collectionManager;
         this.databaseCollectionManager = databaseCollectionManager;
     }
@@ -33,7 +34,6 @@ public class UpdateCommand extends AbstractCommand{
     @Override
     public boolean execute(String argument, Object objectArgument, User user) {
         try {
-            if (user == null) throw new NonAuthorizedUserException();
             if (argument.isEmpty() || objectArgument == null) throw new WrongAmountOfParametersException();
             if (collectionManager.collectionSize() == 0) throw new EmptyCollectionException();
             int id = Integer.parseInt(argument);
@@ -63,25 +63,23 @@ public class UpdateCommand extends AbstractCommand{
                     achievements,
                     weapon,
                     chapter,
-                    user
+                    user,
+                    databaseCollectionManager.getIsDrewById(id)
             ));
-            ResponseOutputer.append("Успешно изменено!\n");
+            ResponseOutputer.append("updateCommandSuccess");
             return true;
         } catch (WrongAmountOfParametersException exception) {
             ResponseOutputer.append("Вместе с этой командой должен быть передан параметр! Наберит 'help' для справки!\n");
         } catch (EmptyCollectionException exception) {
-            ResponseOutputer.append("Коллекция пуста!\n");
+            ResponseOutputer.append("emptyError");
         } catch (NotFoundMarineException e) {
-            ResponseOutputer.append("SpaceMarine с таким id в коллекции нет!\n");
+            ResponseOutputer.append("notFoundError");
         } catch (PermissionDeniedException e) {
-            ResponseOutputer.append("Принадлежащие другим пользователям объекты доступны только для чтения!\n");
+            ResponseOutputer.append("permissionError");
         } catch (DatabaseManagerException e) {
-            ResponseOutputer.append("Произошла ошибка при обращении к базе данных!\n");
+            ResponseOutputer.append("databaseError");
         } catch (IllegalDatabaseEditException e) {
-            ResponseOutputer.append("Произошло нелегальное изменение объекта в базе данных!\n");
-            ResponseOutputer.append("Перезапустите клиент для избежания ошибок!\n");
-        } catch (NonAuthorizedUserException e) {
-            ResponseOutputer.append("Необходимо авторизоваться!\n");
+            ResponseOutputer.append("illegalError");
         }
         return false;
     }

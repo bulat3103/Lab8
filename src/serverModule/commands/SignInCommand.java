@@ -5,6 +5,7 @@ import common.exceptions.MultiUserException;
 import common.exceptions.UserNotFoundException;
 import common.exceptions.WrongAmountOfParametersException;
 import common.utility.User;
+import resources.LocaleBundle;
 import serverModule.utility.DatabaseUserManager;
 import serverModule.utility.ResponseOutputer;
 
@@ -12,7 +13,7 @@ public class SignInCommand extends AbstractCommand{
     private DatabaseUserManager databaseUserManager;
 
     public SignInCommand(DatabaseUserManager databaseUserManager) {
-        super("sign_in", "войти в аккаунт");
+        super("sign_in", "signInCommandDescription");
         this.databaseUserManager = databaseUserManager;
     }
 
@@ -21,7 +22,7 @@ public class SignInCommand extends AbstractCommand{
         try {
             if (!argument.isEmpty() || objectArgument != null) throw new WrongAmountOfParametersException();
             if (databaseUserManager.checkUserByUsernameAndPassword(user)) {
-                ResponseOutputer.append("Авторизация прошла успешно!\n");
+                ResponseOutputer.append("signInCommandSuccess");
                 databaseUserManager.updateOnline(user, true);
             }
             else throw new UserNotFoundException();
@@ -29,13 +30,13 @@ public class SignInCommand extends AbstractCommand{
         } catch (WrongAmountOfParametersException e) {
             ResponseOutputer.append("У этой команды должен быть только один параметр: 'user'\n");
         } catch (DatabaseManagerException e) {
-            ResponseOutputer.append("Произошла ошибка при обращении к базе данных!\n");
+            ResponseOutputer.append("databaseError");
         } catch (UserNotFoundException e) {
-            ResponseOutputer.append("Неправильные имя пользователя или пароль!\n");
+            ResponseOutputer.append("userNotFoundError");
         } catch (ClassCastException e) {
-            ResponseOutputer.append("Переданный клиентом объект неверен!\n");
+            ResponseOutputer.append("classCastError");
         } catch (MultiUserException e) {
-            ResponseOutputer.append("Этот пользователь уже авторизован!\n");
+            ResponseOutputer.append("multiUserError");
         }
         return false;
     }

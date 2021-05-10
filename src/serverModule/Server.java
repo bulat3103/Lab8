@@ -48,7 +48,8 @@ public class Server {
                         }
                         return false;
                     }).get()) break;
-                    new RequestProcessingThread(requestManager, request, address, port, socket).start();
+                    RequestProcessingThread requestProcessingThread = new RequestProcessingThread(requestManager, request, address, port, socket);
+                    requestProcessingThread.start();
                 } catch (InterruptedException | ExecutionException e) {
                     System.out.println("При чтении запроса произошла ошибка многопоточности!");
                 }

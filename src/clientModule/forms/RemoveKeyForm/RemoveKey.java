@@ -48,9 +48,9 @@ public class RemoveKey extends JPanel {
                     key = Integer.parseInt(argumentField.getText());
                     if (key <= 0) throw new NotDeclaredValueException();
                 } catch (NumberFormatException exception) {
-                    errors.append("Ключ должен быть числом!\n");
+                    errors.append(LocaleBundle.getCurrentBundle().getString("valuesOptionPaneError13"));
                 } catch (NotDeclaredValueException notDeclaredValueException) {
-                    errors.append("Ключ должен быть больше 0!\n");
+                    errors.append(LocaleBundle.getCurrentBundle().getString("valuesOptionPaneError14"));
                 }
                 if (errors.toString().equals("")) {
                     try {
@@ -58,11 +58,11 @@ public class RemoveKey extends JPanel {
                                 String.valueOf(key),
                                 client.getUser()));
                         Response fromServer = client.receive();
-                        JOptionPane.showMessageDialog(null, fromServer.getResponseBody());
+                        JOptionPane.showMessageDialog(null, fromServer.localize());
                     } catch (IOException exception) {
-                        JOptionPane.showMessageDialog(null, "Произошла ошибка при отправке запроса на сервер!");
+                        JOptionPane.showMessageDialog(null, LocaleBundle.getCurrentBundle().getString("ioPaneError"));
                     } catch (ClassNotFoundException classNotFoundException) {
-                        JOptionPane.showMessageDialog(null, "Произошла ошибка при получении ответа с сервера!");
+                        JOptionPane.showMessageDialog(null, LocaleBundle.getCurrentBundle().getString("classNotFoundError"));
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, errors.toString());

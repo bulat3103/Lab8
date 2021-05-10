@@ -1,8 +1,10 @@
 package common.utility;
 
 import common.data.SpaceMarine;
+import resources.LocaleBundle;
 
 import java.io.Serializable;
+import java.util.MissingResourceException;
 import java.util.TreeMap;
 
 public class Response implements Serializable {
@@ -26,5 +28,30 @@ public class Response implements Serializable {
 
     public TreeMap<Integer, SpaceMarine> getCollection() {
         return collection;
+    }
+
+    public String localize() {
+        StringBuilder localizeStringBody = new StringBuilder();
+        String[] lines = responseBody.split("\n");
+        for (String line : lines) {
+            if (line.isEmpty()) continue;
+            String[] splitLine = line.split(":");
+            try {
+                localizeStringBody.append(LocaleBundle.getCurrentBundle().getString(splitLine[0]));
+            } catch (MissingResourceException e) {
+                localizeStringBody.append(splitLine[0]);
+            }
+            if (splitLine.length == 1) {
+                localizeStringBody.append("\n");
+                continue;
+            }
+            try {
+                localizeStringBody.append(LocaleBundle.getCurrentBundle().getString(splitLine[1]));
+            } catch (MissingResourceException e) {
+                localizeStringBody.append(splitLine[1]);
+            }
+            localizeStringBody.append("\n");
+        }
+        return localizeStringBody.toString();
     }
 }

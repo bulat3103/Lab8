@@ -5,6 +5,7 @@ import common.exceptions.NonAuthorizedUserException;
 import common.exceptions.WrongAmountOfParametersException;
 import common.utility.SpaceMarineLite;
 import common.utility.User;
+import resources.LocaleBundle;
 import serverModule.utility.CollectionManager;
 import serverModule.utility.DatabaseCollectionManager;
 import serverModule.utility.ResponseOutputer;
@@ -17,7 +18,7 @@ public class InsertCommand extends AbstractCommand{
     private DatabaseCollectionManager databaseCollectionManager;
 
     public InsertCommand(CollectionManager collectionManager, DatabaseCollectionManager databaseCollectionManager) {
-        super("insert null {element}", "добавить новый элемент с заданным ключом");
+        super("insert null {element}", "insertCommandDescription");
         this.collectionManager = collectionManager;
         this.databaseCollectionManager = databaseCollectionManager;
     }
@@ -29,19 +30,16 @@ public class InsertCommand extends AbstractCommand{
     @Override
     public boolean execute(String argument, Object objectArgument, User user) {
         try {
-            if (user == null) throw new NonAuthorizedUserException();
             if (argument.isEmpty() || objectArgument == null) throw new WrongAmountOfParametersException();
             int key = Integer.parseInt(argument);
             SpaceMarineLite marineLite = (SpaceMarineLite) objectArgument;
             collectionManager.addToCollection(key, databaseCollectionManager.insertSpaceMarine(marineLite, user, key));
-            ResponseOutputer.append("Успешно добавлено в коллекцию!\n");
+            ResponseOutputer.append("insertCommandSuccess");
             return true;
         } catch (WrongAmountOfParametersException exception) {
             ResponseOutputer.append("Вместе с этой командой должен быть передан параметр! Наберит 'help' для справки\n");
         } catch (DatabaseManagerException e) {
-            ResponseOutputer.append("Произошла ошибка при обращении к базе данных!\n");
-        } catch (NonAuthorizedUserException e) {
-            ResponseOutputer.append("Необходимо авторизоваться!\n");
+            ResponseOutputer.append("databaseError");
         }
         return false;
     }
